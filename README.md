@@ -4,88 +4,54 @@ SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef
 SPDX-License-Identifier: MPL-2.0
 -->
 
-# OpenSTEF
+<img src="https://raw.githubusercontent.com/OpenSTEF/.github/main/profile/logo.png" alt="OpenSTEF Logo" width="200"/>
 
 <!-- Badges -->
-
+[![PyPI version](https://badge.fury.io/py/openstef.svg)](https://badge.fury.io/py/openstef)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Build Status](https://github.com/OpenSTEF/openstef/workflows/Build/badge.svg)](https://github.com/OpenSTEF/openstef/actions)
 [![Downloads](https://static.pepy.tech/badge/openstef)](https://pepy.tech/project/openstef)
-[![Downloads](https://static.pepy.tech/badge/openstef/month)](https://pepy.tech/project/openstef)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5585/badge)](https://bestpractices.coreinfrastructure.org/projects/5585)
 
-**OpenSTEF** is a modular library for creating short-term forecasts in the energy sector. Version 4.0 introduces a complete architectural refactor with enhanced modularity, type safety, and modern Python development practices.
+## What is OpenSTEF
 
-## What's New in 4.0
+OpenSTEF is a complete Python library for making probabilistic forecasts in the energy sector. It provides automated machine learning pipelines that combine weather data, load measurements, and market information to generate accurate short-term energy forecasts. OpenSTEF handles everything from data validation and feature engineering to model training and uncertainty quantification.
 
-- **Modular Architecture**: Install only the components you need
-- **Modern Tooling**: Built with uv, ruff, pyright, and poe for optimal developer experience
-- **Full Type Safety**: Comprehensive type hints throughout the codebase
-- **Monorepo Structure**: Unified development with specialized packages
-- **Enhanced Workflows**: Streamlined development and contribution processes
+Visit the [OpenSTEF website](https://www.lfenergy.org/projects/openstef/) for more information about the project.
 
-## Table of Contents
+## Brief Monorepo Overview
 
-- [OpenSTEF](#openstef)
-  - [What's New in 4.0](#whats-new-in-40)
-  - [Table of Contents](#table-of-contents)
-  - [Quick Start](#quick-start)
-  - [Package Architecture](#package-architecture)
-  - [Installation](#installation)
-    - [Requirements](#requirements)
-    - [Basic Installation](#basic-installation)
-    - [Modern Package Managers](#modern-package-managers)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-    - [Quick Development Setup](#quick-development-setup)
-  - [License](#license)
-  - [Contact \& Support](#contact--support)
+This repository contains multiple specialized packages organized as a monorepo:
 
-## Quick Start
+- **openstef** - Meta-package providing core functionality and common interfaces
+- **openstef-core** - Foundational utilities, types, and dataset abstractions
+- **openstef-models** - Machine learning models and feature engineering transforms
+- **openstef-meta** - Meta-learning and ensemble modeling capabilities
+- **openstef-beam** - Backtesting, Evaluation, Analysis, and Metrics framework
+- **examples** - Example notebooks and scripts demonstrating usage
 
-```bash
-# Install OpenSTEF
-pip install openstef
-
-# Start forecasting
-python -c "import openstef_models; print('OpenSTEF 4.0 ready!')"
-```
-
-**[Get started with our Quick Start Guide](https://openstef.github.io/openstef/v4/user_guide/quick_start.html)** - step-by-step tutorial with real examples.
-
-## Package Architecture
-
-OpenSTEF 4.0 uses a modular design with specialized packages:
-
-| Package | Purpose | Install Command |
-|---------|---------|-----------------|
-| **openstef** | Meta-package with core components | `pip install openstef` |
-| **openstef-models** | ML models, feature engineering, data processing | `pip install openstef-models` |
-| **openstef-beam** | Backtesting, Evaluation, Analysis, Metrics | `pip install openstef-beam` |
-| **openstef-core** | Core utilities, dataset types, shared types and base models used by other packages | `pip install openstef-core` |
-| **openstef-compatibility** | OpenSTEF 3.x compatibility layer | Coming soon |
-| **openstef-foundational-models** | Deep learning and foundational models | Coming soon |
-
-**[Learn more about the architecture](https://openstef.github.io/openstef/v4/user_guide/installation.html#package-architecture)** in our documentation.
-
-## Installation
+## How to Install
 
 ### Requirements
-- **Python 3.12+** (Python 3.13 supported)
-- **64-bit operating system** (Windows, macOS, Linux)
+- Python 3.12 or 3.13
+- 64-bit operating system (Windows, macOS, Linux)
 
 ### Basic Installation
 
 ```bash
-# For most users
+# Install the complete OpenSTEF package
 pip install openstef
 
-# Core forecasting only
-pip install openstef-models
-
-# With all optional tools
+# Install with all optional dependencies
 pip install "openstef[all]"
+
+# Install specific components only
+pip install openstef-models  # Core forecasting models
+pip install openstef-beam    # Benchmarking framework
 ```
 
-### Modern Package Managers
+### Using Modern Package Managers
 
 ```bash
 # Using uv (recommended for development)
@@ -95,16 +61,24 @@ uv add openstef
 conda install -c conda-forge openstef
 ```
 
-**[Complete Installation Guide](https://openstef.github.io/openstef/v4/user_guide/installation.html)** - detailed instructions including troubleshooting for Apple Silicon, GPU support, and development setup.
+For detailed installation instructions including troubleshooting, see the [installation guide](https://openstef.github.io/openstef/v4/user_guide/installation.html).
 
-## Documentation
+## Examples
 
-- **[Main Documentation](https://openstef.github.io/openstef/v4/)** - guides and API reference
-- **[Quick Start Guide](https://openstef.github.io/openstef/v4/user_guide/quick_start.html)** - get up and running fast
-- **[Tutorials](https://openstef.github.io/openstef/v4/user_guide/tutorials.html)** - step-by-step examples
-- **[API Reference](https://openstef.github.io/openstef/v4/api/)** - detailed function documentation
-- **[Contributing Guide](https://openstef.github.io/openstef/v4/contribute/)** - how to contribute to OpenSTEF
+Explore the [`examples/`](examples/) directory for comprehensive tutorials and use cases:
 
+- **Forecasting Workflows** - Complete end-to-end forecasting pipelines
+- **Benchmarking** - Model comparison and evaluation on public datasets
+- **Feature Engineering** - Custom transforms and preprocessing
+- **Model Configuration** - Setting up different forecasting models
+
+Each example includes detailed explanations and can be run independently. See the [examples README](examples/README.md) for a complete overview.
+
+## License
+
+**Mozilla Public License Version 2.0** - see [LICENSE.md](LICENSE.md) for details.
+
+This project includes third-party libraries licensed under their respective Open-Source licenses. SPDX-License-Identifier headers show applicable licenses. License files are in the [LICENSES/](LICENSES/) directory.
 ## Contributing
 
 We welcome contributions to OpenSTEF 4.0! 
@@ -129,16 +103,24 @@ uv run poe all
 ```
 
 **Code of Conduct**: We follow the [Contributor Code of Conduct](https://openstef.github.io/openstef/v4/contribute/code_of_conduct.html) to ensure a welcoming environment for all contributors.
+## Citations
 
-## License
+If you use OpenSTEF in your research or publications, please cite the project. Citation information and academic references are available at [CITATION.cff](CITATION.cff).
 
-**Mozilla Public License Version 2.0** - see [LICENSE.md](LICENSE.md) for details.
+For BibTeX format:
+```bibtex
+@software{openstef,
+  title = {OpenSTEF: Open Short-Term Energy Forecasting},
+  author = {Contributors to the OpenSTEF project},
+  url = {https://github.com/OpenSTEF/openstef},
+  version = {4.0.0},
+  year = {2025}
+}
+```
 
-This project includes third-party libraries licensed under their respective Open-Source licenses. SPDX-License-Identifier headers show applicable licenses. License files are in the [LICENSES/](LICENSES/) directory.
+## Contact
 
-## Contact & Support
-
-- **[Support Guide](https://openstef.github.io/openstef/v4/project/support.html)** - how to get help
-- **[GitHub Discussions](https://github.com/OpenSTEF/openstef/discussions)** - community Q&A and discussions
-- **[Issue Tracker](https://github.com/OpenSTEF/openstef/issues)** - bug reports and feature requests
-- **[LF Energy OpenSTEF](https://www.lfenergy.org/projects/openstef/)** - project homepage
+- **Documentation**: https://openstef.github.io/openstef/
+- **Support**: See our [Support Guide](https://github.com/OpenSTEF/.github/blob/main/SUPPORT.md)
+- **Issues**: Report bugs and request features on [GitHub Issues](https://github.com/OpenSTEF/openstef/issues)
+- **Community**: Join discussions on [GitHub Discussions](https://github.com/OpenSTEF/openstef/discussions)
