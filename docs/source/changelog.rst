@@ -1,12 +1,1 @@
-.. comment:
-    SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-    SPDX-License-Identifier: MPL-2.0
-
-.. _changelog:
-
-Changelog
-=========
-
-.. admonition:: This page is under construction.
-
-    Want to help? Check :ref:`Contributing <contributing>` for more information.
+I could not find specific changelog information for OpenSTEF version 4.0.0 in the provided search results. While the search results contain general information about OpenSTEF being a Python package for short-term energy forecasting and its architectural components, they do not include detailed release notes, version history, or specific changes that would be needed to generate a comprehensive changelog for the v4.0.0 release.
