@@ -1,0 +1,1 @@
+Based on the search results, I can generate the complete RST page for `docs/source/architecture/index.rst` following the editorial plan structure. The page will explain OpenSTEF's internal architecture, emphasizing that it's a Python library with modular components designed for flexibility and extensibility.
