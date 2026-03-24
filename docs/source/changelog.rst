@@ -1,12 +1,1 @@
-.. comment:
-    SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-    SPDX-License-Identifier: MPL-2.0
-
-.. _changelog:
-
-Changelog
-=========
-
-.. admonition:: This page is under construction.
-
-    Want to help? Check :ref:`Contributing <contributing>` for more information.
+I could not find specific changelog information for OpenSTEF v4.0.0 in the search results. While the search results contain information about OpenSTEF 4.0 design goals and architectural improvements planned for the release, they don't contain the actual changelog entries, version history, or specific changes that would typically be found in a CHANGELOG.md file or GitHub release notes that would be needed to generate a changelog.rst documentation page.
