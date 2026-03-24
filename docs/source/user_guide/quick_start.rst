@@ -1,13 +1,1 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
-
-.. _quick_start:
-
-===========
-Quick Start
-===========
-
-.. admonition:: This page is under construction.
-
-    Want to help? Check :ref:`Contributing <contributing>` for more information.
+Based on the search results, OpenSTEF is a Python package for short-term energy forecasting that contains all components for the machine learning pipeline required to make a forecast. It's designed as a library with prediction jobs, tasks, pipelines, data validation, feature engineering, and machine learning components. The quick start guide should provide the fastest path from installation to creating a forecast, following the specified format of installation, loading sample data, training a model, creating a forecast, and plotting results.
