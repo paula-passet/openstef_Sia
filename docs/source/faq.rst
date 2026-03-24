@@ -1,0 +1,1 @@
+Based on the search results, I can generate an FAQ page for OpenSTEF that addresses common questions about the library. The search results provide information about OpenSTEF being a Python library for energy forecasting, its architecture, pipelines, and current development status.
