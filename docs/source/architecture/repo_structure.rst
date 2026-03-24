@@ -1,0 +1,1 @@
+Based on the search results, I can generate the complete RST page for `docs/source/architecture/repo_structure.rst` following the editorial plan structure. The Knowledge Base provides information about OpenSTEF 4.0's modular mono-repo architecture with multiple self-contained packages including openstef-core, openstef-models, openstef-meta, and openstef-beam modules.
