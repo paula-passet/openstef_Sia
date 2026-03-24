@@ -1,0 +1,1 @@
+Based on the search results, I can generate the complete RST page for `docs/source/use_cases/index.rst` following the editorial plan structure. The Knowledge Base provides information about OpenSTEF's forecasting capabilities and the specific use cases mentioned in the V4 design document.
