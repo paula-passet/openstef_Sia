@@ -1,12 +1,1 @@
-.. comment:
-    SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-    SPDX-License-Identifier: MPL-2.0
-
-.. _changelog:
-
-Changelog
-=========
-
-.. admonition:: This page is under construction.
-
-    Want to help? Check :ref:`Contributing <contributing>` for more information.
+Based on the search results, I can see that OpenSTEF is currently in alpha release status for version 4.0, but I could not find specific changelog information or release history details that would be needed to generate a comprehensive changelog.rst file. The search results mention that OpenSTEF V4 is currently in production at Alliander for congestion management and is making forecasts for 10,000+ different grid locations, but detailed version history and specific changes between releases are not available in the provided information.
