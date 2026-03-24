@@ -1,0 +1,1 @@
+Based on the search results, I can see that OpenSTEF is designed to support diverse forecasting applications with specific accuracy requirements and optimization targets. The search results mention several use cases including congestion management forecasts, transport forecasts, and grid losses forecasting, along with mentions of district heating and other applications.
