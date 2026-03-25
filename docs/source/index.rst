@@ -1,171 +1,48 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
+Welcome to OpenSTEF
+===================
 
-.. title:: OpenSTEF documentation
+OpenSTEF is a Python machine learning library for short-term energy forecasting. It provides complete pipelines for training models, creating forecasts, and evaluating performance across various energy sector use cases including grid congestion management, transport forecasting, and renewable energy integration.
 
-.. module:: openstef
+As a library, OpenSTEF focuses on the machine learning components - data preprocessing, feature engineering, model training, and forecasting. It's designed to integrate into your existing infrastructure and workflows, whether you're building a simple scheduled forecasting system or a complex operational platform.
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :titlesonly:
+Core Capabilities
+-----------------
 
-   User Guide <user_guide/index>
-   API <api/index>
-   Community <project/index>
-   Contributing <contribute/index>
-   changelog
-   examples
+OpenSTEF delivers probabilistic forecasts with confidence intervals, not just point predictions. The library includes domain-specific feature engineering for energy forecasting, supports multiple machine learning algorithms, and provides built-in data validation and post-processing capabilities.
 
-##################################
-OpenSTEF 4.0.0 documentation
-##################################
+The library's modular design allows you to use individual pipelines directly with your own data sources, or leverage the task system for database integration. All forecasting approaches support single-shot, multi-horizon predictions suitable for operational deployment.
 
+Getting Started
+---------------
 
-OpenSTEF is a library for creating short term forecasts for the energy sector. 
-It contains all components for the machine learning pipeline required to make a forecast.
+New users should begin with the quickstart guide to see how to train a model and create your first forecast. For comprehensive learning, work through the tutorials which cover everything from basic usage to advanced customization.
 
-Install
-=======
+If you're evaluating OpenSTEF for a specific application, check the use cases guide to identify which forecasting approach matches your needs.
 
-.. tab-set::
-    :class: sd-width-content-min
+Contents
+--------
 
-    .. tab-item:: pip
+- **Getting Started**
+  
+  - Quickstart: getting_started/quickstart
+  - Tutorials: getting_started/tutorials
 
-        .. code-block:: bash
+- **Guides**
+  
+  - Use Cases: guides/use_cases
+  - How-to Guides: guides/how_to_guides
+  - FAQ: guides/faq
 
-            pip install openstef
+- **Reference**
+  
+  - Architecture: reference/architecture
+  - Concepts: reference/concepts
+  - Changelog: reference/changelog
+  - API Reference: api/index
 
-    .. tab-item:: uv
+Community and Support
+---------------------
 
-        .. code-block:: bash
+OpenSTEF is actively developed and maintained by Alliander and the open source community. Find the latest project information at the `project website <https://www.lfenergy.org/projects/openstef/>`_, join discussions in our Teams channel, or contribute to development through our `GitHub repository <https://github.com/OpenSTEF/openstef>`_.
 
-            uv add openstef
-
-    .. tab-item:: conda
-
-        .. code-block:: bash
-
-            conda install -c conda-forge openstef
-
-    .. tab-item:: pixi
-
-        .. code-block:: bash
-
-            pixi add openstef
-
-    .. tab-item:: other
-
-        .. rst-class:: section-toc
-
-        :doc:`user_guide/installation`
-
-
-For more detailed instructions, see the
-:doc:`installation guide <user_guide/installation>`.
-
-Learn
-=====
-
-.. grid:: 1 1 2 2
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **How to use OpenSTEF?**
-        ^^^
-
-        * :doc:`user_guide/installation`
-        * :doc:`user_guide/quick_start`
-        * :doc:`user_guide/tutorials`
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **What can OpenSTEF do?**
-        ^^^
-
-        * :doc:`user_guide/intro/index`
-        * :doc:`examples`
-
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 12
-
-        **Reference**
-        ^^^
-
-        .. grid:: 1 1 2 2
-            :class-row: sd-align-minor-center
-
-            .. grid-item::
-
-                * :doc:`API reference <api/index>`
-
-            .. grid-item::
-
-                References for OpenSTEF's components:
-
-                - openstef-models: Core forecasting models and feature engineering
-                - openstef-beam: Backtesting, evaluation, analysis and metrics
-                - openstef-core: Core utilities, dataset types, shared types and base models
-
-
-What's new
-==========
-
-.. grid:: 1 1 2 2
-
-    .. grid-item::
-
-       Learn about new features and API changes.
-
-    .. grid-item::
-        
-        * :doc:`changelog`
-
-Contribute
-==========
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        OpenSTEF is an LF Energy community maintained for and by its users. See
-        :ref:`contributing` for the many ways you can help!
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * :ref:`submitting-a-bug-report`
-        * :ref:`contribute_guide`
-        * :ref:`development_workflow`
-        * :ref:`contribution_guideline`
-
-
-
-About OpenSTEF
-==============
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        Here you can find all information about the OpenSTEF community.
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * `Linux Foundation project page <https://www.lfenergy.org/projects/openstef/>`_
-        * `Video About OpenSTEF <https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/>`_
-        * :doc:`project/committee`
-        * :doc:`project/maintainers`
-        * :doc:`project/citing`
-        * :doc:`project/license`
+The project is licensed under the Mozilla Public License 2.0, ensuring it remains open and accessible for both research and commercial applications.
