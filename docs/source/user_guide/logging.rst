@@ -1,356 +1,401 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
+Logging Configuration
+=====================
 
-.. _logging:
-
-=======
-Logging
-=======
-
-OpenSTEF uses Python's standard logging library to provide information about its operations. 
-By default, OpenSTEF configures a null handler, giving you complete control over how logging 
-is handled in your application.
-
-.. _logging-overview:
+OpenSTEF uses Python's standard logging module to provide visibility into library operations. As a library, OpenSTEF follows best practices by using ``NullHandler`` by default, giving you complete control over how and where log messages appear. This page covers how to configure logging for different environments, integrate with production logging systems, and troubleshoot common issues.
 
 Overview
-========
+--------
 
-OpenSTEF follows these logging principles:
+OpenSTEF's logging system provides:
 
-* **No default output**: OpenSTEF uses ``NullHandler`` by default, so no log messages appear unless you configure logging
-* **Standard library**: Uses Python's built-in ``logging`` module for consistency
-* **Hierarchical loggers**: Package-level and module-level loggers allow granular control
-* **Structured context**: Log messages include contextual information through extras
-
-.. _logging-configuration:
+- **Standard Python logging**: Uses the built-in logging module for compatibility
+- **Package-level loggers**: Separate loggers for ``openstef_models``, ``openstef_beam``, and other packages
+- **Granular control**: Configure different log levels for different components
+- **Structured context**: Log messages include contextual information for debugging
 
 Basic Configuration
-===================
+-------------------
 
 To see OpenSTEF log messages, configure logging in your application:
 
 .. code-block:: python
 
-    import logging
-    
-    # Basic configuration - shows INFO level and above
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    
-    # Now OpenSTEF operations will produce log output
-    # TODO: Update with actual OpenSTEF classes when implemented
-    from openstef_models import LinearForecaster
-    forecaster = LinearForecaster()  # Will log initialization details
+   import logging
 
-.. _logging-levels:
+   # Basic configuration - shows INFO level and above
+   logging.basicConfig(
+       level=logging.INFO,
+       format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+   )
+
+   # Now OpenSTEF operations will produce log output
+   from openstef.model.regressors.xgb import XGBOpenstfRegressor
+   from openstef.pipeline.train_model import train_model_pipeline
+
+   # Logging will show training progress
+   model = train_model_pipeline(data, model_type='xgb')
+
+This basic setup is sufficient for development and data science workflows where you want to see what OpenSTEF is doing.
 
 Log Levels
-==========
+----------
 
-OpenSTEF uses standard Python logging levels:
+OpenSTEF uses standard Python logging levels to categorize messages by importance:
 
-* **DEBUG**: Detailed diagnostic information, typically only of interest when diagnosing problems
-* **INFO**: General information about program execution
-* **WARNING**: Something unexpected happened, but the software is still working
-* **ERROR**: A serious problem occurred that prevented a function from completing
-* **CRITICAL**: A very serious error occurred that may prevent the program from continuing
+- **DEBUG**: Detailed diagnostic information (data shapes, column names, internal states)
+- **INFO**: Important operational milestones (processing started/completed, model trained)
+- **WARNING**: Unexpected situations that don't prevent execution (missing data, deprecated usage)
+- **ERROR**: Serious problems that prevent a function from completing
+- **CRITICAL**: Very serious errors that may crash the application
 
-Example configuration for different use cases:
+Configure different levels for different use cases:
 
 .. code-block:: python
 
-    import logging
-    
-    # Development: See everything
-    logging.basicConfig(level=logging.DEBUG)
-    
-    # Production: Important messages only
-    logging.basicConfig(level=logging.WARNING)
-    
-    # Data science workflows: Informational messages
-    logging.basicConfig(level=logging.INFO)
+   import logging
 
-.. _logger-hierarchy:
+   # Development: See everything including diagnostics
+   logging.basicConfig(level=logging.DEBUG)
+
+   # Production: Important messages only
+   logging.basicConfig(level=logging.WARNING)
+
+   # Data science workflows: Informational messages
+   logging.basicConfig(level=logging.INFO)
 
 Logger Hierarchy
-================
+----------------
 
-OpenSTEF loggers follow Python's hierarchical naming convention. You can control 
-logging at different levels of granularity:
-
-Package level control
----------------------
-
-Control logging for entire OpenSTEF packages:
+OpenSTEF loggers follow Python's hierarchical naming convention. You can control logging at different levels of granularity:
 
 .. code-block:: python
 
-    import logging
-    
-    # Disable all openstef-models logging
-    logging.getLogger('openstef_models').setLevel(logging.CRITICAL)
-    
-    # Show only warnings from openstef-beam
-    logging.getLogger('openstef_beam').setLevel(logging.WARNING)
-    
-    # Enable debug mode for specific package
-    logging.getLogger('openstef_models').setLevel(logging.DEBUG)
+   import logging
 
-Module level control
---------------------
+   # Configure all OpenSTEF packages
+   logging.getLogger('openstef').setLevel(logging.INFO)
 
-Control logging for specific modules:
+   # Configure specific packages differently
+   logging.getLogger('openstef_models').setLevel(logging.INFO)
+   logging.getLogger('openstef_beam').setLevel(logging.WARNING)
 
-.. code-block:: python
+   # Disable logging for specific noisy modules
+   logging.getLogger('openstef_models.transforms').setLevel(logging.ERROR)
 
-    import logging
+This hierarchy allows you to reduce noise from verbose components while maintaining visibility into critical operations.
 
-    # Only show errors from the presets module
-    logging.getLogger('openstef_models.presets').setLevel(logging.ERROR)
-    
-    # Debug feature engineering specifically
-    logging.getLogger('openstef_models.transforms').setLevel(logging.DEBUG)
-
-.. _advanced-configuration:
-
-Advanced Configuration
-======================
-
-For more advanced logging configurations like custom formatters, file handlers, 
-rotating logs, and other features, refer to the official 
-`Python logging documentation <https://docs.python.org/3/library/logging.html>`_.
-
-.. _contextual-information:
-
-Contextual Information
-======================
-
-OpenSTEF includes contextual information in log messages to help with debugging 
-and monitoring. Many log messages include extra fields that provide additional context:
-
-.. code-block:: python
-
-    # Example of structured log output (when using appropriate formatters)
-    2025-01-20 14:30:25 - openstef_models.training - INFO - Model training started
-        extra_info: {
-            'model_type': 'XGBoostForecaster',
-            'training_samples': 8760,
-            'features': ['temperature', 'humidity', 'hour_of_day'],
-            'horizon': 24
-        }
-
-This contextual information is particularly useful when:
-
-* Debugging model training issues
-* Monitoring model performance in production
-* Analyzing feature engineering pipelines
-* Tracking data processing workflows
-
-.. _integration-examples:
-
-Integration Examples
-====================
-
-Jupyter Notebooks
-------------------
-
-Configure logging for interactive data science work:
-
-.. code-block:: python
-
-    import logging
-    
-    # Configure for notebook use
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(name)-20s | %(levelname)-8s | %(message)s',
-        force=True  # Override any existing configuration
-    )
-    
-    # Now OpenSTEF operations will show progress
-    # TODO: Update with actual OpenSTEF classes when implemented
-    from openstef_models import load_sample_data, XGBoostForecaster
-    
-    data = load_sample_data()  # Shows data loading progress
-    model = XGBoostForecaster()
-    model.fit(data)  # Shows training progress
-
-Structured logging with structlog
----------------------------------
-
-If you're using `structlog <https://www.structlog.org/>`_ in your application, 
-you can configure OpenSTEF to work with it by integrating structlog with Python's 
-standard logging:
-
-.. code-block:: python
-
-    import logging
-    import structlog
-    
-    # Configure structlog to integrate with standard logging
-    structlog.configure(
-        processors=[
-            structlog.stdlib.filter_by_level,
-            structlog.stdlib.add_logger_name,
-            structlog.stdlib.add_log_level,
-            structlog.stdlib.PositionalArgumentsFormatter(),
-            structlog.processors.StackInfoRenderer(),
-            structlog.processors.format_exc_info,
-            structlog.processors.UnicodeDecoder(),
-            structlog.processors.JSONRenderer()
-        ],
-        context_class=dict,
-        logger_factory=structlog.stdlib.LoggerFactory(),
-        wrapper_class=structlog.stdlib.BoundLogger,
-        cache_logger_on_first_use=True,
-    )
-    
-    # Configure standard logging
-    logging.basicConfig(
-        format="%(message)s",
-        level=logging.INFO,
-    )
-    
-    # Now OpenSTEF logs will be processed by structlog
-    # TODO: Update with actual OpenSTEF classes when implemented
-    from openstef_models import create_forecaster
-    forecaster = create_forecaster()
-
-For more advanced structlog configurations and features, see the 
-`structlog standard library integration guide <https://www.structlog.org/en/stable/standard-library.html>`_.
-
-Standard logging setup
+Production Integration
 ----------------------
 
-For most applications, a simple standard logging configuration is sufficient:
+Standard logging setup
+^^^^^^^^^^^^^^^^^^^^^^
+
+For most production applications, configure logging with appropriate handlers and formatters:
 
 .. code-block:: python
 
-    import logging
-    
-    # Configure root logger
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
-    
-    # Optional: Adjust OpenSTEF package levels
-    logging.getLogger('openstef_models').setLevel(logging.INFO)
-    logging.getLogger('openstef_beam').setLevel(logging.WARNING)
-    
-    # Now use OpenSTEF with logging
-    # TODO: Update with actual OpenSTEF classes when implemented
-    from openstef_models import LinearForecaster
-    forecaster = LinearForecaster()  # Will log initialization details
+   import logging
+   import logging.handlers
 
-.. _troubleshooting:
+   # Create formatter
+   formatter = logging.Formatter(
+       fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+       datefmt='%Y-%m-%d %H:%M:%S'
+   )
+
+   # Console handler for container logs
+   console_handler = logging.StreamHandler()
+   console_handler.setLevel(logging.INFO)
+   console_handler.setFormatter(formatter)
+
+   # File handler with rotation
+   file_handler = logging.handlers.RotatingFileHandler(
+       filename='openstef.log',
+       maxBytes=10485760,  # 10MB
+       backupCount=5
+   )
+   file_handler.setLevel(logging.WARNING)
+   file_handler.setFormatter(formatter)
+
+   # Configure root logger
+   root_logger = logging.getLogger()
+   root_logger.setLevel(logging.INFO)
+   root_logger.addHandler(console_handler)
+   root_logger.addHandler(file_handler)
+
+   # Optional: Adjust OpenSTEF package levels
+   logging.getLogger('openstef_models').setLevel(logging.INFO)
+   logging.getLogger('openstef_beam').setLevel(logging.WARNING)
+
+Structured logging with structlog
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For production systems that require structured logging, integrate OpenSTEF with `structlog <https://www.structlog.org/>`_:
+
+.. code-block:: python
+
+   import logging
+   import structlog
+
+   # Configure structlog to integrate with standard logging
+   structlog.configure(
+       processors=[
+           structlog.stdlib.filter_by_level,
+           structlog.stdlib.add_logger_name,
+           structlog.stdlib.add_log_level,
+           structlog.stdlib.PositionalArgumentsFormatter(),
+           structlog.processors.StackInfoRenderer(),
+           structlog.processors.format_exc_info,
+           structlog.processors.UnicodeDecoder(),
+           structlog.processors.JSONRenderer()
+       ],
+       context_class=dict,
+       logger_factory=structlog.stdlib.LoggerFactory(),
+       wrapper_class=structlog.stdlib.BoundLogger,
+       cache_logger_on_first_use=True,
+   )
+
+   # Configure standard logging
+   logging.basicConfig(
+       format="%(message)s",
+       level=logging.INFO,
+   )
+
+   # Now OpenSTEF logs will be processed by structlog
+   from openstef.pipeline.train_model import train_model_pipeline
+   
+   model = train_model_pipeline(data, model_type='xgb')
+   # Logs appear as structured JSON
+
+For more advanced structlog configurations, see the `structlog standard library integration guide <https://www.structlog.org/en/stable/standard-library.html>`_.
+
+Cloud logging integration
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When deploying to cloud platforms, integrate with their logging systems:
+
+.. code-block:: python
+
+   import logging
+   from google.cloud import logging as gcp_logging
+
+   # Google Cloud Logging
+   client = gcp_logging.Client()
+   client.setup_logging(log_level=logging.INFO)
+
+   # OpenSTEF logs now appear in Cloud Logging
+   from openstef.pipeline.train_model import train_model_pipeline
+   model = train_model_pipeline(data, model_type='xgb')
+
+For AWS CloudWatch or Azure Monitor, use their respective logging handlers. See the :doc:`deployment` page for environment-specific deployment patterns.
+
+Adding Context to Logs
+-----------------------
+
+Using extras for structured context
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Enhance log messages with structured context using the ``extra`` parameter:
+
+.. code-block:: python
+
+   import logging
+
+   logger = logging.getLogger(__name__)
+
+   def train_forecasting_model(data, config):
+       """Train a forecasting model with detailed logging context."""
+       
+       # Add extra context to log messages
+       training_context = {
+           "model_type": config.model_type,
+           "training_samples": len(data),
+           "feature_count": len(data.columns),
+           "horizon": config.horizon,
+       }
+       
+       logger.info(
+           f"Starting model training with {config.model_type}",
+           extra={"training_info": training_context}
+       )
+       
+       # Train model
+       model = train_model_pipeline(data, **config)
+       
+       logger.info(
+           "Model training completed",
+           extra={"training_info": training_context}
+       )
+       
+       return model
+
+Using LoggerAdapter for consistent context
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When you need the same context across multiple log messages, use ``logging.LoggerAdapter``:
+
+.. code-block:: python
+
+   import logging
+
+   logger = logging.getLogger(__name__)
+
+   class ForecastingPipeline:
+       """Forecasting pipeline with consistent logging context."""
+       
+       def __init__(self, pipeline_id, config):
+           self.pipeline_id = pipeline_id
+           self.config = config
+           
+           # Create adapter with consistent context
+           self.logger = logging.LoggerAdapter(
+               logger=logger,
+               extra={
+                   "pipeline_id": pipeline_id,
+                   "model_type": config.model_type,
+                   "horizon": config.horizon
+               }
+           )
+       
+       def run(self, data):
+           """Run the forecasting pipeline."""
+           # All log messages automatically include the adapter's extra context
+           self.logger.info(f"Starting pipeline on {len(data)} samples")
+           
+           try:
+               model = train_model_pipeline(data, **self.config)
+               self.logger.info("Pipeline completed successfully")
+               return model
+           except Exception as e:
+               # Extra context automatically included
+               self.logger.error(f"Pipeline failed: {e}")
+               raise
+
+This approach ensures consistent context across all operations within a class or workflow.
+
+Debugging Tips
+--------------
+
+Enabling debug logging
+^^^^^^^^^^^^^^^^^^^^^^^
+
+When troubleshooting issues, enable DEBUG logging to see detailed diagnostic information:
+
+.. code-block:: python
+
+   import logging
+
+   # Enable debug logging for OpenSTEF
+   logging.basicConfig(level=logging.DEBUG)
+   
+   # Or just for specific components
+   logging.getLogger('openstef.model').setLevel(logging.DEBUG)
+   logging.getLogger('openstef.pipeline').setLevel(logging.DEBUG)
+   
+   # Now run your code - you'll see detailed information
+   from openstef.pipeline.train_model import train_model_pipeline
+   model = train_model_pipeline(data, model_type='xgb')
+
+Debug logs show data shapes, column names, internal states, and other diagnostic information useful for troubleshooting.
+
+Inspecting logger configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If logging isn't working as expected, inspect the logger configuration:
+
+.. code-block:: python
+
+   import logging
+
+   # Debug logging configuration
+   logger = logging.getLogger('openstef')
+   print(f"Logger level: {logger.level}")
+   print(f"Effective level: {logger.getEffectiveLevel()}")
+   print(f"Handlers: {logger.handlers}")
+   print(f"Parent handlers: {logger.parent.handlers}")
+
+This helps identify configuration issues like missing handlers or incorrect log levels.
 
 Troubleshooting
-===============
+---------------
 
 No log output appearing
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 If you're not seeing any OpenSTEF log messages:
 
-1. **Check if logging is configured**: OpenSTEF uses ``NullHandler`` by default
+1. **Check if logging is configured**: OpenSTEF uses ``NullHandler`` by default, so you must configure logging in your application
 2. **Verify log levels**: Ensure your handler level isn't too restrictive
 3. **Check logger hierarchy**: Parent logger settings can override child settings
 
 .. code-block:: python
 
-    import logging
-    
-    # Debug logging configuration
-    logger = logging.getLogger('openstef_models')
-    print(f"Logger level: {logger.level}")
-    print(f"Effective level: {logger.getEffectiveLevel()}")
-    print(f"Handlers: {logger.handlers}")
-    print(f"Parent handlers: {logger.parent.handlers}")
+   import logging
+
+   # Ensure logging is configured
+   logging.basicConfig(level=logging.INFO)
+   
+   # Verify OpenSTEF logger level
+   openstef_logger = logging.getLogger('openstef')
+   print(f"Effective level: {openstef_logger.getEffectiveLevel()}")
 
 Too much log output
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 If OpenSTEF is producing too many log messages:
 
 .. code-block:: python
 
-    import logging
-    
-    # Reduce OpenSTEF verbosity
-    logging.getLogger('openstef_models').setLevel(logging.WARNING)
-    logging.getLogger('openstef_beam').setLevel(logging.WARNING)
-    
-    # Or disable specific noisy modules
-    logging.getLogger('openstef_models.transforms').setLevel(logging.ERROR)
+   import logging
+
+   # Reduce OpenSTEF verbosity
+   logging.getLogger('openstef_models').setLevel(logging.WARNING)
+   logging.getLogger('openstef_beam').setLevel(logging.WARNING)
+
+   # Or disable specific noisy modules
+   logging.getLogger('openstef.feature_engineering').setLevel(logging.ERROR)
 
 Performance considerations
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Logging can impact performance in tight loops. OpenSTEF follows best practices:
-
-* Log messages are not formatted unless actually output
-* Debug logging is conditionally executed
-* Structured logging uses lazy evaluation
-
-You can further optimize by:
+Logging can impact performance in tight loops. Use appropriate log levels and consider lazy evaluation:
 
 .. code-block:: python
 
-    import logging
-    
-    # Set appropriate levels to avoid unnecessary processing
-    logging.getLogger('openstef_models').setLevel(logging.WARNING)
-    
-    # Use logging filters for fine-grained control
-    class PerformanceFilter(logging.Filter):
-        def filter(self, record):
-            # Skip debug messages during performance-critical sections
-            return record.levelno >= logging.INFO
-    
-    logging.getLogger('openstef_models').addFilter(PerformanceFilter())
+   import logging
 
-.. _best-practices:
+   logger = logging.getLogger(__name__)
+
+   # Inefficient - string formatting happens even if DEBUG is disabled
+   for i in range(1000000):
+       logger.debug(f"Processing item {i} with data {expensive_operation()}")
+
+   # Efficient - check level first
+   for i in range(1000000):
+       if logger.isEnabledFor(logging.DEBUG):
+           logger.debug(f"Processing item {i} with data {expensive_operation()}")
+
+   # Or use lazy formatting
+   for i in range(1000000):
+       logger.debug("Processing item %s with data %s", i, expensive_operation())
+
+In production, set log levels to WARNING or ERROR to minimize performance impact.
 
 Best Practices
-==============
+--------------
 
-For library users:
+Follow these guidelines for effective logging:
 
-1. **Configure logging early**: Set up logging before importing OpenSTEF modules
-2. **Use appropriate levels**: INFO for general monitoring, DEBUG for troubleshooting
-3. **Leverage hierarchical control**: Use package/module-level logger configuration
-4. **Integrate with your existing setup**: OpenSTEF works with any Python logging configuration
+1. **Use appropriate log levels**: DEBUG for diagnostics, INFO for milestones, WARNING for unexpected situations, ERROR for failures
+2. **Include context**: Add structured context using ``extra`` or ``LoggerAdapter`` to make logs searchable
+3. **Don't log sensitive data**: Avoid logging passwords, API keys, or personally identifiable information
+4. **Use logger names**: Create module-level loggers with ``logger = logging.getLogger(__name__)``
+5. **Configure once**: Set up logging at application startup, not in library code
+6. **Test logging configuration**: Verify logs appear correctly in your target environment
 
-Example complete setup:
+See Also
+--------
 
-.. code-block:: python
-
-    import logging
-    
-    def setup_openstef_logging(level=logging.INFO):
-        """Set up logging for OpenSTEF integration."""
-        
-        # Basic configuration
-        logging.basicConfig(
-            level=level,
-            format='%(asctime)s - %(name)-25s - %(levelname)-8s - %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
-        )
-        
-        # Optional: Fine-tune specific packages
-        logging.getLogger('openstef_models').setLevel(level)
-        logging.getLogger('openstef_beam').setLevel(logging.WARNING)  # Less verbose
-    
-    # Use in your application
-    setup_openstef_logging(level=logging.INFO)
-    
-    # Now use OpenSTEF with proper logging
-    # TODO: Update with actual OpenSTEF classes when implemented
-    from openstef_models import create_forecaster
-    forecaster = create_forecaster()
+- :doc:`deployment` - Production deployment patterns including logging configuration for different environments
+- :doc:`data_integration` - Data integration patterns that benefit from logging visibility
+- :doc:`use_cases` - Common use cases showing logging in context
