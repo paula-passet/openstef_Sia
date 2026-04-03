@@ -1,171 +1,50 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
+Welcome to OpenSTEF
+===================
 
-.. title:: OpenSTEF documentation
+OpenSTEF is a Python machine learning library for short-term energy forecasting. It automates the end-to-end workflow of building, training, and deploying forecasting models for the energy sector, from feature engineering to multi-horizon predictions.
 
-.. module:: openstef
+Who is OpenSTEF for?
+---------------------
+
+OpenSTEF is designed for data scientists, machine learning engineers, and energy professionals who need to create operational forecasts for energy systems. Whether you're forecasting solar generation, wind power, or grid load, OpenSTEF provides the tools to build production-ready models.
+
+Getting started
+---------------
+
+**New to OpenSTEF?** Start with the installation guide and quickstart tutorial to create your first forecast in minutes.
+
+**Ready to build models?** Explore the user guide for detailed information on data preparation, model training, and making predictions.
+
+**Looking for specific functionality?** Check the API reference for complete documentation of all modules and functions.
+
+**Want to contribute?** Read the contributing guide to learn how to report bugs, request features, or submit code.
+
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
-   :titlesonly:
+   :caption: Contents
 
-   User Guide <user_guide/index>
-   API <api/index>
-   Community <project/index>
-   Contributing <contribute/index>
-   changelog
-   examples
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents
+   :hidden:
 
-##################################
-OpenSTEF 4.0.0 documentation
-##################################
-
-
-OpenSTEF is a library for creating short term forecasts for the energy sector. 
-It contains all components for the machine learning pipeline required to make a forecast.
-
-Install
-=======
-
-.. tab-set::
-    :class: sd-width-content-min
-
-    .. tab-item:: pip
-
-        .. code-block:: bash
-
-            pip install openstef
-
-    .. tab-item:: uv
-
-        .. code-block:: bash
-
-            uv add openstef
-
-    .. tab-item:: conda
-
-        .. code-block:: bash
-
-            conda install -c conda-forge openstef
-
-    .. tab-item:: pixi
-
-        .. code-block:: bash
-
-            pixi add openstef
-
-    .. tab-item:: other
-
-        .. rst-class:: section-toc
-
-        :doc:`user_guide/installation`
+   getting_started/index
+   user_guide/index
+   concepts/index
+   reference/index
+   faq/index
+   api/index
 
 
-For more detailed instructions, see the
-:doc:`installation guide <user_guide/installation>`.
+Community and support
+---------------------
 
-Learn
-=====
+OpenSTEF is an open source project hosted by LF Energy. We welcome contributions and feedback from the community.
 
-.. grid:: 1 1 2 2
+- **GitHub repository**: https://github.com/OpenSTEF/openstef
+- **Issue tracker**: https://github.com/OpenSTEF/openstef/issues
+- **LF Energy project page**: https://www.lfenergy.org/projects/openstef/
+- **Video introduction**: https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/
 
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **How to use OpenSTEF?**
-        ^^^
-
-        * :doc:`user_guide/installation`
-        * :doc:`user_guide/quick_start`
-        * :doc:`user_guide/tutorials`
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **What can OpenSTEF do?**
-        ^^^
-
-        * :doc:`user_guide/intro/index`
-        * :doc:`examples`
-
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 12
-
-        **Reference**
-        ^^^
-
-        .. grid:: 1 1 2 2
-            :class-row: sd-align-minor-center
-
-            .. grid-item::
-
-                * :doc:`API reference <api/index>`
-
-            .. grid-item::
-
-                References for OpenSTEF's components:
-
-                - openstef-models: Core forecasting models and feature engineering
-                - openstef-beam: Backtesting, evaluation, analysis and metrics
-                - openstef-core: Core utilities, dataset types, shared types and base models
-
-
-What's new
-==========
-
-.. grid:: 1 1 2 2
-
-    .. grid-item::
-
-       Learn about new features and API changes.
-
-    .. grid-item::
-        
-        * :doc:`changelog`
-
-Contribute
-==========
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        OpenSTEF is an LF Energy community maintained for and by its users. See
-        :ref:`contributing` for the many ways you can help!
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * :ref:`submitting-a-bug-report`
-        * :ref:`contribute_guide`
-        * :ref:`development_workflow`
-        * :ref:`contribution_guideline`
-
-
-
-About OpenSTEF
-==============
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        Here you can find all information about the OpenSTEF community.
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * `Linux Foundation project page <https://www.lfenergy.org/projects/openstef/>`_
-        * `Video About OpenSTEF <https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/>`_
-        * :doc:`project/committee`
-        * :doc:`project/maintainers`
-        * :doc:`project/citing`
-        * :doc:`project/license`
+For bug reports, use the GitHub issue tracker. For questions and discussions, start a conversation on GitHub or reach out through LF Energy channels.
