@@ -437,14 +437,14 @@ Example alert configuration for Prometheus Alertmanager:
        for: 15m
        annotations:
          summary: "OpenSTEF forecast job failing"
-         description: "Forecast error rate is {{ $value }} errors/sec"
+         description: "Forecast error rate is {{ value }} errors/sec"
      
      - alert: ModelStale
        expr: openstef_model_age_hours > 168  # 7 days
        for: 1h
        annotations:
          summary: "OpenSTEF model is stale"
-         description: "Model has not been retrained in {{ $value }} hours"
+         description: "Model has not been retrained in {{ value }} hours"
 
 Configuration Management
 ------------------------
