@@ -5,7 +5,7 @@ Choosing the right forecasting model is one of the most consequential decisions 
 
 For background on what short-term energy forecasting involves, see :doc:`forecasting_basics`. For an explanation of how models produce probabilistic outputs like quantile intervals, see :doc:`quantiles_and_confidence`.
 
-.. mermaid:: diagrams/concepts/model_selection_diagram_1.mmd
+.. note:: [DIAGRAM: Decision tree showing model selection flow: data size → non-linearity → latency constraints → recommended model]
 
 Available Model Types
 ---------------------
