@@ -1,0 +1,14 @@
+graph LR
+    A[(Data Layer)] -->|custom hooks| B[Transform Pipeline]
+    B -->|custom hooks| C[Feature Engineering]
+    C -->|custom hooks| D[Forecasting Model]
+    D -->|custom hooks| E[Workflow Orchestration]
+    F([Data Hook]) -.-> A
+    G([Transform Hook]) -.-> B
+    H([Model Hook]) -.-> D
+    I([Orchestration Hook]) -.-> E
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C,D,E primary
+    class F,G,H,I accent
