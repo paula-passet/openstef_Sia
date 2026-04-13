@@ -1,0 +1,18 @@
+graph TD
+    A([TargetProvider]) -->|BenchmarkTarget list| B[BenchmarkPipeline]
+    C([ForecasterFactory]) -->|forecaster per target| B
+    B --> D[BacktestPipeline]
+    D --> E[EvaluationPipeline]
+    E --> F[AnalysisPipeline]
+    B -->|lifecycle events| G[CallbackManager]
+    F -->|results| H[(BenchmarkStorage)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B primary
+    class D,E,F primary
+    class A,C accent
+    class G accent
+    class H secondary
