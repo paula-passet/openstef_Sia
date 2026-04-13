@@ -1,0 +1,17 @@
+graph LR
+    A[(Historical Data)] --> B[Backtesting]
+    B --> C[Generate Metrics]
+    C --> D[Evaluate Results]
+    D --> E[Analysis Report]
+    E -->|refine config| B
+    D -->|flag issues| C
+    F([BenchmarkPipeline]) --> B
+    G([Core and Models]) --> F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D,E primary
+    class A,F secondary
+    class G accent
