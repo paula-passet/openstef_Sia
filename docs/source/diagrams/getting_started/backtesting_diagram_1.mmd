@@ -1,0 +1,17 @@
+graph LR
+    A([Historical Data]) --> B[Training Window 1]
+    B --> C[Predict T1]
+    C --> D[Training Window 2]
+    D --> E[Predict T2]
+    E --> F[Training Window 3]
+    F --> G[Predict T3]
+    G --> H[(Compare vs Actual)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A accent
+    class B,D,F secondary
+    class C,E,G primary
+    class H secondary
