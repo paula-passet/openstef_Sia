@@ -1,0 +1,16 @@
+graph LR
+    A([Load Data]) --> D[Time Features]
+    B([Weather Data]) --> E[Weather Transforms]
+    C([Calendar Data]) --> F[Holiday Flags]
+    D --> G[Feature Matrix]
+    E --> G
+    F --> G
+    G --> H[Lag Features]
+    H --> I[(Forecast Model)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C accent
+    class D,E,F primary
+    class G,H primary
+    class I secondary
