@@ -1,0 +1,37 @@
+graph TD
+    A[(TimeSeriesDataset)] --> B
+
+    subgraph T["Layer 1: Transforms"]
+        B[TransformPipeline]
+        B1([validation]) --> B
+        B2([time_domain]) --> B
+        B3([weather_domain]) --> B
+        B4([energy_domain]) --> B
+    end
+
+    B --> C
+
+    subgraph M["Layer 2: Models"]
+        C[ForecastingModel]
+        C1([LGBMForecaster]) --> C
+        C2([LGBMLinearForecaster]) --> C
+        C3([ConstantMedianForecaster]) --> C
+    end
+
+    C --> D
+
+    subgraph E["Layer 3: Explainability"]
+        D[ExplainableForecaster]
+        D --> D1([SHAP Values])
+        D --> D2([feature_importances])
+    end
+
+    D --> F[(ForecastDataset)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D primary
+    class A,F secondary
+    class B1,B2,B3,B4,C1,C2,C3,D1,D2 accent
