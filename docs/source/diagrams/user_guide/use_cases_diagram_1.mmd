@@ -1,0 +1,37 @@
+graph TD
+    A([OpenSTEF Core])
+    B[Congestion and Transformer]
+    C[Free Space Estimation]
+    D[Grid Losses]
+    E[Transport Forecasting]
+    F[District Heating]
+    G[MV Route Congestion]
+    IN1[(Metered Load)]
+    IN2[(Weather Data)]
+    IN3[(Topology; Prices)]
+    OUT1[Congestion Alerts]
+    OUT2[Capacity Planning]
+    OUT3[Settlement; TSO Reports]
+    OUT4[Heat Dispatch; Route Overload]
+    IN1 --> A
+    IN2 --> A
+    IN3 --> A
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    B --> OUT1
+    C --> OUT2
+    D --> OUT3
+    E --> OUT3
+    F --> OUT4
+    G --> OUT4
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E,F,G accent
+    class IN1,IN2,IN3 secondary
+    class OUT1,OUT2,OUT3,OUT4 primary
