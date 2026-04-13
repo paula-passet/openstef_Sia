@@ -3,7 +3,18 @@ Quickstart
 
 This page shows the fastest path to your first forecast. Copy, paste, and run—no explanations, just working code.
 
-.. note:: [DIAGRAM: Simple workflow showing: synthetic data → model creation → training → prediction → forecast output]
+.. mermaid::
+
+   graph LR
+       A([Synthetic Data]) --> B[Create Model]
+       B --> C[Train Model]
+       C --> D[Run Prediction]
+       D --> E([Forecast Output])
+       classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+       classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+       classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+       class B,C,D primary
+       class A,E accent
 
 For detailed explanations of each step, see :doc:`first_forecast`. For installation instructions, see :doc:`installation`.
 
