@@ -1,0 +1,28 @@
+graph TD
+    A[(openstef_core Types)] --> B
+    A --> C
+    A --> D
+
+    subgraph transforms
+        B[validation; general\ntime; weather; energy]
+    end
+
+    subgraph models
+        C[BaseForecastingModel\nXGBoost; LightGBM; LGBMLinear]
+    end
+
+    subgraph explainability
+        D[ExplainableForecaster\nContributions; Plotter]
+    end
+
+    B -->|TransformPipeline| C
+    D -->|mixins| C
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B primary
+    class C secondary
+    class D accent
+    class A secondary
