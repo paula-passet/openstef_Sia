@@ -1,0 +1,18 @@
+graph TD
+    A([TimeSeriesMixin]) --> C[TimeSeriesDataset]
+    B([DatasetMixin]) --> C
+    C --> D[VersionedTimeSeriesDataset]
+    E[TimeSeriesTransform] --> C
+    F[VersionedTimeSeriesTransform] --> D
+    G([LeadTime; AvailableAt]) --> C
+    G --> E
+    H[(BaseModel; BaseConfig)] --> C
+    H --> E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class C,D primary
+    class H secondary
+    class A,B,E,F,G accent
