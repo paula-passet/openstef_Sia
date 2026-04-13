@@ -1,0 +1,20 @@
+graph LR
+    A[(VersionedTimeSeriesDataset)] -->|historical data| B[BacktestPipeline]
+    H([HorizonTransform]) -->|forecaster| B
+    B -->|predictions| C[EvaluationPipeline]
+    M([RMAEProvider; RCRPSProvider]) -->|metrics| C
+    C -->|EvaluationReport| D[AnalysisPipeline]
+    V([VisualizationProviders]) -->|charts| D
+    D --> E[AnalysisOutput]
+    F[BenchmarkPipeline] -->|orchestrates| B
+    F -->|orchestrates| C
+    F -->|orchestrates| D
+    G[(BenchmarkStorage)] -->|storage| F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D primary
+    class F,G secondary
+    class A,H,M,V,E accent
