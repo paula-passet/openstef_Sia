@@ -1,0 +1,17 @@
+graph LR
+    A([MV Route Measurement Points]) --> B[OpenSTEF Forecasters]
+    B --> C[Load Forecasts per Point]
+    C --> D[(Network Topology)]
+    D --> E[Power Flow Calculation]
+    E --> F[Cable Loading Percentages]
+    F --> G{Exceeds Threshold?}
+    G -->|Yes| H[Flag for Operator]
+    G -->|No| I([Within Safe Limits])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,E primary
+    class D,F secondary
+    class A,G,H,I accent
