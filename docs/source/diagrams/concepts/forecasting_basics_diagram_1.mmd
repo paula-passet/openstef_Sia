@@ -1,0 +1,15 @@
+graph LR
+    A([Now t=0]) --> B[15 min\nNear-Real-Time]
+    B --> C[1 Hour\nIntra-Day]
+    C --> D[24 Hours\nDay-Ahead]
+    D --> E[48 Hours\nExtended Day-Ahead]
+    F([High Frequency]) -.->|shorter horizon| B
+    F -.->|lower frequency| E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C primary
+    class D,E secondary
+    class A,F accent
