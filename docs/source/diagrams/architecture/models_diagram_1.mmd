@@ -1,0 +1,20 @@
+graph TD
+    A([Transforms Layer]) --> E[ForecastingModel]
+    B([Models Layer]) --> E
+    E --> F([Explainability Layer])
+
+    A1[(validation; general\ntime; weather; energy)] --> A
+    A2[(postprocessing)] --> A
+
+    B1[XGBoost; LGBM\nGBLinear; Median; Flatliner] --> B
+
+    F1([ExplainableForecaster\nContributionsMixin]) --> F
+    F2([FeatureImportancePlotter]) --> F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,F primary
+    class E secondary
+    class A1,A2,B1,F1,F2 accent
