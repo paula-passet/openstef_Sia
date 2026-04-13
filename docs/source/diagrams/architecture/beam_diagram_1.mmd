@@ -1,0 +1,28 @@
+graph LR
+    subgraph core["openstef_core"]
+        A[(VersionedTimeSeries\nDataset)]
+    end
+    subgraph models["openstef_models"]
+        B([BacktestForecaster\nMixin])
+    end
+    subgraph beam["openstef_beam"]
+        C[BacktestPipeline]
+        D[EvaluationPipeline]
+        E[AnalysisPipeline]
+        F[BenchmarkPipeline]
+        G[(BenchmarkStorage)]
+        H([TargetProvider])
+    end
+    A -->|input data| C
+    B -->|forecaster| C
+    C -->|predictions| D
+    D -->|EvaluationReport| E
+    E -->|charts and tables| F
+    H -->|targets| F
+    F -->|results| G
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class C,D,E,F primary
+    class A,G secondary
+    class B,H accent
