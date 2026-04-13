@@ -1,0 +1,15 @@
+graph LR
+    A[(External Sources)] --> B[TimeSeriesDataset]
+    B --> C[OpenSTEF Pipeline]
+    C --> D[Forecasts]
+    D --> E[(External Sinks)]
+    A1([SCADA / Sensors]) --> A
+    A2([Weather APIs]) --> A
+    E1([Database]) --> E
+    E2([Dashboard]) --> E
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,D primary
+    class A,E secondary
+    class A1,A2,E1,E2 accent
