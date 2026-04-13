@@ -1,0 +1,18 @@
+graph LR
+    A([T₀: Forecast Generated]) --> B[15 min\nDispatch]
+    A --> C[1 h\nIntraday]
+    A --> D[24 h\nDay-Ahead]
+    A --> E[48 h\nBalancing]
+    B --> F(Update: every 15 min)
+    C --> G(Update: every hour)
+    D --> H[(Full Time Series)]
+    E --> H
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C,D,E secondary
+    class F,G accent
+    class H primary
