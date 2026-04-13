@@ -6,7 +6,7 @@ feature engineering pipelines, forecasting model implementations, and explainabi
 tools that turn raw time series data into calibrated probabilistic forecasts. This page
 explains how those three layers are structured and how they compose together.
 
-.. mermaid:: diagrams/architecture/models_diagram_1.mmd
+.. note:: [DIAGRAM: Component-level diagram showing the three layers of openstef-models. The bottom layer is **Transforms** (five domain subpackages: validation, general, time_domain, weather_domain, energy_domain, plus postprocessing). The middle layer is **Models** (Forecaster base class; concrete implementations: XGBoostForecaster, LGBMForecaster, GBLinearForecaster, MedianForecaster, FlatlinerForecaster). The top layer is **Explainability** (ExplainableForecaster and ContributionsMixin mixins, FeatureImportancePlotter). Arrows show: Transforms feed into ForecastingModel; ForecastingModel composes a Forecaster; Forecaster optionally implements explainability mixins.]
 
 For the data types (``TimeSeriesDataset``, ``ForecastInputDataset``) that flow through
 these layers, see the :doc:`core` sibling page. For backtesting and evaluation of
