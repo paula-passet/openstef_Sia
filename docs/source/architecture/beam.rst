@@ -5,7 +5,7 @@ The OpenSTEF BEAM Package
 
 This page covers the BEAM package in depth — its design philosophy, the four sub-systems it contains, how they connect, and how to use them in practice. For the data structures that BEAM consumes (``TimeSeriesDataset``, ``VersionedTimeSeriesDataset``), see the :doc:`core` page. For the model transforms that BEAM-compatible forecasters are built from, see the :doc:`models` page.
 
-.. mermaid:: diagrams/architecture/beam_diagram_1.mmd
+.. note:: [DIAGRAM: Component-level diagram of the BEAM workflow. Left-to-right flow: (1) VersionedTimeSeriesDataset (from openstef_core) feeds into (2) BacktestPipeline, which produces a TimeSeriesDataset of predictions. That dataset feeds into (3) EvaluationPipeline, which produces an EvaluationReport containing SubsetMetrics segmented by lead time, time window, and filtering. The EvaluationReport feeds into (4) AnalysisPipeline, which produces visualisations and aggregated comparison tables. A top-level BenchmarkPipeline box wraps steps 1–4 and connects to (5) BenchmarkStorage (with three concrete backends: InMemory, Local, S3). A BenchmarkCallback bus runs alongside the entire pipeline for monitoring and customisation hooks.]
 
 Why Realistic Evaluation Matters
 ---------------------------------
