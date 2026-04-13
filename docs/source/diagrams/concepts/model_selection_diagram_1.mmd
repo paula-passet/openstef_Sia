@@ -1,0 +1,16 @@
+graph TD
+    A([Start: Select Model]) --> B{Data Size}
+    B -->|Small| C[XGBoost]
+    B -->|Large| D{Load Profile Type}
+    D -->|Smooth; Periodic| E{Compute Budget}
+    D -->|Irregular; Spiky| C
+    E -->|Limited| C
+    E -->|Flexible| F{Prefer Interpretability}
+    F -->|Yes| G[LightGBM]
+    F -->|No| H[CatBoost]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,D,E,F accent
+    class C,G,H secondary
