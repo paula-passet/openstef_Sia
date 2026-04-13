@@ -1,0 +1,23 @@
+graph LR
+    A[(VersionedTimeSeriesDataset)] --> B[BacktestPipeline]
+    B -->|predictions| C[(TimeSeriesDataset)]
+    C --> D[EvaluationPipeline]
+    D -->|EvaluationReport| E[AnalysisPipeline]
+    E --> F[Visualisations and Tables]
+    B2[BenchmarkPipeline] -.->|wraps| B
+    B2 -.->|wraps| D
+    B2 -.->|wraps| E
+    B2 --> G[(BenchmarkStorage)]
+    G --> G1([InMemory])
+    G --> G2([Local])
+    G --> G3([S3])
+    H([BenchmarkCallback]) -.->|monitors| B2
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,D,E primary
+    class A,C,G secondary
+    class B2,H accent
+    class G1,G2,G3 accent
