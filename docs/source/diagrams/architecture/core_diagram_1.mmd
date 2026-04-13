@@ -1,0 +1,35 @@
+graph TD
+    A([openstef-models; openstef-beam]) --> B[Transform Interfaces]
+    B --> C[Dataset Layer]
+    C --> D[Types and Validation]
+    C --> E[Utilities]
+
+    subgraph TI[Transform Interfaces]
+        B1(TimeSeriesTransform)
+        B2(VersionedTimeSeriesTransform)
+    end
+
+    subgraph DL[Dataset Layer]
+        C1(TimeSeriesDataset)
+        C2(VersionedTimeSeriesDataset)
+    end
+
+    subgraph TV[Types and Validation]
+        D1(LeadTime; AvailableAt)
+        D2(ValidationError)
+    end
+
+    subgraph UT[Utilities]
+        E1(BaseModel; BaseConfig)
+        E2(pandas; ISO 8601 helpers)
+    end
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A secondary
+    class B1,B2 primary
+    class C1,C2 primary
+    class D1,D2 accent
+    class E1,E2 accent
