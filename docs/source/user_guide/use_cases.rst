@@ -3,7 +3,7 @@ Common Use Cases
 
 OpenSTEF is a general-purpose short-term energy forecasting library, but it was designed with a concrete set of real-world problems in mind. This page describes the most common use cases the library supports, what distinguishes each one technically, and how to configure OpenSTEF appropriately for each scenario.
 
-.. mermaid:: diagrams/user_guide/use_cases_diagram_1.mmd
+.. note:: [DIAGRAM: Use case overview showing the six forecasting scenarios (congestion management, free space estimation, grid loss, transport, district heating, MV route congestion) arranged around a central OpenSTEF core, with arrows indicating the input data types each consumes (load measurements, weather, topology, market prices) and the output applications each feeds (demand response, capacity planning, financial settlement, upstream TSO reporting, thermal network dispatch)]
 
 Introduction
 ------------
@@ -211,7 +211,7 @@ This is where `power-grid-model <https://github.com/PowerGridModel/power-grid-mo
 3. **Extract cable loading** (current as a fraction of rated capacity) for each segment from the power flow result.
 4. **Flag congestion** where loading exceeds a threshold (e.g., 80% of rated current).
 
-.. mermaid:: diagrams/user_guide/use_cases_diagram_2.mmd
+.. note:: [DIAGRAM: MV route congestion workflow showing: (1) OpenSTEF forecasts load at N measurement points on the route, (2) forecasted loads are fed as injections into a power-grid-model network topology, (3) power flow results yield per-segment cable loading percentages, (4) segments exceeding the congestion threshold are flagged for operator action]
 
 **What makes this use case distinctive:**
 
