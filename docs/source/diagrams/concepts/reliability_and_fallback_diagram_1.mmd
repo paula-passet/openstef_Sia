@@ -1,0 +1,20 @@
+graph LR
+    A([Raw Input]) -->|validate| B[Input Validation]
+    B -->|fail| F1[/Missing Data Error/]
+    B -->|pass| C[Feature Transforms]
+    C -->|fail| F2[/Transform Error/]
+    C -->|pass| D[(Trained Model)]
+    D -->|stale or fail| E[Fallback Forecaster]
+    D -->|success| G([Forecast Output])
+    E -->|fail| F3[/Critical Failure/]
+    E -->|success| G
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef error fill:#ff6b6b,stroke:#1E3A5F,stroke-width:2px,color:#fff
+
+    class A,G primary
+    class D,E secondary
+    class B,C accent
+    class F1,F2,F3 error
