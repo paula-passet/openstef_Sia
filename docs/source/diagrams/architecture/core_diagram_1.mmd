@@ -1,0 +1,21 @@
+graph TD
+    A([openstef_core]) --> B[datasets]
+    A --> C[mixins]
+    A --> D[transforms]
+    A --> E[utils]
+    A --> F[types]
+    D -->|depends on| B
+    D -->|depends on| C
+    B -->|depends on| C
+    B -->|depends on| E
+    B -->|depends on| F
+    G([openstef_models]) -->|uses| B
+    G -->|uses| C
+    H([openstef_beam]) -->|uses| B
+    H -->|uses| C
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E,F accent
+    class G,H secondary
