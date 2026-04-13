@@ -5,7 +5,7 @@ OpenSTEF is a library that sits in the middle of your data pipeline — it consu
 
 For production deployment patterns (scheduling, containerisation, orchestration), see :doc:`deployment`. For worked end-to-end use cases, see :doc:`use_cases`.
 
-.. mermaid:: diagrams/user_guide/data_integration_diagram_1.mmd
+.. note:: [DIAGRAM: Data flow — external sources → DataFrame → ForecastInputDataset → OpenSTEF workflow → ForecastDataset → external sinks]
 
 
 The Central Contract: ``ForecastInputDataset``
