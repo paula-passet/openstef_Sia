@@ -10,7 +10,7 @@ how you can build a graceful degradation strategy around the library's built-in 
 For background on what OpenSTEF forecasts and why, see :doc:`forecasting_basics`. For
 details on probabilistic outputs, see :doc:`quantiles_and_confidence`.
 
-.. mermaid:: diagrams/concepts/reliability_and_fallback_diagram_1.mmd
+.. note:: [DIAGRAM: Layered reliability stack — raw input → validation transforms → trained model → fallback forecaster → output, with failure paths annotated at each stage]
 
 Data Quality: The First Line of Defence
 -----------------------------------------
