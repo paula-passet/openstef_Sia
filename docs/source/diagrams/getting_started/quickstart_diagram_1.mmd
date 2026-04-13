@@ -1,0 +1,9 @@
+graph LR
+    A[Load Data] --> B[Create Model]
+    B --> C[Train]
+    C --> D[Forecast]
+    D --> E[Output]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    class A,C,E primary
+    class B,D secondary
