@@ -1,0 +1,18 @@
+graph LR
+    A([t=0 Now]) --> B[15 min\nEvery 15 min]
+    A --> C[1 hour\nEvery 15-60 min]
+    A --> D[24 hours\nUp to 4x daily]
+    A --> E[48 hours\nOnce daily D-1]
+
+    B --- F([Near Real-Time])
+    C --- G([Intraday])
+    D --- H([Day-Ahead])
+    E --- I([Two-Day-Ahead])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C,D,E secondary
+    class F,G,H,I accent
