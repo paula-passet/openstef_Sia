@@ -1,0 +1,17 @@
+graph TD
+    A[openstef-core] --> B[TransformPipeline]
+    A --> E[LGBMForecaster]
+    B --> E
+    B --> F[LGBMLinearForecaster]
+    C[Domain Transforms] --> B
+    E --> G[ExplainableForecaster]
+    F --> G
+    G --> H[FeatureImportancePlotter]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C primary
+    class A secondary
+    class E,F,G,H accent
