@@ -1,0 +1,18 @@
+graph LR
+    A([Historical Data]) --> B[Initial Training Window]
+    B --> C[Generate Forecasts]
+    C --> D{Retrain Due?}
+    D -->|No| C
+    D -->|Yes| E[Advance Window]
+    E --> F[Retrain Model]
+    F --> C
+    C --> G[Collect Forecasts]
+    G --> H[Compare vs Ground Truth]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,E accent
+    class C,F,G primary
+    class D,H secondary
