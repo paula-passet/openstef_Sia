@@ -1,0 +1,19 @@
+graph TD
+    A([Input Data]) --> B[Data Validation]
+    B -->|valid| C[Staleness Check]
+    B -->|invalid data| F[Fallback Model]
+    C -->|fresh| D[Primary Model]
+    C -->|stale model| F
+    D -->|success| E([Forecast Output])
+    D -->|model error| F
+    F -->|fallback ok| E
+    F -->|fallback fails| G[Base-Case Forecaster]
+    G --> E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,E accent
+    class B,C primary
+    class D,F,G secondary
