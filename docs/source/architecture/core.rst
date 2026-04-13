@@ -3,7 +3,7 @@ The Core Package (``openstef_core``)
 
 The ``openstef_core`` package is the foundation of OpenSTEF's V4 architecture. Every other package in the library — ``openstef_models``, ``openstef_beam``, and any custom extensions you write — builds on the abstractions defined here. This page explains the key data structures, type system, mixin-based design patterns, and transform interfaces that ``openstef_core`` provides.
 
-.. mermaid:: diagrams/architecture/core_diagram_1.mmd
+.. note:: [DIAGRAM: Component-level diagram of the ``openstef_core`` package showing the four main layers: (1) ``types`` module (``LeadTime``, ``AvailableAt``, ``Quantile``) at the base; (2) ``datasets`` sub-package (``TimeSeriesDataset``, ``VersionedTimeSeriesDataset``, ``DatasetMixin``, ``TimeSeriesMixin``) built on top of types; (3) ``transforms`` sub-package (``Transform`` mixin, ``TimeSeriesTransform``, ``VersionedTimeSeriesTransform``) consuming datasets; (4) ``utils`` and ``exceptions`` as cross-cutting concerns. Arrows indicate dependency direction flowing upward from types through datasets to transforms.]
 
 ----
 
