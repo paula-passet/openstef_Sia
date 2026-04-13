@@ -42,7 +42,7 @@ The practical consequence is that your imports change, the configuration object
 changes, and the high-level pipeline functions are replaced by an explicit
 workflow class. Each of these is covered in its own section below.
 
-.. mermaid:: diagrams/user_guide/migration_v3_v4_diagram_1.mmd
+.. note:: [DIAGRAM: V3 single-package layout vs V4 multi-package layout showing openstef-core / openstef-models / openstef-beam as separate boxes with dependency arrows]
 
 ----
 
