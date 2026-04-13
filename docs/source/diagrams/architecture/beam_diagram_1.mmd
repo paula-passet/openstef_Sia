@@ -1,0 +1,15 @@
+graph TD
+    A[(VersionedTimeSeriesDataset)] -->|input| B[BacktestPipeline]
+    B -->|predictions| C[EvaluationPipeline]
+    C -->|EvaluationReports| D[AnalysisPipeline]
+    D -->|summaries; visuals| E[BenchmarkPipeline]
+    F([openstef_core]) -->|datasets; types| B
+    G([openstef_models]) -->|transforms; forecasters| B
+    E -->|orchestrates| H[(BenchmarkStorage)]
+    E -->|multi-target| I([ForecasterFactory])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,D,E primary
+    class A,H secondary
+    class F,G,I accent
