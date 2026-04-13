@@ -1,0 +1,22 @@
+graph LR
+    A([Now]) --> B[Near Horizon]
+    B --> C[Mid Horizon]
+    C --> D[Far Horizon +48h]
+
+    B --> P1[Narrow Band\nP25-P75]
+    C --> P2[Wider Band\nP10-P90]
+    D --> P3[Widest Band\nP10-P90]
+
+    P1 --> E[(P50 Central Line)]
+    P2 --> E
+    P3 --> E
+
+    E --> F([Actual Observed])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D primary
+    class E,P1,P2,P3 secondary
+    class F accent
