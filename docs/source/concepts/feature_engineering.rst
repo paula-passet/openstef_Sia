@@ -11,7 +11,7 @@ For background on what short-term forecasting is and why it is useful, see
 :doc:`forecasting_basics`. For information on how features interact with model selection,
 see :doc:`model_selection`.
 
-.. mermaid:: diagrams/concepts/feature_engineering_diagram_1.mmd
+.. note:: [DIAGRAM: Feature engineering pipeline showing raw inputs (timestamp, weather, load history) flowing through transform stages into a feature matrix consumed by the forecasting model]
 
 What Makes a Good Energy Feature
 ---------------------------------
