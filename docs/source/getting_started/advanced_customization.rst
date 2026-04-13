@@ -303,7 +303,7 @@ logic. Subclass ``ForecastCallback`` and override only the events you care about
 
    forecasts = workflow.predict(new_dataset)
 
-.. mermaid:: diagrams/getting_started/advanced_customization_diagram_1.mmd
+.. note:: [DIAGRAM: Extension point hierarchy — Transform → TransformPipeline → ForecastingModel → CustomForecastingWorkflow, showing where each customization layer sits]
 
 
 Patterns and Best Practices
