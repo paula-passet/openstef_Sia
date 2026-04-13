@@ -11,7 +11,7 @@ integrates naturally into whatever execution environment you already use. The
 deployment patterns described here are not prescriptive; they are starting points
 you can adapt to your infrastructure.
 
-.. mermaid:: diagrams/user_guide/deployment_diagram_1.mmd
+.. note:: [DIAGRAM: High-level deployment topology showing a scheduler triggering a Python process that loads data, runs a workflow, and writes results to storage and a monitoring backend.]
 
 Scheduling Approaches
 ---------------------
