@@ -1,0 +1,18 @@
+graph TD
+    A[Model Families] --> B[Tree-Based]
+    A --> C[Linear Boosters]
+    B --> D[LightGBM]
+    B --> E[XGBoost]
+    C --> F[GBLinear XGBoost]
+    C --> G[LGBMLinear]
+    D --> H([Fast; High Nonlinear; Low Interpret])
+    E --> I([Moderate; High Nonlinear; Low Interpret])
+    F --> J([Fast; Low Nonlinear; High Interpret])
+    G --> K([Fast; Low Nonlinear; High Interpret])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C secondary
+    class D,E,F,G primary
+    class H,I,J,K accent
