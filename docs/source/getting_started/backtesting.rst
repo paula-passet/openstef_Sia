@@ -11,7 +11,7 @@ performance over time, and compare multiple models against one another.
 If you haven't yet run a basic forecast, see :doc:`first_forecast` first. For
 advanced model customisation before backtesting, see :doc:`advanced_customization`.
 
-.. mermaid:: diagrams/getting_started/backtesting_diagram_1.mmd
+.. note:: [DIAGRAM: Timeline showing train/predict/retrain cycle during a backtest — events spaced along a time axis with shaded training windows and prediction arrows.]
 
 Why Backtesting Matters
 -----------------------
