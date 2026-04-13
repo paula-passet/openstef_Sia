@@ -1,0 +1,21 @@
+graph TD
+    A([Forecast Horizon: 0-48h]) --> B[P90 Upper Boundary]
+    A --> C[P50 Median Forecast]
+    A --> D[P10 Lower Boundary]
+    B --> E[Wide Outer Band P10-P90]
+    D --> E
+    C --> F[Narrow Inner Band P25-P75]
+    E --> G[80% Prediction Interval]
+    F --> G
+    G --> H[Uncertainty Widens Over Time]
+    I([Actual Outcome]) -->|may exit band| G
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef orange fill:#FF8C00,stroke:#1E3A5F,stroke-width:2px,color:#fff
+
+    class A,C primary
+    class B,D,E,F secondary
+    class G,H accent
+    class I orange
