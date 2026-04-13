@@ -42,7 +42,12 @@ extensions = [
     "sphinx_design",
     "sphinx_copybutton",
     "matplotlib.sphinxext.plot_directive",
+    "sphinxcontrib.mermaid"
 ]
+
+# Mermaid configuration 
+mermaid_version = "10.6.1"
+mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
