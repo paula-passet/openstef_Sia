@@ -1,0 +1,20 @@
+graph TD
+    A([Raw Time Series Data]) --> B{Sufficient History?}
+    B -->|No| A
+    B -->|Yes| C[Feature Engineering]
+    C --> D{Train/Predict Split?}
+    D --> E[Model Training]
+    E --> F[Generate Predictions]
+    F --> G[Evaluation]
+    G -->|Iterate| C
+    G -->|Retrain| E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef decision fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+
+    class A primary
+    class C,E,F primary
+    class G secondary
+    class B,D accent
