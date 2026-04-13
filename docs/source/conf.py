@@ -45,9 +45,12 @@ extensions = [
     "sphinxcontrib.mermaid"
 ]
 
-# Mermaid configuration 
+# Mermaid configuration
 mermaid_version = "10.6.1"
-#mermaid_init_js = "mermaid.initialize({startOnLoad:true, theme:'base', themeVariables: {'fontSize':'16px'}, flowchart: {padding: 10}});"
+mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
+
+# Override default 500px height
+mermaid_d3_zoom = False  # Disable zoom feature that adds extra wrapper
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
