@@ -5,7 +5,7 @@ This tutorial walks you through building a complete short-term energy forecast w
 
 If you want the fastest possible path to a running forecast without the explanations, see :doc:`quickstart`. For comparing multiple models against each other, see :doc:`backtesting`.
 
-.. mermaid:: diagrams/getting_started/first_forecast_diagram_1.mmd
+.. note:: [DIAGRAM: Step-by-step flowchart showing the five stages of the forecasting workflow: (1) Data Preparation — load a ``pd.DataFrame`` and wrap it in a ``TimeSeriesDataset``; (2) Feature Engineering — preprocessing transforms add lag features, datetime features, and holiday indicators; (3) Model Training — ``ForecastingModel.fit()`` fits the preprocessing pipeline and the underlying forecaster jointly; (4) Prediction — ``ForecastingModel.predict()`` applies the same transforms to new data and returns a ``ForecastDataset``; (5) Evaluation — ``ForecastingModel.score()`` computes metrics such as MAE against ground truth. Decision point between steps 3 and 5: if metrics are unsatisfactory, revisit preprocessing configuration or model hyperparameters.]
 
 Overview
 --------
