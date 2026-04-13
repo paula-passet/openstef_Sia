@@ -47,7 +47,7 @@ extensions = [
 
 # Mermaid configuration 
 mermaid_version = "10.6.1"
-mermaid_init_js = "mermaid.initialize({startOnLoad:true});"
+mermaid_init_js = "mermaid.initialize({startOnLoad:true, theme:'base', themeVariables: {'fontSize':'16px'}, flowchart: {padding: 10}});"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
