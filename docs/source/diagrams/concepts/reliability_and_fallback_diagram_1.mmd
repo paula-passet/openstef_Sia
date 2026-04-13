@@ -1,0 +1,14 @@
+graph TD
+    A([Start Forecast]) --> B[Primary Ensemble Model]
+    B -->|success| C([Deliver Forecast])
+    B -->|InsufficientlyCompleteError| D[Base-Case Fallback]
+    D -->|success| C
+    D -->|failure| E[Cached Last-Known-Good]
+    E -->|success| C
+    E -->|unavailable| F[Alert and Manual Review]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,C primary
+    class B,D,E secondary
+    class F accent
