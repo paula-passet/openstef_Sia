@@ -1,0 +1,17 @@
+graph TD
+    A[V3 Single Package] --> B[openstef]
+    B --> C[Data Access]
+    B --> D[Model Logic]
+    B --> E[Pipelines]
+    F[V4 Multi Package] --> G[openstef-core]
+    F --> H[openstef-models]
+    F --> I[openstef-beam]
+    G -->|base interfaces| H
+    H -->|optional| I
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,F primary
+    class B secondary
+    class G,H,I secondary
+    class C,D,E accent
