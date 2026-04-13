@@ -1,0 +1,15 @@
+graph TD
+    A[Data Preparation] --> B[Feature Engineering]
+    B --> C[Model Training]
+    C --> D[Prediction]
+    D --> E[Evaluation]
+    E --> F{Metrics OK?}
+    F -->|Yes| G([Done])
+    F -->|No| H[Tune Config or Params]
+    H --> C
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C,D,E primary
+    class H secondary
+    class F,G accent
