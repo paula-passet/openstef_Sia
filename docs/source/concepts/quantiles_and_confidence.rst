@@ -9,7 +9,7 @@ predictions that describe the full range of likely outcomes rather than a single
 This page explains what quantiles are, how OpenSTEF generates and calibrates them, and why they
 matter for day-to-day operational decisions.
 
-.. mermaid:: diagrams/concepts/quantiles_and_confidence_diagram_1.mmd
+.. note:: [DIAGRAM: Time-series chart showing a 48-hour forecast horizon. The x-axis is time, the y-axis is power (MW). Three shaded bands are drawn: a wide outer band between P10 and P90 (light blue), a narrower inner band between P25 and P75 (medium blue), and a central line for P50 (dark blue). Actual observed outcomes are overlaid as a black line. The bands widen as the forecast horizon increases, illustrating growing uncertainty further into the future.]
 
 What Quantiles Are
 ------------------
