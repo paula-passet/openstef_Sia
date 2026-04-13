@@ -3,7 +3,7 @@ Quickstart
 
 This page gets you from a fresh install to a working forecast in under five minutes. There are no explanations of *why* things work the way they do — just the minimal, copy-paste-ready code you need. For deeper understanding, see :doc:`first_forecast`.
 
-.. mermaid:: diagrams/getting_started/quickstart_diagram_1.mmd
+.. note:: [DIAGRAM: Simple left-to-right workflow showing five stages connected by arrows: (1) Load Data → (2) Create Model → (3) Train → (4) Forecast → (5) Output]
 
 Prerequisites
 -------------
