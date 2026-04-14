@@ -1,0 +1,16 @@
+graph TD
+    A([P10 Lower Bound]) --> E[80% Prediction Band]
+    B([P90 Upper Bound]) --> E
+    E --> F[P25 to P75 Band]
+    F --> G([P50 Median Line])
+    G --> H{Actual vs Forecast}
+    H -->|within band| I([Normal Calibration])
+    H -->|outside P10-P90| J([Calibration Exceedance])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class G,E primary
+    class H,F secondary
+    class A,B,I,J accent
