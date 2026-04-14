@@ -1,0 +1,26 @@
+graph LR
+    T0([Forecast Issued\nT=0])
+    A[15 min\nIntra-hour Dispatch]
+    B[1 hour\nHour-ahead Balancing]
+    C[24 hours\nDay-ahead Market]
+    D[48 hours\nTwo-day Planning]
+    U1(Refresh: every 15 min)
+    U2(Refresh: every hour)
+    U3(Refresh: 06:00 and 18:00)
+
+    T0 -->|15 min lead| A
+    T0 -->|1 h lead| B
+    T0 -->|24 h lead| C
+    T0 -->|48 h lead| D
+    A --- U1
+    B --- U2
+    C --- U3
+    D --- U3
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class T0 secondary
+    class A,B,C,D primary
+    class U1,U2,U3 accent
