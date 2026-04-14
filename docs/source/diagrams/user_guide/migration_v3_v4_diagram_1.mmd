@@ -1,0 +1,18 @@
+graph LR
+    subgraph V3["V3 Monolithic"]
+        A([PredictionJob]) --> B[train_model_pipeline]
+        A --> C[create_forecast_pipeline]
+        B --> D[(MLflow)]
+        C --> D
+    end
+    subgraph V4["V4 Modular"]
+        E([VersionedTimeSeriesDataset]) --> F[ForecastingModel]
+        F --> G[CustomForecastingWorkflow]
+        G --> H[(Pluggable ModelStorage)]
+    end
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,E primary
+    class B,C,F,G accent
+    class D,H secondary
