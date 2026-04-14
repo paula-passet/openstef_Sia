@@ -1,0 +1,24 @@
+graph TD
+    A[ForecastingModel / FeaturePipeline]
+    B[transforms]
+    C[models]
+    D[explainability]
+    E[(openstef-core)]
+
+    A --> B
+    A --> C
+    A --> D
+    B -->|features| C
+    D -->|mixins| C
+    E -->|base interfaces| B
+    E -->|base interfaces| C
+    E -->|base interfaces| D
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,D accent
+    class C primary
+    class E secondary
