@@ -1,0 +1,14 @@
+graph LR
+    A([fit_start]) --> B[Preprocess Pipeline]
+    B --> C[Forecaster]
+    C --> D([fit_end])
+    E([predict_start]) --> F[Preprocess Pipeline]
+    F --> G[Forecaster]
+    G --> H[Postprocess Pipeline]
+    H --> I([predict_end])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,F,H primary
+    class C,G secondary
+    class A,D,E,I accent
