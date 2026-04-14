@@ -1,0 +1,13 @@
+graph LR
+    A[(Data Volume)] -->|read input| B[Job Container]
+    B -->|write models| C[(Model Volume)]
+    B -->|write forecasts| D[(Output Volume)]
+    E([train or predict]) -->|mode flag| B
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B primary
+    class C,D secondary
+    class A,E accent
