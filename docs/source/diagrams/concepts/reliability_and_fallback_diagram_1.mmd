@@ -1,0 +1,17 @@
+graph LR
+    A([Input Data]) --> B[Data Validation]
+    B -->|valid| C[Model Health Check]
+    B -->|invalid| E[Data Fallback]
+    C -->|healthy| D[Generate Forecast]
+    C -->|degraded| F[Fallback Forecaster]
+    E --> F
+    F --> D
+    D --> G([Output Forecast])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,G primary
+    class C,D secondary
+    class B,E,F accent
