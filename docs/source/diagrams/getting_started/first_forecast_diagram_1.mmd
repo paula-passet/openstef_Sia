@@ -1,0 +1,19 @@
+graph TD
+    A[Data Preparation] -->|DatetimeIndex and target?| B{Valid Format?}
+    B -->|No| Z([Fix Data Issues])
+    B -->|Yes| C[Feature Engineering]
+    C -->|Lag windows too long?| D{History Check}
+    D -->|Yes| E([Set cutoff_history])
+    D -->|No| F[Model Training]
+    E --> F
+    F --> G[Prediction]
+    G --> H[Evaluation]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef decision fill:#00D9C5,stroke:#1E3A5F,stroke-width:3px,color:#000
+
+    class A,C,F,G,H primary
+    class Z,E accent
+    class B,D secondary
