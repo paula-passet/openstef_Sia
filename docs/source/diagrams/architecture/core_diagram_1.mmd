@@ -1,0 +1,13 @@
+graph TD
+    A[Types and Exceptions] --> B[Datasets Module]
+    A --> C[Utils Module]
+    B --> D[Transforms Module]
+    D --> E[openstef_models]
+    D --> F[openstef_beam]
+    D --> G[openstef_meta]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,C primary
+    class B,D secondary
+    class E,F,G accent
