@@ -1,0 +1,33 @@
+graph TD
+    A([openstef-models]) --> D
+    B([openstef-beam]) --> D
+    A --> E
+    B --> E
+
+    D[datasets module]
+    E[types module]
+    F[utils module]
+    G[(base_model)]
+
+    D --> E
+    D --> F
+    E --> G
+
+    D1(TimeSeriesDataset; mixins)
+    D2(validation)
+    E1(LeadTime; AvailableAt; Quantile)
+    G1(PydanticStringPrimitive)
+
+    D --> D1
+    D --> D2
+    E --> E1
+    G --> G1
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class D,E primary
+    class G,G1 secondary
+    class A,B accent
+    class F,D1,D2,E1 accent
