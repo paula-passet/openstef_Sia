@@ -1,0 +1,19 @@
+graph TD
+    A([Input Data]) --> B{Data Valid?}
+    B -->|yes| C[Primary ML Model]
+    B -->|no| D{Retry Valid?}
+    C --> E([Forecast Output])
+    D -->|yes| F[BaseCaseForecaster\n7-day lag]
+    D -->|no| G[BaseCaseForecaster\n14-day lag]
+    F --> H{Output Valid?}
+    H -->|yes| E
+    H -->|no| G
+    G --> E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,E accent
+    class C,F,G primary
+    class B,D,H secondary
