@@ -1,0 +1,17 @@
+graph TD
+    A[openstef_beam] -->|depends on| B[openstef_models]
+    A -->|depends on| C[openstef_core]
+    B -->|depends on| C
+    A2[Backtesting; Evaluation; Metrics]
+    B2[ML Models; Feature Engineering]
+    C2[Data Structures; Utilities]
+    A --- A2
+    B --- B2
+    C --- C2
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B primary
+    class C primary
+    class A2,B2,C2 accent
