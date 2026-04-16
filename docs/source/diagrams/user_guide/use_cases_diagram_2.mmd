@@ -1,0 +1,15 @@
+graph LR
+    A([Node A Forecast]) --> D[OpenSTEF\nProbabilistic Forecasts]
+    B([Node B Forecast]) --> D
+    C([Node C Forecast]) --> D
+    D -->|Q0.9 injections| E[(Power-Grid-Model\nTopology)]
+    E --> F[Power Flow\nCalculation]
+    F --> G[Segment Loading %]
+    G --> H[Congestion\nHeatmap]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C accent
+    class D,F primary
+    class E secondary
+    class G,H primary
