@@ -1,0 +1,16 @@
+graph LR
+    A([TargetProvider]) -->|BenchmarkTargets| B[Backtesting Stage]
+    A -.->|skip backtesting| C
+    B -->|predictions.parquet| C[EvaluationPipeline]
+    C -->|EvaluationReports| D[AnalysisPipeline]
+    C -->|EvaluationReports| E[ComparisonPipeline]
+    D -->|HTML plots| F([Global / Group / Target])
+    E -->|comparison plots| G([Multi-run Reports])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C primary
+    class D,E secondary
+    class F,G accent
