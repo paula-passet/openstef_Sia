@@ -1,0 +1,49 @@
+graph TD
+    IN1[Load Measurements]
+    IN2[Weather Data]
+    IN3[Energy Prices]
+    IN4[Grid Topology]
+
+    CORE[(OpenSTEF Core)]
+
+    UC1[Congestion Management]
+    UC2[Free Space Estimation]
+    UC3[Grid Loss Forecast]
+    UC4[Transport Forecast]
+    UC5[District Heating]
+    UC6[MV Route Congestion]
+
+    OUT1[Demand Response Triggers]
+    OUT2[Capacity Planning]
+    OUT3[Market Optimisation]
+    OUT4[TSO Reporting]
+    OUT5[Thermal Scheduling]
+    OUT6[Route Congestion Alerts]
+
+    IN1 --> CORE
+    IN2 --> CORE
+    IN3 --> CORE
+    IN4 --> CORE
+
+    CORE --> UC1
+    CORE --> UC2
+    CORE --> UC3
+    CORE --> UC4
+    CORE --> UC5
+    CORE --> UC6
+
+    UC1 --> OUT1
+    UC2 --> OUT2
+    UC3 --> OUT3
+    UC4 --> OUT4
+    UC5 --> OUT5
+    UC6 --> OUT6
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class IN1,IN2,IN3,IN4 accent
+    class CORE secondary
+    class UC1,UC2,UC3,UC4,UC5,UC6 primary
+    class OUT1,OUT2,OUT3,OUT4,OUT5,OUT6 accent
