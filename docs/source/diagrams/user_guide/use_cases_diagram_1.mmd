@@ -1,0 +1,19 @@
+graph TD
+    A([Individual Asset]) --> B[Congestion Management]
+    A --> C[Free Space Estimation]
+    D([System-Wide]) --> E[Grid Loss]
+    D --> F[Transport Forecasting]
+    D --> G[District Heating]
+    D --> H[MV Route Congestion]
+    B -->|peak accuracy| I[Demand Response]
+    C -->|peak accuracy| I
+    E -->|cost-weighted| J[Financial Hedging]
+    F -->|cost-weighted| K[Capacity Planning]
+    G -->|cost-weighted| K
+    H -->|peak accuracy| I
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,E,F,G,H primary
+    class A,D secondary
+    class I,J,K accent
