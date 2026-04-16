@@ -1,0 +1,14 @@
+graph TD
+    A[(Source Systems)] --> B[Scheduled Script]
+    A --> C[Containerised Service]
+    A --> D[Orchestrated Platform]
+    B --> E([OpenSTEF Core])
+    C --> E
+    D --> E
+    E --> F[(Downstream Consumers)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class E primary
+    class A,F secondary
+    class B,C,D accent
