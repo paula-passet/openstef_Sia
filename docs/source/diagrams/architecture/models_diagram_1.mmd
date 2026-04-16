@@ -1,0 +1,42 @@
+graph TD
+    A[(openstef_core)] --> B
+    A --> C
+
+    subgraph TRANSFORMS[openstef_models.transforms]
+        B1([validation]) --> B
+        B2([general]) --> B
+        B3([time_domain]) --> B
+        B4([weather_domain]) --> B
+        B5([energy_domain]) --> B
+        B[FeaturePipeline]
+    end
+
+    subgraph MODELS[openstef_models.models]
+        C[ForecastingModel]
+        C --> C1[preprocessing]
+        C --> C2[forecaster]
+        C --> C3[postprocessing]
+    end
+
+    B -->|composes| C1
+    B -->|composes| C3
+
+    C -.->|side branch| D
+
+    subgraph EXPLAIN[openstef_models.explainability]
+        D[ExplainableForecaster]
+        D --> E[ContributionsMixin]
+        D --> F[FeatureImportancePlotter]
+    end
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A secondary
+    class B primary
+    class B1,B2,B3,B4,B5 accent
+    class C primary
+    class C1,C2,C3 accent
+    class D primary
+    class E,F accent
