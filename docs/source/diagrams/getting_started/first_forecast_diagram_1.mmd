@@ -1,0 +1,17 @@
+graph TD
+    A([Data Preparation]) --> B([Feature Engineering])
+    B --> C([Model Training])
+    C --> D{Validation Score OK?}
+    D -->|yes| E([Prediction])
+    D -->|no| C
+    E --> F([Evaluation])
+    F --> G{Metrics in Threshold?}
+    G -->|yes| H([Done])
+    G -->|no| B
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,E primary
+    class C,F secondary
+    class D,G accent
+    class H primary
