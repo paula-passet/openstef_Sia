@@ -1,0 +1,18 @@
+graph TD
+    A([TimeSeriesDataset]) --> B[common_preprocessing]
+    B --> C[Forecaster 1]
+    B --> D[Forecaster 2]
+    B --> E[Forecaster N]
+    C --> F[(EnsembleForecastDataset)]
+    D --> F
+    E --> F
+    F --> G[combiner_preprocessing]
+    G --> H[ForecastCombiner]
+    H --> I[common_postprocessing]
+    I --> J([ForecastDataset])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,J primary
+    class F,H secondary
+    class B,C,D,E,G,I accent
