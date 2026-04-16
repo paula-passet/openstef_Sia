@@ -1,0 +1,23 @@
+graph LR
+    EXT1([openstef_core\nDatasets])
+    EXT2([openstef_models\nWorkflowConfig])
+    A[Backtesting Phase]
+    B[Evaluation Phase]
+    C[Analysis Phase]
+    D[Benchmarking Phase]
+    STORE[(BenchmarkStorage)]
+
+    EXT1 -->|time series input| A
+    EXT2 -->|model config| A
+    A -->|predictions; ground truth| B
+    B -->|metrics; EvaluationReport| C
+    C -->|visualisations| D
+    D --> STORE
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D primary
+    class STORE secondary
+    class EXT1,EXT2 accent
