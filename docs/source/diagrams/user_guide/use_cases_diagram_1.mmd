@@ -1,0 +1,28 @@
+graph TD
+    A[(Load Measurements)] --> CORE
+    B[(Weather Data)] --> CORE
+    C[(Topology Data)] --> CORE
+    D[(Market Prices)] --> CORE
+
+    CORE([OpenSTEF Core])
+
+    CORE --> U1[Congestion Management]
+    CORE --> U2[Free Space Estimation]
+    CORE --> U3[Grid Loss Forecast]
+    CORE --> U4[Transport Forecast]
+    CORE --> U5[District Heating]
+    CORE --> U6[MV Route Congestion]
+
+    U1 --> O1[Demand Response Triggers]
+    U2 --> O2[Capacity Planning]
+    U3 --> O3[Financial Settlement]
+    U6 --> O4[TSO Reporting]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class CORE primary
+    class A,B,C,D secondary
+    class U1,U2,U3,U4,U5,U6 accent
+    class O1,O2,O3,O4 primary
