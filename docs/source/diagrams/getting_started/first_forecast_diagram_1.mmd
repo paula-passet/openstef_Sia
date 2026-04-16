@@ -1,0 +1,17 @@
+graph TD
+    A([Data Preparation]) --> B{Sufficient History?}
+    B -->|No| Z([Add More Data])
+    B -->|Yes - TimeSeriesDataset| C([Feature Engineering])
+    C -->|TimeSeriesDataset| D([Model Training])
+    D --> E{Model Fitted?}
+    E -->|No| F([Check and Retry])
+    E -->|Yes - ModelFitResult| G([Prediction])
+    G -->|ForecastDataset| H([Evaluation])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,C,D,G,H primary
+    class B,E secondary
+    class Z,F accent
