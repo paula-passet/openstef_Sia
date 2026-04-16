@@ -1,0 +1,17 @@
+graph TD
+    A([Quantile Forecast]) --> B[P90 Upper Bound]
+    A --> C[P50 Median Estimate]
+    A --> D[P10 Lower Bound]
+    B --> E[(80% Prediction Interval)]
+    D --> E
+    C --> E
+    E --> F[Actual Measurement]
+    F --> G{Within Band?}
+    G -->|80% of time| H([Inside Interval])
+    G -->|20% of time| I([Outside Interval])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,C primary
+    class B,D,E secondary
+    class F,G,H,I accent
