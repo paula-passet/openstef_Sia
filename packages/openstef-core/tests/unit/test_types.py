@@ -2,13 +2,15 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+import warnings
 from datetime import UTC, datetime, time, timedelta, timezone
 
 import pandas as pd
 import pytest
 import pytz
+from pydantic import BaseModel
 
-from openstef_core.types import AvailableAt, LeadTime
+from openstef_core.types import AvailableAt, LeadTime, Quantile, QuantileOrGlobal
 
 
 @pytest.mark.parametrize(
@@ -342,3 +344,113 @@ def test_available_at_apply_index_matches_apply():
     scalar = pd.DatetimeIndex([at.apply(ts.to_pydatetime()) for ts in index])
 
     pd.testing.assert_index_equal(vectorized, scalar)
+
+
+def test_quantile_serialization_no_warnings():
+    """Quantile used as dict key in a QuantileOrGlobal union must not trigger pydantic serialization warnings."""
+
+    class Model(BaseModel):
+        metrics: dict[QuantileOrGlobal, dict[str, float]]
+
+    m = Model(metrics={Quantile(0.05): {"mae": 1.0}, Quantile(0.5): {"mae": 2.0}, "global": {"mae": 1.5}})
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("error", category=UserWarning, message="Pydantic serializer")
+        data = m.model_dump_json()
+
+    assert '"0.05"' in data
+    assert '"0.5"' in data
+    assert '"global"' in data
+
+
+@pytest.mark.parametrize(
+    ("quantile_value", "expected_format"),
+    [
+        pytest.param(0.5, "quantile_P50", id="integer_percentile"),
+        pytest.param(0.025, "quantile_P2.5", id="fractional_percentile"),
+        pytest.param(0.9999, "quantile_P99.99", id="multi_decimal_precision"),
+    ],
+)
+def test_quantile_format(quantile_value: float, expected_format: str):
+    assert Quantile(quantile_value).format() == expected_format
+
+
+@pytest.mark.parametrize(
+    ("value"),
+    [0.025, 0.1, 0.5, 0.999, 0.9999],
+)
+def test_quantile_format_parse_roundtrip(value: float):
+    """format() → parse() must recover the original value exactly."""
+    q = Quantile(value)
+    assert Quantile.parse(q.format()) == q
+
+
+def test_quantile_parse_rejects_invalid():
+    with pytest.raises(ValueError, match="Invalid quantile string"):
+        Quantile.parse("not_a_quantile")
+
+
+@pytest.mark.parametrize(
+    ("percentile", "expected_quantile"),
+    [
+        pytest.param(50, 0.5, id="integer_percentile"),
+        pytest.param(99.9, 0.999, id="fractional_percentile"),
+        pytest.param(2.5, 0.025, id="small_fractional"),
+    ],
+)
+def test_quantile_from_percentile(percentile: float, expected_quantile: float):
+    result = Quantile.from_percentile(percentile)
+    assert result == Quantile(expected_quantile)
+
+
+def test_quantile_from_percentile_rejects_out_of_range():
+    with pytest.raises(ValueError, match="Percentile must be between 0 and 100"):
+        Quantile.from_percentile(101)
+
+
+def test_quantile_to_percentile_precision():
+    """to_percentile() must return exact values despite IEEE-754 float traps."""
+    assert str(Quantile(0.999).to_percentile()) == "99.9"
+
+
+@pytest.mark.parametrize(
+    ("percentile"),
+    [2.5, 10, 50, 99.9, 99.99],
+)
+def test_quantile_percentile_roundtrip(percentile: float):
+    """from_percentile() → to_percentile() must recover the original value."""
+    assert Quantile.from_percentile(percentile).to_percentile() == percentile
+
+
+@pytest.mark.parametrize(
+    ("quantile_value"),
+    [-1.0, 1.1],
+)
+def test_quantile_rejects_out_of_range(quantile_value: float):
+    with pytest.raises(ValueError, match="Quantile must be between 0 and 1"):
+        Quantile(quantile_value)
+
+
+@pytest.mark.parametrize(
+    ("quantile_str", "expected"),
+    [
+        ("quantile_P50", True),
+        ("quantile_P99.99", True),
+        ("not_quantile", False),
+    ],
+)
+def test_quantile_is_valid_quantile_string(quantile_str: str, expected: bool):
+    assert Quantile.is_valid_quantile_string(quantile_str) == expected
+
+
+@pytest.mark.parametrize(
+    ("quantile_value", "expected_complement"),
+    [
+        pytest.param(0.1, 0.9, id="q10"),
+        pytest.param(0.025, 0.975, id="q2.5"),
+        pytest.param(0.5, 0.5, id="q50"),
+        pytest.param(0.999, 0.001, id="q99.9"),
+    ],
+)
+def test_quantile_complementary(quantile_value: float, expected_complement: float):
+    assert Quantile(quantile_value).complementary() == Quantile(expected_complement)

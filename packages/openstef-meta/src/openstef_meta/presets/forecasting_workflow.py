@@ -44,7 +44,14 @@ from openstef_models.models.forecasting.lgbmlinear_forecaster import LGBMLinearF
 from openstef_models.models.forecasting.xgboost_forecaster import XGBoostForecaster, XGBoostHyperParams
 from openstef_models.presets.forecasting_workflow import LocationConfig
 from openstef_models.transforms.energy_domain import WindPowerFeatureAdder
-from openstef_models.transforms.general import Clipper, EmptyFeatureRemover, SampleWeightConfig, SampleWeighter, Scaler
+from openstef_models.transforms.general import (
+    EmptyFeatureRemover,
+    OutlierHandler,
+    SampleWeightConfig,
+    SampleWeighter,
+    Scaler,
+    Shifter,
+)
 from openstef_models.transforms.general.imputer import Imputer
 from openstef_models.transforms.general.nan_dropper import NaNDropper
 from openstef_models.transforms.general.selector import Selector
@@ -170,6 +177,11 @@ class EnsembleForecastingWorkflowConfig(BaseConfig):
         default="relative_humidity",
         description="Name of the relative humidity column in datasets.",
     )
+    selected_features: FeatureSelection = Field(
+        default=FeatureSelection.ALL,
+        description="Feature selection for which features to include/exclude.",
+    )
+
     predict_history: timedelta = Field(
         default=timedelta(days=14),
         description="Amount of historical data available at prediction time.",
@@ -196,6 +208,13 @@ class EnsembleForecastingWorkflowConfig(BaseConfig):
     detect_non_zero_flatliner: bool = Field(
         default=False,
         description="If True, flatliners are also detected on non-zero values (median of the load).",
+    )
+
+    # Feature engineering
+    shifters: list[Shifter] = Field(
+        default=[],
+        description="List of feature shifts to align aggregation intervals. "
+        "Each Shifter can target different features with different aggregation periods.",
     )
     rolling_aggregate_features: list[AggregationFunction] = Field(
         default=[],
@@ -283,6 +302,7 @@ class EnsembleForecastingWorkflowConfig(BaseConfig):
 
 def _checks(config: EnsembleForecastingWorkflowConfig) -> list[Transform[TimeSeriesDataset, TimeSeriesDataset]]:
     return [
+        Selector(selection=config.selected_features),
         InputConsistencyChecker(),
         FlatlineChecker(
             load_column=config.target_column,
@@ -332,7 +352,9 @@ def _feature_standardizers(
     return cast(
         list[Transform[TimeSeriesDataset, TimeSeriesDataset]],
         [
-            Clipper(selection=Include(config.energy_price_column).combine(config.clip_features), mode="standard"),
+            OutlierHandler(
+                selection=Include(config.energy_price_column).combine(config.clip_features), mode="standard"
+            ),
             Scaler(selection=Exclude(config.target_column), method="standard"),
             EmptyFeatureRemover(),
         ],
@@ -488,6 +510,7 @@ def create_ensemble_forecasting_workflow(config: EnsembleForecastingWorkflowConf
     common_preprocessing = TransformPipeline(
         transforms=[
             *_checks(config),
+            *config.shifters,
             *_feature_adders(config),
             HolidayFeatureAdder(country_code=config.location.country_code),
             DatetimeFeaturesAdder(onehot_encode=False),

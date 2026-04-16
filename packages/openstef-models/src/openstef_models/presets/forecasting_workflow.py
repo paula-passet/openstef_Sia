@@ -36,14 +36,15 @@ from openstef_models.models.forecasting.median_forecaster import MedianForecaste
 from openstef_models.models.forecasting.xgboost_forecaster import XGBoostForecaster, XGBoostHyperParams
 from openstef_models.transforms.energy_domain import WindPowerFeatureAdder
 from openstef_models.transforms.general import (
-    Clipper,
     EmptyFeatureRemover,
     Imputer,
     NaNDropper,
+    OutlierHandler,
     SampleWeightConfig,
     SampleWeighter,
     Scaler,
     Selector,
+    Shifter,
 )
 from openstef_models.transforms.postprocessing import ConfidenceIntervalApplicator, QuantileSorter
 from openstef_models.transforms.time_domain import (
@@ -206,6 +207,11 @@ class ForecastingWorkflowConfig(BaseConfig):  # PredictionJob
     )
 
     # Feature engineering
+    shifters: list[Shifter] = Field(
+        default=[],
+        description="List of feature shifts to align aggregation intervals. "
+        "Each Shifter can target different features with different aggregation periods.",
+    )
     rolling_aggregate_features: list[AggregationFunction] = Field(
         default=[],
         description="If not None, rolling aggregate(s) of load will be used as features in the model.",
@@ -311,6 +317,7 @@ def create_forecasting_workflow(
         ),
         CompletenessChecker(completeness_threshold=config.completeness_threshold),
     ]
+    feature_aligners = config.shifters
     feature_adders = [
         LagsAdder(
             history_available=config.predict_history,
@@ -349,7 +356,7 @@ def create_forecasting_workflow(
         ),
     ]
     feature_standardizers = [
-        Clipper(selection=Include(config.energy_price_column).combine(config.clip_features), mode="standard"),
+        OutlierHandler(selection=Include(config.energy_price_column).combine(config.clip_features), mode="standard"),
         Scaler(selection=Exclude(config.target_column), method="standard"),
         SampleWeighter(
             target_column=config.target_column,
@@ -361,6 +368,7 @@ def create_forecasting_workflow(
     if config.model == "xgboost":
         preprocessing = [
             *checks,
+            *feature_aligners,
             *feature_adders,
             HolidayFeatureAdder(country_code=config.location.country_code),
             DatetimeFeaturesAdder(onehot_encode=False),
@@ -382,6 +390,7 @@ def create_forecasting_workflow(
     elif config.model == "lgbmlinear":
         preprocessing = [
             *checks,
+            *feature_aligners,
             *feature_adders,
             HolidayFeatureAdder(country_code=config.location.country_code),
             DatetimeFeaturesAdder(onehot_encode=False),
@@ -396,6 +405,7 @@ def create_forecasting_workflow(
     elif config.model == "lgbm":
         preprocessing = [
             *checks,
+            *feature_aligners,
             *feature_adders,
             HolidayFeatureAdder(country_code=config.location.country_code),
             DatetimeFeaturesAdder(onehot_encode=False),
@@ -410,6 +420,7 @@ def create_forecasting_workflow(
     elif config.model == "gblinear":
         preprocessing = [
             *checks,
+            *feature_aligners,
             *feature_adders,
             *feature_standardizers,
             Imputer(
