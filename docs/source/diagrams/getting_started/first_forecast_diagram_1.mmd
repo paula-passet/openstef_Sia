@@ -1,0 +1,18 @@
+graph TD
+    A[Load TimeSeriesDataset] --> B{Data Quality Checks}
+    B -->|fail| C[Fix Data]
+    C --> B
+    B -->|pass| D[Feature Engineering]
+    D --> E[Model Training - fit]
+    E --> F[Train; Val; Test Split]
+    F --> G[Predict - workflow.predict]
+    G --> H[Evaluate - score]
+    H --> I[Visualise Forecast]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,D,G,H primary
+    class E,F secondary
+    class B,C,I accent
