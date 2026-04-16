@@ -1,0 +1,15 @@
+graph LR
+    A([Now t0]) --> B[15 min\nIntra-day Balancing]
+    A --> C[1 hour\nOperational Dispatch]
+    A --> D[24 hours\nDay-ahead Scheduling]
+    A --> E[48 hours\nTwo-day Outlook]
+    B --> F([Update: 15 min])
+    C --> G([Update: 15 min])
+    D --> H([Update: 1 hour])
+    E --> I([Update: 6 hours])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E secondary
+    class F,G,H,I accent
