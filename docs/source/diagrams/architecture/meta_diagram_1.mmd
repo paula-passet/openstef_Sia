@@ -1,0 +1,20 @@
+graph LR
+    A[(TimeSeriesDataset)] --> B[TransformPipeline]
+    B --> C[Forecaster 1]
+    B --> D[Forecaster 2]
+    B --> E[Forecaster N]
+    C --> F([EnsembleForecastDataset])
+    D --> F
+    E --> F
+    F --> G[ForecastCombiner]
+    G --> H[(Combined Forecast)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,H secondary
+    class B primary
+    class C,D,E primary
+    class F accent
+    class G secondary
