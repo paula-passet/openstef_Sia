@@ -1,0 +1,18 @@
+graph LR
+    A[Measurements Data] --> B[add_measurements]
+    C[P50 Forecast Line] --> D[add_model]
+    E[Quantile Bands] --> D
+    B --> D
+    D --> F[plot method]
+    F --> G[Blue Measurement Line]
+    F --> H[Orange P50 Line]
+    F --> I[Shaded P30-P70 Band]
+    F --> J[Shaded P10-P90 Band]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,D,F primary
+    class A,C,E secondary
+    class G,H,I,J accent
