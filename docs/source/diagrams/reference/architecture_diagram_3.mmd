@@ -1,0 +1,19 @@
+graph LR
+    A([Input Data]) --> B[Preprocessing Pipeline]
+    subgraph FM[ForecastingModel]
+        B --> T1[Transform 1]
+        T1 --> T2[Transform 2]
+        T2 --> T3[Transform 3]
+        T3 --> C[Forecaster]
+        C --> P1[Postprocess 1]
+        P1 --> P2[Postprocess 2]
+    end
+    P2 --> D([Forecast Output])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class T1,T2,T3 accent
+    class P1,P2 accent
+    class C secondary
+    class A,D primary
+    class B,FM primary
