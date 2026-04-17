@@ -1,0 +1,13 @@
+graph LR
+    A[(Data Source)] --> B([Scheduled Job])
+    B --> C[Fit Workflow]
+    C --> D[Predict Workflow]
+    D --> E[(Model Storage)]
+    D --> F[(Forecast Sink)]
+    F --> G[Monitoring]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,D primary
+    class A,E,F secondary
+    class G accent
