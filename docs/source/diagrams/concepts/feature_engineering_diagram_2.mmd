@@ -1,0 +1,24 @@
+graph TD
+    A[Raw TimeSeriesDataset] --> B[LagsAdder]
+    B --> C[Wind and Atmosphere Features]
+    C --> D[Radiation and Cyclic Features]
+    D --> E[Rolling Aggregates]
+    E --> F[Holiday and Datetime Features]
+    F --> G[EmptyFeatureRemover]
+    G --> H[Final Feature Matrix]
+
+    B -->|lag_1h; lag_24h| B
+    C -->|wind_power; dew_point| C
+    D -->|sin_hour; cos_hour; daylight| D
+    E -->|mean_1h; std_24h| E
+    F -->|is_holiday; month; weekday| F
+    G -->|drops all-NaN cols| G
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A accent
+    class B,C,D,E,F primary
+    class G secondary
+    class H accent
