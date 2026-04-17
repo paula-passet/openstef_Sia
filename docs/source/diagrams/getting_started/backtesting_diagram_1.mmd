@@ -1,0 +1,17 @@
+graph LR
+    A([Jan]) --> B[Training Window]
+    B --> C{Retrain Event}
+    C -->|every 7 days| B
+    C --> D[Horizon Marker]
+    D --> E[Predict Window]
+    E -->|every 6 hours| F([Dec])
+    G[No Lookahead] --> D
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,F accent
+    class B,E primary
+    class C,D secondary
+    class G accent
