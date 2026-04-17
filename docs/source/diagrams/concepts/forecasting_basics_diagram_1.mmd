@@ -1,0 +1,17 @@
+graph LR
+    A([T=0 Now]) --> B[15 min\nIntraday Balancing]
+    A --> C[1 hour\nGate Closure]
+    A --> D[24 hours\nDay-Ahead Market]
+    A --> E[48 hours\nTwo-Day Planning]
+    B --> F([Every 15 min])
+    C --> G([Every Hour])
+    D --> H([Twice Daily])
+    E --> H
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C,D,E secondary
+    class F,G,H accent
