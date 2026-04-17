@@ -1,0 +1,22 @@
+graph TD
+    A[Data Preparation] --> B[Feature Engineering]
+    B --> C{Sufficient History?}
+    C -->|No| B2[Reduce Lag Window]
+    C -->|Yes| D[Model Training]
+    B2 --> D
+    D --> E{Score Acceptable?}
+    E -->|No| F[Adjust Config]
+    F --> D
+    E -->|Yes| G[Prediction]
+    G --> H[Evaluation]
+    H -->|Reconfigure| F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef decision fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+
+    class A,G,H primary
+    class D,B secondary
+    class B2,F accent
+    class C,E decision
