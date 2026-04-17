@@ -1,0 +1,21 @@
+graph TD
+    A([Presets and Workflows]) --> B[Forecasting Models]
+    A --> C[Component Models]
+    D[General Transforms] --> B
+    E[Time Domain Transforms] --> B
+    F[Energy Domain Transforms] --> B
+    G[Postprocessing Transforms] --> B
+    D --> C
+    E --> C
+    F --> C
+    H[(MLflow Integration)] --> B
+    I[ModelSerializer; PredictorCallback] --> B
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C secondary
+    class D,E,F,G accent
+    class H,I primary
