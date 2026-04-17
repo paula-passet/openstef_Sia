@@ -1,0 +1,17 @@
+graph LR
+    A[Weather Data] --> D[Transform Stage]
+    B[Timestamps] --> D
+    C[Historical Load] --> D
+    D --> E[Lag Features]
+    D --> F[Calendar Features]
+    D --> G[Weather Features]
+    E --> H[Feature Matrix]
+    F --> H
+    G --> H
+    H --> I[ML Model]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C accent
+    class D,E,F,G primary
+    class H,I secondary
