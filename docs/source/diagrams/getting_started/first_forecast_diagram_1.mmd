@@ -1,0 +1,22 @@
+graph TD
+    A[Data Preparation] --> B{Sufficient Coverage}
+    B -->|No| Z[Abort Run]
+    B -->|Yes| C[Feature Engineering]
+    C --> D[Model Training]
+    D --> E{Fit Result Status}
+    E -->|Flatliner| F[Log and Skip]
+    E -->|Success| G[Prediction]
+    G --> H{Eval Data Available}
+    H -->|No| I[Store Forecast]
+    H -->|Yes| J[Evaluation]
+    J --> I
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef warn fill:#f5a623,stroke:#1E3A5F,stroke-width:2px,color:#000
+
+    class A,C,D,G primary
+    class B,E,H secondary
+    class J,I accent
+    class Z,F warn
