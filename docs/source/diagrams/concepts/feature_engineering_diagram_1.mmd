@@ -1,0 +1,15 @@
+graph LR
+    A[Raw Inputs] --> B[LagsAdder]
+    B --> C[WeatherFeatures]
+    C --> D[CyclicFeaturesAdder]
+    D --> E[HolidayFeatureAdder]
+    E --> F[Feature Matrix]
+    F --> G[ML Model]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D,E primary
+    class G secondary
+    class A,F accent
