@@ -1,0 +1,12 @@
+graph TD
+    A[TransformPipeline] --> B[ForecastingModel]
+    B --> C[CustomForecastingWorkflow]
+    D[Callbacks] -->|optional| C
+    A --> |data prep| E[Cleaned Features]
+    E --> B
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,E primary
+    class B secondary
+    class C,D accent
