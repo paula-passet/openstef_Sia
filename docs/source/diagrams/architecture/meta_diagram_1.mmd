@@ -1,0 +1,15 @@
+graph TD
+    A[openstef_core] --> E[openstef_meta]
+    B[openstef_models] --> E
+    C[openstef_beam] --> E
+    E --> F[N Base Forecasters]
+    F -->|parallel predictions| G[EnsembleForecastDataset]
+    G --> H[ForecastCombiner]
+    H --> I[Final ForecastDataset]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class E,F,G,H,I primary
+    class A,B,C secondary
