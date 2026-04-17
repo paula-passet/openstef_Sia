@@ -1,0 +1,14 @@
+graph TD
+    A[(openstef_core\nTimeSeriesDataset)] --> B
+    E[(openstef_models\nForecasters)] --> B
+
+    B[Backtesting\nBacktestPipeline] --> C[Evaluation\nMetricProviders]
+    C --> D[Analysis\nEvaluationReport]
+    D --> F[Benchmarking\nBenchmarkPipeline]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D,F primary
+    class A,E secondary
