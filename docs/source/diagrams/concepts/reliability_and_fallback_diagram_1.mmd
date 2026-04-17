@@ -1,0 +1,18 @@
+graph LR
+    A[(Historical Load Data)] -->|slice| B[Primary Lag Window\n7 days]
+    B -->|has gaps?| C{Gaps Detected}
+    C -->|no| D[Repeat Weekly Pattern]
+    C -->|yes| E[Fallback Lag Window\n14 days]
+    E --> D
+    D --> F[Forecast Horizon]
+    D --> G[Std Dev per Hour]
+    G --> H[Confidence Intervals]
+    F --> H
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class D,F primary
+    class A,B,E secondary
+    class C,G,H accent
