@@ -1,0 +1,17 @@
+graph LR
+    A([Scheduler]) --> B[Training Job]
+    A --> C[Prediction Job]
+    B --> D[(Model Store)]
+    C --> D
+    D --> B
+    D --> C
+    B --> E[Monitoring Callback]
+    C --> E
+    E --> F([Observability Platform])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C primary
+    class D secondary
+    class E,F accent
