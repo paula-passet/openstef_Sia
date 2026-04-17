@@ -1,0 +1,16 @@
+graph LR
+    A[(Raw Time Series)] -->|load| B[VersionedTimeSeriesDataset]
+    B -->|feed| C[TransformPipeline]
+    C -->|HolidayFeatureAdder; LagTransformer; Scaler| D[ForecastingModel]
+    D -->|fit; predict| E[CustomForecastingWorkflow]
+    E -->|store| F[(LocalModelStorage)]
+    E -->|output| G[ForecastDataset]
+    G --> H([Point Forecasts; Quantile Intervals])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D primary
+    class A,F secondary
+    class E,G,H accent
