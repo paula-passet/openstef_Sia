@@ -1,0 +1,17 @@
+graph TD
+    A[Data Preparation] --> B{Data Complete}
+    B -->|No| A
+    B -->|Yes| C[Feature Engineering]
+    C --> D[Model Training]
+    D --> E{Metrics OK}
+    E -->|No| C
+    E -->|Yes| F[Prediction]
+    F --> G[Evaluation]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef decision fill:#00D9C5,stroke:#1E3A5F,stroke-width:3px,color:#000
+
+    class A,C,D,F,G primary
+    class B,E decision
