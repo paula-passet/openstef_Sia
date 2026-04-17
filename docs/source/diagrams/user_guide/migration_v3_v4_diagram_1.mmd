@@ -1,0 +1,16 @@
+graph TD
+    A[openstef V3 Monolithic] --> B[Models]
+    A --> C[Pipelines]
+    A --> D[Data Classes]
+    A --> E[Feature Engineering]
+
+    F[openstef-core] -->|abstractions| G[openstef-models]
+    G -->|models; workflows| H[openstef]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A secondary
+    class B,C,D,E accent
+    class F,G,H primary
