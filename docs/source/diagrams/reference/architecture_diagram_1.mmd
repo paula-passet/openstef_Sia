@@ -1,0 +1,15 @@
+graph TD
+    A[(openstef_core)] --> B[openstef_models]
+    A --> C[openstef_beam]
+    B --> C
+    A1[Data Structures] --> A
+    A2[Utilities] --> A
+    B1[ML Models] --> B
+    B2[Feature Engineering] --> B
+    C1[Backtesting; Metrics] --> C
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A secondary
+    class B,C primary
+    class A1,A2,B1,B2,C1 accent
