@@ -1,0 +1,26 @@
+graph TD
+    A[(openstef_core)] --> B[transforms module]
+    A --> C[models module]
+    B -->|features| C
+    C <-->|via model interface| D[explainability module]
+
+    subgraph Core
+    A
+    end
+
+    subgraph Middle Layer
+    B
+    C
+    end
+
+    subgraph Top Layer
+    D
+    end
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C primary
+    class A secondary
+    class D accent
