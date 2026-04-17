@@ -1,0 +1,17 @@
+graph TD
+    A[Raw Input Data] --> B[Validation Checks]
+    B -->|pass| C[Imputation]
+    B -->|fail| G[Base-Case Forecaster]
+    C -->|pass| D[Primary Model Inference]
+    C -->|fail| G
+    D -->|success| E[Forecast Output]
+    D -->|exception| G
+    G --> F[Fallback Forecast]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,C,D primary
+    class G,F secondary
+    class B,E accent
