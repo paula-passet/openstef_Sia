@@ -1,0 +1,19 @@
+graph TD
+    A[(TimeSeriesDataset)] --> B[Preprocessing]
+    B --> C[XGBoost Forecaster]
+    B --> D[LGBM Forecaster]
+    B --> E[Forecaster N]
+    C --> F[(EnsembleForecastDataset)]
+    D --> F
+    E --> F
+    G([Additional Features]) --> H[ForecastCombiner]
+    F --> H
+    H --> I[Postprocessing]
+    I --> J[(Final Forecast)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,I primary
+    class A,F,J secondary
+    class C,D,E accent
+    class G,H accent
