@@ -1,0 +1,16 @@
+graph LR
+    T0([T=0 Now]) -->|48h horizon| TGT[(Target T+48h)]
+    T0 -->|24h horizon| T24[T+24h]
+    T0 -->|1h horizon| T1[T+1h]
+    T0 -->|15min horizon| T15[T+15min]
+    T47([T=47h Now]) -->|1h horizon| TGT
+    TGT --- NOTE[Same moment; converging forecasts]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class T0,T47 primary
+    class TGT secondary
+    class T24,T1,T15 accent
+    class NOTE accent
