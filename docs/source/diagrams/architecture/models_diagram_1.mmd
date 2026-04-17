@@ -1,0 +1,20 @@
+graph TD
+    A[Presets and Workflows] --> B[Forecasting Models]
+    A --> C[Component-Split Models]
+    D[energy_domain transforms] --> B
+    E[temporal transforms] --> B
+    F[other domain transforms] --> C
+    D --> C
+    G[Mixins and Explainability] -.->|cross-cutting| B
+    G -.->|cross-cutting| C
+    H[(MLflow; Joblib)] -.->|persistence| A
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C secondary
+    class D,E,F accent
+    class G primary
+    class H secondary
