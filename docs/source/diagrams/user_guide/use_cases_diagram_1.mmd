@@ -1,0 +1,15 @@
+graph LR
+    A[Load History] --> C([OpenSTEF])
+    B[Weather Data] --> C
+    D[Energy Prices] --> C
+    E[Grid Topology] --> C
+    C --> F[Demand Response]
+    C --> G[Capacity Planning]
+    C --> H[Financial Optimisation]
+    C --> I[Connection Decisions]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class C primary
+    class A,B,D,E secondary
+    class F,G,H,I accent
