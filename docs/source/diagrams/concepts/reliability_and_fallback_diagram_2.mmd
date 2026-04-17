@@ -1,0 +1,15 @@
+graph TD
+    A[Primary ML Model] -->|success| B([Return Forecast])
+    A -->|InsufficientlyCompleteError; ModelLoadingError; PredictError| C[Base Case Forecaster]
+    C -->|success| D([Return Base Case])
+    C -->|Exception| E[Last Known Good]
+    E -->|available| F([Return Cached Forecast])
+    E -->|not available| G[Alert and Manual Intervention]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,C,E primary
+    class G secondary
+    class B,D,F accent
