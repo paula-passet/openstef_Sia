@@ -1,0 +1,17 @@
+graph LR
+    H[(Historical Data)] --> T0
+    T0([now t0]) --> A[15 min horizon]
+    T0 --> B[1 h horizon]
+    T0 --> C[24 h horizon]
+    T0 --> D[48 h horizon]
+    A --- U1([every 15 min])
+    B --- U2([every hour])
+    C --- U3([once or twice daily])
+    D --- U4([once or twice daily])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class T0 primary
+    class A,B,C,D secondary
+    class H accent
+    class U1,U2,U3,U4 accent
