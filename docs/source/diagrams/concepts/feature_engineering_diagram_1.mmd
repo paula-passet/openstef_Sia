@@ -1,0 +1,18 @@
+graph LR
+    A[Temperature] --> D[AtmosphereDerived\nFeaturesAdder]
+    B[Humidity] --> D
+    C[Pressure] --> D
+    E[Wind Speed] --> F[Wind Features\nAdder]
+    G[Radiation] --> H[Radiation Features\nAdder]
+    D --> I[Apparent Temp\nDew Point]
+    F --> J[Model Features]
+    H --> J
+    I --> J
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,E,G accent
+    class D,F,H primary
+    class I,J secondary
