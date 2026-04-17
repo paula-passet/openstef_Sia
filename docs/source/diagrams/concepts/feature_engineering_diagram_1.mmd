@@ -1,0 +1,14 @@
+graph LR
+    A[Load History] --> D[Lag Features]
+    B[Weather Data] --> E[Weather Features]
+    C[Datetime] --> F[Calendar Features]
+    D --> G[Feature Matrix]
+    E --> G
+    F --> G
+    G --> H[ML Model]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class D,E,F primary
+    class G,H secondary
+    class A,B,C accent
