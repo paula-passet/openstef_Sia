@@ -1,0 +1,16 @@
+graph LR
+    H[Historical Data Window] --> N([Now - Forecast Issued])
+    N --> A[15 min - Intra-hour]
+    N --> B[1 h - Operational]
+    N --> C[24 h - Day-ahead]
+    N --> D[48 h - Extended Plan]
+    A --> A2[Update: every 15 min]
+    B --> B2[Update: every 15-60 min]
+    C --> C2[Update: 1-2x daily]
+    D --> D2[Update: once daily]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class N primary
+    class A,B,C,D secondary
+    class H,A2,B2,C2,D2 accent
