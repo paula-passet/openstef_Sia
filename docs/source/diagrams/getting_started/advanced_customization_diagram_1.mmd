@@ -1,0 +1,14 @@
+graph LR
+    A([TimeSeriesDataset]) --> B[Preprocessing Pipeline]
+    B --> C[Forecaster]
+    C --> D[Postprocessing Pipeline]
+    D --> E([ForecastDataset])
+    F[CustomForecastingWorkflow] -.->|fit callback| B
+    F -.->|predict callback| D
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,E primary
+    class C secondary
+    class B,D accent
+    class F secondary
