@@ -1,0 +1,16 @@
+graph TD
+    A[Shared Preprocessing] --> B[LightGBM Forecaster]
+    A --> C[XGBoost Forecaster]
+    A --> D[GBLinear Forecaster]
+    B --> E[(Ensemble Dataset)]
+    C --> E
+    D --> E
+    E --> F[Forecast Combiner]
+    F --> G[Final Forecast]
+    G --> H[Shared Postprocessing]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,H primary
+    class B,C,D secondary
+    class E,F,G accent
