@@ -1,0 +1,16 @@
+graph LR
+    A[(Raw Data)] -->|wrap| B[VersionedTimeSeriesDataset]
+    B -->|horizon view| C[Train Event]
+    C -->|fit model| D[Versioned Model]
+    D -->|predict| E[Prediction Event]
+    E -->|store| F[(OOS Predictions)]
+    E -->|next window| C
+    F --> G[BacktestPipeline Results]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class C,E,G primary
+    class D,F secondary
+    class A,B accent
