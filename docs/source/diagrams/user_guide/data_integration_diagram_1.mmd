@@ -1,0 +1,16 @@
+graph LR
+    A[(PostgreSQL)] --> E[pandas DataFrame]
+    B[(InfluxDB)] --> E
+    C[(S3)] --> E
+    D[(Databricks/Spark)] -->|toPandas| E
+    E --> F[Set DatetimeIndex]
+    F --> G([TimeSeriesDataset])
+    G --> H[OpenSTEF Pipeline]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class E,F primary
+    class A,B,C,D secondary
+    class G,H accent
