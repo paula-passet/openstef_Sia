@@ -1,0 +1,36 @@
+graph LR
+    subgraph BF["Base Forecasters"]
+        A[lgbm]
+        B[xgboost]
+        C[gblinear]
+        D[lgbm_linear]
+    end
+    E([EnsembleForecastDataset])
+    subgraph FC["ForecastCombiner"]
+        F[WeightsCombiner]
+        G[StackingCombiner]
+    end
+    H([Ensemble Output])
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    E --> F
+    E --> G
+    F --> H
+    G --> H
+    I([openstef_meta])
+    J[(openstef_core)]
+    K[(openstef_models)]
+    L[(openstef_beam)]
+    I -->|datasets/types| J
+    I -->|transforms/workflows| K
+    I -->|evaluation metrics| L
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C,D primary
+    class E,F,G accent
+    class H primary
+    class I secondary
+    class J,K,L secondary
