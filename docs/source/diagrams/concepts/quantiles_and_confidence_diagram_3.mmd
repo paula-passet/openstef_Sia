@@ -1,0 +1,17 @@
+graph TD
+    A[Forecasted Probability] --> C[Calibration Plot]
+    B[Observed Frequency] --> C
+    C --> D[Dashed Diagonal Line]
+    C --> E[Model Scatter Points]
+    D --> F{Calibration Check}
+    E --> F
+    F -->|above diagonal| G[Underconfident]
+    F -->|on diagonal| H[Well Calibrated]
+    F -->|below diagonal| I[Overconfident]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B primary
+    class C,D,E secondary
+    class F accent
+    class G,H,I primary
