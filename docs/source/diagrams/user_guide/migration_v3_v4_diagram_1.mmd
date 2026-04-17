@@ -1,0 +1,25 @@
+graph TD
+    subgraph V3["V3 Monolith"]
+        A[openstef package]
+        B[PredictionJob dict]
+        C[train_model_pipeline]
+        D[create_forecast_pipeline]
+        A --> B
+        B --> C
+        B --> D
+    end
+    subgraph V4["V4 Layered Packages"]
+        E[openstef-core]
+        F[openstef-models]
+        G[openstef-beam]
+        E -->|base classes| F
+        E -->|interfaces| G
+        F -->|fit; predict| G
+    end
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B primary
+    class C,D accent
+    class E secondary
+    class F,G primary
