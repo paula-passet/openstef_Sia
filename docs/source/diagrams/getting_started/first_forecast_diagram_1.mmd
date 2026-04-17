@@ -1,0 +1,16 @@
+graph LR
+    A[(Raw Dataset)] --> B[TransformPipeline\nPreprocessing]
+    B --> C[ForecastingModel\nForecaster]
+    C --> D[TransformPipeline\nPostprocessing]
+    D --> E[CustomForecastingWorkflow\nfit ; predict]
+    E --> F[(ForecastDataset)]
+
+    B:::accent
+    D:::accent
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,F secondary
+    class C,E primary
