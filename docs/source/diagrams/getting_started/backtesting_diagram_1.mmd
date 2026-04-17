@@ -1,0 +1,17 @@
+graph LR
+    A([Start]) --> B[Train Model]
+    B --> C[Predict]
+    C --> D{Next predict\ninterval?}
+    D -->|yes| C
+    D -->|no - retrain| E[Advance Window]
+    E --> F{Reached End?}
+    F -->|no| B
+    F -->|yes| G([Backtest Complete])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C primary
+    class D,F secondary
+    class A,E,G accent
