@@ -1,0 +1,16 @@
+graph LR
+    A([Historical Data]) --> B[Train Window 1]
+    B -->|predict| C[Forecast Window 1]
+    C --> D[Train Window 2]
+    D -->|predict| E[Forecast Window 2]
+    E --> F[Train Window 3]
+    F -->|predict| G[Forecast Window 3]
+    G --> H[(Compare vs Actuals)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,D,F primary
+    class C,E,G accent
+    class A,H secondary
