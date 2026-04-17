@@ -1,0 +1,24 @@
+graph TD
+    A[Input Data] --> B[Individual Asset]
+    A --> C[System-Wide]
+    B --> D[Congestion Mgmt]
+    B --> E[Free Space Est]
+    B --> F[District Heating]
+    C --> G[Grid Loss]
+    C --> H[Transport]
+    C --> I[MV Route Congestion]
+    D --> J[Demand Response]
+    E --> J
+    F --> J
+    G --> K[TSO Reporting]
+    H --> K
+    I --> L[Capacity Planning]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C secondary
+    class D,E,F,G,H,I accent
+    class J,K,L primary
