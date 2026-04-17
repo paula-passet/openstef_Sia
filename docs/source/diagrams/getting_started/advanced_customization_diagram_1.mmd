@@ -1,0 +1,15 @@
+graph TD
+    A([CustomForecastingWorkflow]) --> B[on_fit_start callback]
+    B --> C[TransformPipeline\nPreprocessing]
+    C --> D[(ForecastingModel)]
+    D --> E[TransformPipeline\nPostprocessing]
+    E --> F[on_fit_end callback]
+    A --> G[on_predict_start callback]
+    G --> C
+    E --> H[on_predict_end callback]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class C,E primary
+    class D secondary
+    class A,B,F,G,H accent
