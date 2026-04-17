@@ -1,0 +1,28 @@
+graph LR
+    CORE[(openstef_core\nTypes; Datasets; Transforms)]
+    MODELS[(openstef_models\nBase Forecasters)]
+    BEAM[(openstef_beam\nMetric Providers)]
+
+    PREP[Common Preprocessing]
+    F1[Forecaster 1]
+    FN[Forecaster N]
+    COMB[ForecastCombiner]
+    OUT([EnsembleForecastDataset])
+
+    CORE -->|feeds| PREP
+    PREP --> F1
+    PREP --> FN
+    MODELS -->|implements| F1
+    MODELS -->|implements| FN
+    F1 -->|predictions| COMB
+    FN -->|predictions| COMB
+    BEAM -->|metrics| COMB
+    COMB --> OUT
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class PREP,F1,FN,COMB primary
+    class CORE,MODELS,BEAM secondary
+    class OUT accent
