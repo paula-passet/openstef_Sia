@@ -1,171 +1,61 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
+OpenSTEF Documentation
+======================
 
-.. title:: OpenSTEF documentation
+**OpenSTEF** (Open Short-Term Energy Forecasting) is an open-source Python library for
+building accurate short-term energy forecasts. It provides complete machine learning
+pipelines — from data preprocessing and feature engineering through model training,
+probabilistic forecasting, and evaluation — with domain knowledge for the power grid
+built in from the start.
 
-.. module:: openstef
+Who Is It For?
+--------------
+
+OpenSTEF is designed for data scientists and engineers working in the energy sector who
+need reliable load forecasts hours to days ahead. Whether you are managing grid
+congestion, estimating EV charging capacity, or predicting grid losses, OpenSTEF gives
+you a model-agnostic framework that handles the heavy lifting so you can focus on your
+use case.
+
+Where to Start
+--------------
+
+If you are new to OpenSTEF, the **Getting Started** section walks you through
+installation and your first forecast in minutes. Once you are up and running, the
+**User Guide** covers the core concepts in depth: how prediction jobs are structured,
+how the built-in feature engineering works, and how to train and evaluate models.
+The **API Reference** provides complete documentation for every public class and
+function in the library. If you want to extend OpenSTEF — adding a custom model or
+contributing a pipeline — the **Developer Guide** explains the architecture and
+contribution workflow.
+
+.. note::
+
+   OpenSTEF does **not** automatically retrieve weather data. You are responsible for
+   supplying weather and load time series as inputs to the pipelines.
+
+Community & Support
+-------------------
+
+OpenSTEF is a `LF Energy <https://lfenergy.org/>`_ project developed openly on GitHub.
+
+- **GitHub:** https://github.com/OpenSTEF/openstef — source code, issues, and releases
+- **Slack:** https://slack.lfenergy.org/ — join the ``#openstef`` channel for questions and discussion
+- **Email:** openstef@lfenergy.org
+- **Community meetings:** `Bi-weekly open calls <https://lf-energy.atlassian.net/wiki/spaces/OS/pages/32278358/OpenSTEF+four-weekly+community+meeting>`_ — all are welcome
+
+Found a bug or have a feature request? Open an issue on
+`GitHub Issues <https://github.com/OpenSTEF/openstef/issues>`_.
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
-   :titlesonly:
+   :caption: Contents
+   :hidden:
 
-   User Guide <user_guide/index>
-   API <api/index>
-   Community <project/index>
-   Contributing <contribute/index>
+   getting_started/index
+   user_guide/index
+   concepts/index
+   architecture/index
+   faq
    changelog
-   examples
-
-##################################
-OpenSTEF 4.0.0 documentation
-##################################
-
-
-OpenSTEF is a library for creating short term forecasts for the energy sector. 
-It contains all components for the machine learning pipeline required to make a forecast.
-
-Install
-=======
-
-.. tab-set::
-    :class: sd-width-content-min
-
-    .. tab-item:: pip
-
-        .. code-block:: bash
-
-            pip install openstef
-
-    .. tab-item:: uv
-
-        .. code-block:: bash
-
-            uv add openstef
-
-    .. tab-item:: conda
-
-        .. code-block:: bash
-
-            conda install -c conda-forge openstef
-
-    .. tab-item:: pixi
-
-        .. code-block:: bash
-
-            pixi add openstef
-
-    .. tab-item:: other
-
-        .. rst-class:: section-toc
-
-        :doc:`user_guide/installation`
-
-
-For more detailed instructions, see the
-:doc:`installation guide <user_guide/installation>`.
-
-Learn
-=====
-
-.. grid:: 1 1 2 2
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **How to use OpenSTEF?**
-        ^^^
-
-        * :doc:`user_guide/installation`
-        * :doc:`user_guide/quick_start`
-        * :doc:`user_guide/tutorials`
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **What can OpenSTEF do?**
-        ^^^
-
-        * :doc:`user_guide/intro/index`
-        * :doc:`examples`
-
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 12
-
-        **Reference**
-        ^^^
-
-        .. grid:: 1 1 2 2
-            :class-row: sd-align-minor-center
-
-            .. grid-item::
-
-                * :doc:`API reference <api/index>`
-
-            .. grid-item::
-
-                References for OpenSTEF's components:
-
-                - openstef-models: Core forecasting models and feature engineering
-                - openstef-beam: Backtesting, evaluation, analysis and metrics
-                - openstef-core: Core utilities, dataset types, shared types and base models
-
-
-What's new
-==========
-
-.. grid:: 1 1 2 2
-
-    .. grid-item::
-
-       Learn about new features and API changes.
-
-    .. grid-item::
-        
-        * :doc:`changelog`
-
-Contribute
-==========
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        OpenSTEF is an LF Energy community maintained for and by its users. See
-        :ref:`contributing` for the many ways you can help!
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * :ref:`submitting-a-bug-report`
-        * :ref:`contribute_guide`
-        * :ref:`development_workflow`
-        * :ref:`contribution_guideline`
-
-
-
-About OpenSTEF
-==============
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        Here you can find all information about the OpenSTEF community.
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * `Linux Foundation project page <https://www.lfenergy.org/projects/openstef/>`_
-        * `Video About OpenSTEF <https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/>`_
-        * :doc:`project/committee`
-        * :doc:`project/maintainers`
-        * :doc:`project/citing`
-        * :doc:`project/license`
+   contribute/index
+   api/index
