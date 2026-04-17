@@ -1,0 +1,20 @@
+graph LR
+    A[Update Dependencies] --> B[Fix Import Paths]
+    B --> C[Replace Config Objects]
+    C --> D[Wrap in TimeSeriesDataset]
+    D --> E[Replace Pipeline Calls]
+    E --> F[Migrate MLflow Config]
+    F --> G[Run Test Suite]
+
+    C1([PredictionJobDataClass]) -.->|maps to| C
+    D1([raw DataFrame]) -.->|wraps to| D
+    E1([train_model_pipeline]) -.->|becomes fit| E
+    E2([create_forecast_pipeline]) -.->|becomes predict| E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D,E,F,G primary
+    class C1,D1 secondary
+    class E1,E2 accent
