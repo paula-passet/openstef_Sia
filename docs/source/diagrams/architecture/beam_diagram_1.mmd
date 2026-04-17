@@ -1,0 +1,18 @@
+graph TD
+    A[openstef_core] --> D[BacktestPipeline]
+    B[openstef_models] --> D
+    C[ForecasterFactory] -->|injects models| D
+    D -->|simulates production| E[EvaluationConfig]
+    E -->|lead times; windows| F[AnalysisConfig]
+    F -->|metrics; visuals| G[BenchmarkPipeline]
+    G --> H[(predictions.parquet)]
+    G --> I[Evaluation Scores]
+    G --> J[HTML Reports]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class D,E,F,G primary
+    class A,B,C secondary
+    class H,I,J accent
