@@ -1,0 +1,18 @@
+graph LR
+    A([Raw Input Data]) --> B[TransformPipeline]
+    subgraph PRE[Preprocessing]
+        B --> C[AddWeatherFeatures]
+        C --> D[Other Transforms]
+    end
+    D --> E[Forecaster]
+    E --> F[TransformPipeline]
+    subgraph POST[Postprocessing]
+        F --> G[Output Transforms]
+    end
+    G --> H([Forecast Output])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,H primary
+    class E secondary
+    class B,C,D,F,G accent
