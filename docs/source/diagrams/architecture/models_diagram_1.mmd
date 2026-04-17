@@ -1,0 +1,16 @@
+graph TD
+    A[(openstef_core\nTimeSeriesDataset)] --> B[transforms]
+    A --> C[models]
+    B --> C
+    C --> D[explainability]
+    C --> E([openstef_meta\nEnsemble Models])
+    C --> F([User Code])
+    D --> F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C,D primary
+    class A secondary
+    class E,F accent
