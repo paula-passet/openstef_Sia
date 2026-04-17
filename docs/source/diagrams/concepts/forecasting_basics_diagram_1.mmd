@@ -1,0 +1,17 @@
+graph LR
+    A([NOW]) --> B[15min Horizon]
+    A --> C[1h Horizon]
+    A --> D[24h Horizon]
+    A --> E[48h Horizon]
+    B --> F[Refresh: 15min]
+    C --> G[Refresh: 1h]
+    D --> H[Refresh: 24h]
+    E --> H
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C,D,E secondary
+    class F,G,H accent
