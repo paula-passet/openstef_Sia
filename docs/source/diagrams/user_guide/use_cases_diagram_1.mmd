@@ -1,0 +1,19 @@
+graph TD
+    A[OpenSTEF Forecasting] --> B[Congestion Management]
+    A --> C[Free Space Estimation]
+    A --> D[Grid Losses]
+    A --> E[Transport Forecasting]
+    A --> F[District Heating]
+    A --> G[MV Route Congestion]
+    B -->|Peak Alerts| H[Output Applications]
+    C -->|Capacity Planning| H
+    D -->|Cost Optimisation| H
+    E -->|TSO Reporting| H
+    F -->|Thermal Demand| H
+    G -->|Route Loading| H
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A secondary
+    class B,C,D,E,F,G primary
+    class H accent
