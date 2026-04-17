@@ -1,0 +1,12 @@
+graph TD
+    A[Actual Measurements] --> E[Overlay Chart]
+    B[P50 Forecast Line] --> E
+    C[P10 to P90 Band] --> E
+    D[P05 to P95 Band] --> E
+    E --> F[Probabilistic View]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,D primary
+    class E secondary
+    class A,F accent
