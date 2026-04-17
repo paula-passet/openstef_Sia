@@ -1,0 +1,23 @@
+graph TD
+    A[openstef_models] --> CORE
+    B[openstef_beam] --> CORE
+    C[openstef_meta] --> CORE
+
+    subgraph CORE[openstef_core]
+        D[datasets] --> E[mixins]
+        D --> F[validation]
+        G[transforms] --> D
+        G --> E
+        D --> H[types; utils]
+        G --> H
+        E --> H
+    end
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class D,G primary
+    class E,F secondary
+    class H accent
+    class A,B,C accent
