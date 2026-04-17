@@ -1,0 +1,16 @@
+graph LR
+    A[Measurements Load] --> D[ForecastTimeSeriesPlotter]
+    B[P50 Forecast Line] --> D
+    C[P10 to P90 Quantiles] --> D
+    D --> E[Quantile Band Layer]
+    E --> F[Forecast Line Layer]
+    F --> G[Measurements Layer]
+    G --> H[Interactive Plotly Chart]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class D,E,F,G primary
+    class A,B,C secondary
+    class H accent
