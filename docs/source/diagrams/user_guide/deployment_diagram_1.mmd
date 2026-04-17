@@ -1,0 +1,15 @@
+graph LR
+    A[(Data Sources)] --> B([Scheduled Runner])
+    B --> C[OpenSTEF Workflow]
+    C --> D[(Model Storage)]
+    C --> E[(Forecast Sink)]
+    D --> F[Local or MLflow]
+    G[Monitoring Callbacks] --> C
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class C,B primary
+    class A,D,E secondary
+    class F,G accent
