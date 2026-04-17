@@ -1,0 +1,18 @@
+graph TD
+    A[Primary Model] -->|success| B[Staleness Check]
+    A -->|ModelError| F[Base-Case Forecaster]
+    B -->|fresh| C[Data Completeness Check]
+    B -->|stale; OldModelError| D[Fallback Model]
+    C -->|complete| E[Forecast Output]
+    C -->|missing data; InputError| D[Fallback Model]
+    D -->|fallback ok| E
+    D -->|FallbackError| F
+    F --> E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C primary
+    class D,F secondary
+    class E accent
