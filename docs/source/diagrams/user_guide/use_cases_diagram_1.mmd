@@ -1,0 +1,17 @@
+graph TD
+    A[OpenSTEF Forecasting] --> B[Congestion]
+    A --> C[Free Space]
+    A --> D[Grid Loss]
+    A --> E[Transport]
+    A --> F[District Heating]
+    B -->|Peak Alerts| G[Load History; Weather]
+    C -->|Capacity Headroom| G
+    D -->|Cost Optimisation| H[Topology; Market Prices]
+    E -->|TSO Reporting| H
+    F -->|Thermal Demand| G
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E,F secondary
+    class G,H accent
