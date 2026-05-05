@@ -1,0 +1,17 @@
+graph TD
+    A[FAQ Hub] --> B[General]
+    A --> C[Installation]
+    A --> D[Models and Forecasting]
+    A --> E[Data and Features]
+    A --> F[Troubleshooting]
+    B --> G[getting_started doc]
+    C --> G
+    D --> G
+    E --> G
+    F --> H[GitHub Discussions]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E,F accent
+    class G,H secondary
