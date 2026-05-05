@@ -4,122 +4,122 @@ SPDX-FileCopyrightText: 2017-2023 Contributors to the OpenSTEF project <openstef
 SPDX-License-Identifier: MPL-2.0
 -->
 
-# OpenSTEF
+<p align="center">
+  <img src="https://raw.githubusercontent.com/OpenSTEF/.github/main/profile/img/openstef_logo_wide_colorful_bg.png" alt="OpenSTEF Logo" width="400"/>
+</p>
 
-<!-- Badges -->
+<p align="center">
+  <a href="https://pepy.tech/project/openstef"><img src="https://static.pepy.tech/badge/openstef" alt="Downloads"/></a>
+  <a href="https://pepy.tech/project/openstef"><img src="https://static.pepy.tech/badge/openstef/month" alt="Downloads per month"/></a>
+  <a href="https://bestpractices.coreinfrastructure.org/projects/5585"><img src="https://bestpractices.coreinfrastructure.org/projects/5585/badge" alt="CII Best Practices"/></a>
+  <a href="https://github.com/paula-passet/openstef_Sia/releases/tag/v3.0.0"><img src="https://img.shields.io/badge/version-v3.0.0-blue" alt="Version v3.0.0"/></a>
+  <a href="https://github.com/paula-passet/openstef_Sia/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MPL--2.0-green" alt="License: MPL-2.0"/></a>
+</p>
 
-[![Downloads](https://static.pepy.tech/badge/openstef)](https://pepy.tech/project/openstef)
-[![Downloads](https://static.pepy.tech/badge/openstef/month)](https://pepy.tech/project/openstef)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5585/badge)](https://bestpractices.coreinfrastructure.org/projects/5585)
+---
 
-> **Note:** OpenSTEF v4 is actively under development in the [`release/v4.0.0`](https://github.com/OpenSTEF/openstef/tree/release/v4.0.0) feature branch. Pre-releases are already available on [PyPI](https://pypi.org/project/openstef/#history), give them a try and share your feedback!
+## What is OpenSTEF
 
-OpenSTEF is a Python package designed for generating short-term forecasts in the energy sector. The repository includes all the essential components required for machine learning pipelines that facilitate the forecasting process. To utilize the package, users are required to furnish their own data storage and retrieval interface.
+OpenSTEF is a Python package for generating short-term energy forecasts, providing all the essential components of an end-to-end machine learning pipeline — from feature engineering and model training to forecast creation and KPI monitoring. It supports multiple model backends (XGBoost, LightGBM, and others) through a unified `OpenstfRegressor` interface, and is designed to integrate with any data storage layer you supply. OpenSTEF is a [Linux Foundation Energy](https://www.lfenergy.org/projects/openstef/) project. For full documentation, visit [openstef.github.io/openstef](https://openstef.github.io/openstef/index.html).
 
-# Table of contents
+---
 
-- [OpenSTEF](#openstef)
-- [Table of contents](#table-of-contents)
-- [External information sources](#external-information-sources)
-- [Installation](#installation)
-  - [Install the openstef package](#install-the-openstef-package)
-    - [Remark regarding installation within a **conda environment on Windows**](#remark-regarding-installation-within-a-conda-environment-on-windows)
-  - [Remark regarding installation on Apple Silicon](#remark-regarding-installation-on-apple-silicon)
-    - [Remark regarding installation with minimal XGBoost dependency](#remark-regarding-installation-with-minimal-xgboost-dependency)
-- [Usage](#usage)
-  - [Example notebooks](#example-notebooks)
-  - [Reference Implementation](#reference-implementation)
-  - [Database connector for openstef](#database-connector-for-openstef)
-- [License](#license)
-  - [Licenses third-party libraries](#licenses-third-party-libraries)
-- [Contributing](#contributing)
-- [Contact](#contact)
+## Repository Structure
 
-# External information sources
+The repository is organised as a single-package library with the following top-level directories:
 
-- [Documentation website](https://openstef.github.io/openstef/index.html);
-- [Python package](https://pypi.org/project/openstef/);
-- [Linux Foundation project page](https://www.lfenergy.org/projects/openstef/);
-- [Documentation on dashboard](https://raw.githack.com/OpenSTEF/.github/main/profile/html/openstef_dashboard_doc.html);
-- [Video about OpenSTEF](https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/);
+| Path | Purpose |
+|---|---|
+| `openstef/` | Core library — pipelines, models, feature engineering, tasks, data classes |
+| `test/` | Unit and integration tests |
+| `examples/` | Runnable example scripts and notebooks |
+| `docs/` | Source files for the documentation website |
+| `LICENSES/` | License files for third-party dependencies |
 
-# Installation
+---
 
-## Install the openstef package
+## Installation
+
+Install the latest release from PyPI:
 
 ```shell
-pip install openstef
+pip install openstef==3.0.0
 ```
 
-### Remark regarding installation within a **conda environment on Windows**
+**CPU-only (x86\_64 Linux / Windows only)** — installs a smaller XGBoost variant:
 
-A version of the pywin32 package will be installed as a secondary dependency along with the installation of the openstef package. Since conda relies on an old version of pywin32, the new installation can break conda's functionality. The following command can solve this issue:
+```shell
+pip install openstef[cpu]==3.0.0
+```
+
+### conda on Windows
+
+A secondary `pywin32` dependency may break conda. Fix with:
 
 ```shell
 pip install pywin32==300
 ```
 
-For more information on this issue see the [readme of pywin32](https://github.com/mhammond/pywin32#installing-via-pip) or [this Github issue](https://github.com/mhammond/pywin32/issues/1865#issue-1212752696).
+See the [pywin32 README](https://github.com/mhammond/pywin32#installing-via-pip) for details.
 
-## Remark regarding installation on Apple Silicon
+### Apple Silicon (M1 and later)
 
-If you want to install the `openstef` package on Apple Silicon (Mac with M1-chip or newer), you can encounter issues with the dependencies, such as `xgboost`. Solution:
+1. `brew install libomp`
+2. If `libomp` is not found at `/usr/local/opt`, symlink it:
+   ```sh
+   mkdir -p /usr/local/opt/libomp/
+   ln -s /opt/brew/Cellar/libomp/{your_version}/lib /usr/local/opt/libomp/lib
+   ```
+3. Reinstall XGBoost via conda-forge: `pip uninstall xgboost && conda install -c conda-forge xgboost`
+4. If LightGBM also fails: `pip uninstall lightgbm && conda install -c conda-forge 'lightgbm>=4.2.0'`
 
-1. Run `brew install libomp` (if you haven’t installed Homebrew: [follow instructions here](https://brew.sh/))
-2. If your interpreter can not find the `libomp` installation in `/usr/local/bin`, it is probably in `/opt/brew/Cellar`. Run:
+---
 
-```sh
-mkdir -p /usr/local/opt/libomp/
-ln -s /opt/brew/Cellar/libomp/{your_version}/lib /usr/local/opt/libomp/lib
+## Examples
+
+Runnable examples are in the [`examples/`](https://github.com/paula-passet/openstef_Sia/tree/v3.0.0/examples) folder. See the [`examples/README.md`](https://github.com/paula-passet/openstef_Sia/tree/v3.0.0/examples/README.md) for an overview of available scripts and notebooks.
+
+For a fully self-contained offline walkthrough, see the [openstef-offline-example](https://github.com/OpenSTEF/openstef-offline-example) repository.
+
+A complete reference implementation (databases, dashboard, example data) is available at [openstef-reference](https://github.com/OpenSTEF/openstef-reference).
+
+---
+
+## License
+
+This project is licensed under the **Mozilla Public License, version 2.0** — see [`LICENSE`](https://github.com/paula-passet/openstef_Sia/blob/main/LICENSE) for details.
+
+Third-party libraries are licensed under their own respective open-source licenses. SPDX-License-Identifier headers are used throughout the codebase; corresponding license texts are in the [`LICENSES/`](https://github.com/paula-passet/openstef_Sia/tree/main/LICENSES) directory.
+
+---
+
+## Contributing
+
+Please read the following documents before submitting a pull request:
+
+- [CODE\_OF\_CONDUCT.md](https://github.com/OpenSTEF/.github/blob/main/CODE_OF_CONDUCT.md)
+- [CONTRIBUTING.md](https://github.com/OpenSTEF/.github/blob/main/CONTRIBUTING.md)
+- [PROJECT\_GOVERNANCE.md](https://github.com/OpenSTEF/.github/blob/main/PROJECT_GOVERNANCE.md)
+
+---
+
+## Citations
+
+If you use OpenSTEF in your research, please cite the project via its [Linux Foundation Energy project page](https://www.lfenergy.org/projects/openstef/) or the [PyPI package](https://pypi.org/project/openstef/). A suggested BibTeX entry:
+
+```bibtex
+@software{openstef,
+  author    = {Contributors to the OpenSTEF project},
+  title     = {OpenSTEF: Open Short-Term Energy Forecasting},
+  version   = {3.0.0},
+  year      = {2023},
+  url       = {https://github.com/paula-passet/openstef_Sia},
+  license   = {MPL-2.0}
+}
 ```
 
-3. Uninstall `xgboost` with `pip` (`pip uninstall xgboost`) and install with `conda-forge` (`conda install -c conda-forge xgboost`)
-4. If you encounter similar issues with `lightgbm`: uninstall `lightgbm` with `pip` (`pip uninstall lightgbm`) and install later version with `conda-forge` (`conda install -c conda-forge 'lightgbm>=4.2.0'`)
+---
 
-### Remark regarding installation with minimal XGBoost dependency
+## Contact
 
-It is possible to install openSTEF with a minimal XGBoost (CPU-only) package. This only works on x86_64 (amd64) Linux and Windows platforms. Advantage is that significantly smaller dependencies are installed. In that case run:
-
-```shell
-pip install openstef[cpu]
-```
-
-# Usage
-
-## Example notebooks
-
-To help you get started, a set of fundamental example notebooks has been created. You can access these offline examples [here](https://github.com/OpenSTEF/openstef-offline-example).
-
-## Reference Implementation
-
-A complete implementation including databases, user interface, example data, etc. is available at: https://github.com/OpenSTEF/openstef-reference
-
-![screenshot](https://user-images.githubusercontent.com/60883372/146760483-29af3ac7-62af-4f13-98c7-982a79c517d1.jpg)
-Screenshot of the operational dashboard showing the key functionality of OpenSTEF.
-Dashboard documentation can be found [here](https://raw.githack.com/OpenSTEF/.github/main/profile/html/openstef_dashboard_doc.html).
-
-To run a task use:
-
-```shell
-python -m openstef task <task_name>
-```
-
-## Database connector for openstef
-
-This repository provides an interface to OpenSTEF (reference) databases. The repository can be found [here](https://github.com/OpenSTEF/openstef-dbc).
-
-# License
-
-This project is licensed under the Mozilla Public License, version 2.0 - see LICENSE for details.
-
-## Licenses third-party libraries
-
-This project includes third-party libraries, which are licensed under their own respective Open-Source licenses. SPDX-License-Identifier headers are used to show which license is applicable. The concerning license files can be found in the LICENSES directory.
-
-# Contributing
-
-Please read [CODE_OF_CONDUCT.md](https://github.com/OpenSTEF/.github/blob/main/CODE_OF_CONDUCT.md), [CONTRIBUTING.md](https://github.com/OpenSTEF/.github/blob/main/CONTRIBUTING.md) and [PROJECT_GOVERNANCE.md](https://github.com/OpenSTEF/.github/blob/main/PROJECT_GOVERNANCE.md) for details on the process for submitting pull requests to us.
-
-# Contact
-
-Please read [SUPPORT.md](https://github.com/OpenSTEF/.github/blob/main/SUPPORT.md) for how to connect and get into contact with the OpenSTEF project
+Please read [SUPPORT.md](https://github.com/OpenSTEF/.github/blob/main/SUPPORT.md) for how to connect with and get support from the OpenSTEF project community.
