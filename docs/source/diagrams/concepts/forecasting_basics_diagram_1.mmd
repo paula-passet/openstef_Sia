@@ -1,0 +1,16 @@
+graph LR
+    A([Now]) -->|15 min| B[15 min Horizon]
+    A -->|1 hour| C[1 h Horizon]
+    A -->|24 hours| D[24 h Horizon]
+    A -->|48 hours| E[48 h Horizon]
+    B -->|every 15 min| F([Available At])
+    C -->|every 15-30 min| F
+    D -->|every 6 h| F
+    E -->|1-2x daily| F
+    F -->|lag delay| G[Forecast Usable]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A primary
+    class B,C,D,E accent
+    class F,G secondary
