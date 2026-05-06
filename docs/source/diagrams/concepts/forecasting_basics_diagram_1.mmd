@@ -1,0 +1,15 @@
+graph LR
+    A([T=0 Now]) --> B[T+15min\nEvery 15 min]
+    A --> C[T+1h\nEvery 15 min]
+    A --> D[T+24h\nEvery hour]
+    A --> E[T+48h\nTwice daily]
+    A --> F([T+7d Limit])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef warning fill:#f5e6e6,stroke:#c0392b,stroke-width:2px,color:#000
+
+    class A primary
+    class B,C,D,E secondary
+    class F warning
