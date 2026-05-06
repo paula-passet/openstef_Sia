@@ -1,0 +1,19 @@
+graph TD
+    A[Raw Input Data] --> B[Common Preprocessing]
+    B --> C[Base Forecasters N x Forecaster]
+    C --> D[ForecastCombiner\nWeights or Stacking]
+    D --> E[Ensemble Output ForecastDataset]
+    F[EnsembleForecastingModel] --> B
+    F --> D
+    G[EnsembleForecastingWorkflowConfig] --> F
+    H[(openstef_core\ndatasets; domain types)] --> F
+    I[(openstef_models\ntransforms; Workflow)] --> F
+    J[(openstef_beam\ndistributed pipeline)] --> F
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D,E primary
+    class F,G secondary
+    class H,I,J accent
