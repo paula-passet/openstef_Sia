@@ -1,0 +1,19 @@
+graph LR
+    A([on_fit_start]) --> B{Reusable model?}
+    B -->|yes| C[Load existing model]
+    B -->|no| D[Train new model]
+    C --> D
+    D --> E([on_fit_end])
+    E --> F[Store model; metrics]
+    F --> G{Model selection?}
+    G -->|compare| H[Select best run]
+    H --> I([on_predict_start])
+    I --> J[(Load best model)]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,E,I primary
+    class B,G accent
+    class C,D,F,H,J secondary
