@@ -209,6 +209,10 @@ class EnsembleForecastingWorkflowConfig(BaseConfig):
         default=False,
         description="If True, flatliners are also detected on non-zero values (median of the load).",
     )
+    predict_nonzero_flatliner: bool = Field(
+        default=False,
+        description="If True, predict the median of load measurements instead of zero (only for flatliner model).",
+    )
 
     # Feature engineering
     shifters: list[Shifter] = Field(
@@ -221,8 +225,19 @@ class EnsembleForecastingWorkflowConfig(BaseConfig):
         description="If not None, rolling aggregate(s) of load will be used as features in the model.",
     )
     clip_features: FeatureSelection = Field(
-        default=FeatureSelection(include=None, exclude=None),
-        description="Feature selection for which features to clip.",
+        default=FeatureSelection.ALL,
+        description="Feature selection for which features to clip to their learned range.",
+    )
+    nan_on_outlier_features: FeatureSelection = Field(
+        default=FeatureSelection.NONE,
+        description="Feature selection for which features to replace out-of-range values with NaN. "
+        "Defaults to no features (disabled).",
+    )
+    max_day_lags: int = Field(
+        default=14,
+        description="Maximum number of days to look back for day-based lags. "
+        "Default is 14 days (two weekly cycles). Set to 7 for a single weekly cycle.",
+        ge=1,
     )
     forecaster_sample_weights: dict[str, SampleWeightConfig] = Field(
         default={
@@ -308,7 +323,7 @@ def _checks(config: EnsembleForecastingWorkflowConfig) -> list[Transform[TimeSer
             load_column=config.target_column,
             flatliner_threshold=config.flatliner_threshold,
             detect_non_zero_flatliner=config.detect_non_zero_flatliner,
-            error_on_flatliner=False,
+            error_on_flatliner=True,
         ),
         CompletenessChecker(completeness_threshold=config.completeness_threshold),
     ]
@@ -321,6 +336,8 @@ def _feature_adders(config: EnsembleForecastingWorkflowConfig) -> list[Transform
             horizons=config.horizons,
             add_trivial_lags=True,
             target_column=config.target_column,
+            max_day_lags=config.max_day_lags,
+            lag_fallback_offset=timedelta(days=7),
         ),
         WindPowerFeatureAdder(
             windspeed_reference_column=config.wind_speed_column,
@@ -352,8 +369,14 @@ def _feature_standardizers(
     return cast(
         list[Transform[TimeSeriesDataset, TimeSeriesDataset]],
         [
+            *(
+                [OutlierHandler(mode="standard", selection=config.nan_on_outlier_features, outlier_action="nan")]
+                if config.nan_on_outlier_features != FeatureSelection.NONE
+                else []
+            ),
             OutlierHandler(
-                selection=Include(config.energy_price_column).combine(config.clip_features), mode="standard"
+                selection=Include(config.energy_price_column).combine(config.clip_features),
+                mode="standard",
             ),
             Scaler(selection=Exclude(config.target_column), method="standard"),
             EmptyFeatureRemover(),
@@ -399,6 +422,7 @@ def _build_forecasters(
                                 horizons=config.horizons,
                                 add_trivial_lags=True,
                                 target_column=config.target_column,
+                                max_day_lags=config.max_day_lags,
                             ).features_added()
                         ).difference({"load_lag_P7D"})
                     )
