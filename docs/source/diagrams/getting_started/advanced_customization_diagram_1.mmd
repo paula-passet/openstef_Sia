@@ -1,0 +1,15 @@
+graph TD
+    A[(Raw TimeSeriesDataset)] --> B[Transform]
+    B --> C[TransformPipeline]
+    C --> D[CustomForecastingWorkflow]
+    D --> E([Final Forecast])
+    B1[Feature Engineering] --> C
+    B2[Scaling; Outliers] --> C
+    B3[Lag Creation] --> C
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A secondary
+    class B,C,D primary
+    class B1,B2,B3 accent
+    class E primary
