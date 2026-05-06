@@ -1,0 +1,18 @@
+graph LR
+    A([Aggregate Load]) --> B[ComponentSplitter]
+    B --> C[Solar Component]
+    B --> D[Wind Component]
+    B --> E[Residual Load]
+    C --> F[Solar Pipeline]
+    D --> G[Wind Pipeline]
+    E --> H[Residual Pipeline]
+    F --> I[(Forecast Output)]
+    G --> I
+    H --> I
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B primary
+    class C,D,E accent
+    class F,G,H primary
+    class I secondary
