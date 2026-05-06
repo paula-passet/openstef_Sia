@@ -1,0 +1,16 @@
+graph LR
+    A[(Load Measurements)] --> D[Feature Engineering]
+    B[(Weather Data)] --> D
+    C[(Calendar and Holidays)] --> D
+    D --> E[Lag Features]
+    D --> F[Time Features]
+    D --> G[Weather Features]
+    E --> H[Model Feature Matrix]
+    F --> H
+    G --> H
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class D,E,F,G primary
+    class A,B,C secondary
+    class H accent
