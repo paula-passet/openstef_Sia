@@ -1,0 +1,18 @@
+graph LR
+    A[(TimeSeriesDataset)] --> B[ComponentSplitter]
+    B --> C{fit or predict}
+    C -->|fit| D[Train on History]
+    C -->|predict| E[Decompose Signal]
+    D --> F[Fitted Splitter]
+    E --> G[(EnergyComponentDataset)]
+    G --> H[Solar Column]
+    G --> I[Wind Column]
+    G --> J[Other Column]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class B,C primary
+    class A,G secondary
+    class D,E,F,H,I,J accent
