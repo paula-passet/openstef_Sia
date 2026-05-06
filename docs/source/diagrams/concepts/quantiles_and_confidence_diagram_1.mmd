@@ -1,0 +1,18 @@
+graph TD
+    A[Lead Time = 0h] --> B[Fast Error Growth]
+    B --> C[Growth Slows]
+    C --> D[Plateau Reached]
+    D --> E[Max Uncertainty σ_max]
+
+    F["σ_t = a x 1 - exp-t/τ + b"] --> B
+
+    G[Short Horizon] --> B
+    H[Far Horizon] --> D
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D primary
+    class E,F secondary
+    class G,H accent
