@@ -1,0 +1,21 @@
+graph TD
+    A[Raw Dataset] --> B[Wind and Atmosphere Features]
+    B --> C[Radiation Features]
+    C --> D[Cyclic and Daylight Features]
+    D --> E[Holiday and Datetime Features]
+    E --> F[Rolling Aggregates]
+    F --> G[Outlier Handling]
+    G --> H[Scaling - Standardised]
+
+    A:::accent
+    B:::primary
+    C:::primary
+    D:::primary
+    E:::primary
+    F:::secondary
+    G:::secondary
+    H:::secondary
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
