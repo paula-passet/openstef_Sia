@@ -1,118 +1,120 @@
 Installation
 ============
 
-This page covers everything you need to get OpenSTEF installed: system requirements, the different ways to install the library, optional feature sets, and how to confirm the installation is working. Once you have OpenSTEF installed, head over to :doc:`quickstart` for a minimal working forecast example.
+This page covers everything you need to get OpenSTEF installed: system requirements, the different packages available, optional extras, and how to confirm your installation is working.
+
+Once you have OpenSTEF installed, head over to the :doc:`quickstart` page to run your first forecast.
 
 System Requirements
 -------------------
 
-Before installing, make sure your environment meets the following requirements:
+OpenSTEF requires **Python 3.12 or later** (Python < 4.0). No other system-level dependencies are needed beyond a working Python environment and ``pip``.
 
-- **Python** 3.12 or later (Python 4.x is also supported)
-- **pip** 21.0 or later (for reliable extras resolution)
-- A virtual environment is strongly recommended (``venv``, ``conda``, or similar)
+.. note::
+   Using a virtual environment (``venv``, ``conda``, or similar) is strongly recommended to avoid dependency conflicts with other projects.
 
-OpenSTEF has no mandatory system-level dependencies beyond Python itself. GPU support for XGBoost requires a CUDA-capable device and the appropriate CUDA toolkit, but this is entirely optional.
+Standard Installation
+---------------------
 
-Installing OpenSTEF
--------------------
-
-The simplest way to get started is to install the ``openstef`` meta-package, which pulls in all sub-packages and their default dependencies in one step:
+The simplest way to get started is to install the ``openstef`` meta-package, which pulls in the full framework:
 
 .. code-block:: bash
 
    pip install openstef
 
-This installs the following four packages together:
+This single command installs four packages:
 
-- **openstef-core** — shared data structures, base classes, and dataset utilities
-- **openstef-models** — forecasting models (quantile regression, LightGBM, XGBoost, and more)
-- **openstef-beam** — backtesting, evaluation, analysis, and metrics (BEAM)
-- **openstef-meta** — meta-models that combine the above
+- **openstef-core** — shared data structures, base classes, and utilities used across the framework
+- **openstef-models** — forecasting model implementations (LightGBM, XGBoost, and others)
+- **openstef-beam** — Backtesting, Evaluation, Analysis and Metrics (BEAM) tooling
+- **openstef-meta** — meta-model layer that composes the above into end-to-end pipelines
 
-For most users this single command is all that is needed.
+If you only need part of the framework, see `Installing Individual Packages`_ below.
 
 Installing Individual Packages
-------------------------------
+-------------------------------
 
-If you only need part of the framework — for example, to embed a single model in an existing pipeline — you can install sub-packages individually:
+Each OpenSTEF package can be installed independently. This is useful when you want to minimise your dependency footprint or when deploying components separately.
+
+**openstef-core** — data structures and shared utilities:
 
 .. code-block:: bash
 
-   # Core data structures and utilities only
    pip install openstef-core
 
-   # Models package (includes openstef-core automatically)
-   pip install openstef-models
+Key dependencies: ``joblib``, ``numpy``, ``pandas``, ``pyarrow``, ``pydantic``.
 
-   # BEAM evaluation toolkit
+**openstef-beam** — backtesting, evaluation, and metrics:
+
+.. code-block:: bash
+
    pip install openstef-beam
 
-   # Meta-models (requires openstef-beam and openstef-models)
+Key dependencies: ``openstef-core``, ``plotly``, ``pyyaml``, ``scoringrules``, ``tqdm``.
+
+**openstef-models** — forecasting models:
+
+.. code-block:: bash
+
+   pip install openstef-models
+
+Key dependencies: ``openstef-core``, ``openstef-beam``, ``holidays``, ``mlflow-skinny``, ``pvlib``.
+
+**openstef-meta** — meta-model pipelines:
+
+.. code-block:: bash
+
    pip install openstef-meta
 
-Each package declares its own dependencies, so pip will resolve the minimum required set automatically.
+Key dependencies: ``openstef-beam``, ``openstef-core``, ``openstef-models[lgbm]``.
 
 Optional Dependencies
 ---------------------
 
-Several packages expose optional feature sets that are not installed by default. These are activated using pip's ``[extra]`` syntax.
+Several packages expose optional extras that activate additional functionality. Install them by appending the extra name in square brackets.
 
 openstef-models extras
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The models package ships three optional extras for gradient-boosted tree backends:
+The ``openstef-models`` package ships without a specific gradient-boosting backend by default. Choose the one that fits your hardware:
 
 .. code-block:: bash
 
-   # LightGBM support (recommended for most use cases)
+   # LightGBM backend (recommended for most use cases)
    pip install "openstef-models[lgbm]"
 
-   # XGBoost on CPU (Linux, macOS, Windows)
+   # XGBoost — CPU-optimised build (Linux, Windows, macOS)
    pip install "openstef-models[xgb-cpu]"
 
-   # XGBoost with GPU acceleration (requires CUDA)
+   # XGBoost — GPU build
    pip install "openstef-models[xgb-gpu]"
 
-You can combine extras in a single install:
+You can combine extras:
 
 .. code-block:: bash
 
    pip install "openstef-models[lgbm,xgb-cpu]"
 
-.. note::
-   If you try to use a model that requires an uninstalled extra, OpenSTEF raises a ``MissingExtraError`` with a clear message telling you which extra to install. You will not encounter a bare ``ImportError``.
-
 openstef-beam extras
 ^^^^^^^^^^^^^^^^^^^^
 
-The BEAM package has two optional extras:
-
 .. code-block:: bash
 
-   # Baseline models (pulls in openstef-meta and openstef-models)
+   # Baseline models (requires openstef-meta and openstef-models)
    pip install "openstef-beam[baselines]"
 
-   # S3 filesystem support for reading/writing artifacts from S3
+   # All optional features, including S3 filesystem support
    pip install "openstef-beam[all]"
 
-The ``[all]`` extra includes ``[baselines]`` plus S3 support via ``s3fs``.
+The ``[all]`` extra adds ``s3fs`` for reading and writing data directly to Amazon S3, in addition to the baseline models.
 
-MLflow Integration
-^^^^^^^^^^^^^^^^^^
-
-MLflow is included as a lightweight dependency (``mlflow-skinny``) in ``openstef-models`` by default. This provides experiment tracking and model registry support without the full MLflow server stack. If you need the complete MLflow UI and artifact server, install the full package separately:
-
-.. code-block:: bash
-
-   pip install mlflow
-
-No additional OpenSTEF configuration is required — the ``MLFlowStorage`` and ``MLFlowStorageCallback`` classes in ``openstef_models.integrations.mlflow`` will pick up a full MLflow installation automatically.
+.. note::
+   If you attempt to use a feature that requires a missing extra, OpenSTEF raises a ``MissingExtraError`` with an explicit message telling you exactly which ``pip install`` command to run.
 
 Installing for Development
 --------------------------
 
-To contribute to OpenSTEF or run the test suite, clone the repository and install the package in editable mode with development dependencies:
+To contribute to OpenSTEF or run the test suite, clone the repository and install in editable mode:
 
 .. code-block:: bash
 
@@ -120,57 +122,59 @@ To contribute to OpenSTEF or run the test suite, clone the repository and instal
    cd openstef
    pip install -e ".[dev]"
 
-.. note::
-   Refer to the contributing guide in the repository root for details on running tests, linting, and submitting pull requests.
+Editable mode means changes to the source files are reflected immediately without reinstalling.
 
 Verifying the Installation
 --------------------------
 
-After installation, run the following snippet to confirm that the core packages are importable and print their versions:
+After installation, confirm that the packages are importable and check their versions:
 
 .. code-block:: python
 
    import openstef_core
-   import openstef_models
    import openstef_beam
+   import openstef_models
    import openstef_meta
 
-   print("openstef-core   :", openstef_core.__version__)
-   print("openstef-models :", openstef_models.__version__)
-   print("openstef-beam   :", openstef_beam.__version__)
-   print("openstef-meta   :", openstef_meta.__version__)
+   print(openstef_core.__version__)
+   print(openstef_beam.__version__)
+   print(openstef_models.__version__)
+   print(openstef_meta.__version__)
 
-If all four lines print version strings without errors, the installation is complete.
+All four lines should print a version string without raising an ``ImportError``. If a package is missing, the error message will indicate which ``pip install`` command to run.
 
-To verify that an optional backend such as LightGBM is available, you can do a quick import check:
-
-.. code-block:: python
-
-   try:
-       import lightgbm
-       print("LightGBM available:", lightgbm.__version__)
-   except ImportError:
-       print("LightGBM not installed — run: pip install 'openstef-models[lgbm]'")
-
-Upgrading
----------
-
-To upgrade to the latest release, pass the ``--upgrade`` flag:
+You can also verify from the command line:
 
 .. code-block:: bash
 
-   pip install --upgrade openstef
+   python -c "import openstef_core; print(openstef_core.__version__)"
 
-To upgrade a specific sub-package without touching the others:
+Troubleshooting
+---------------
 
-.. code-block:: bash
+**ImportError after installation**
+   Make sure you are running Python inside the same virtual environment where you ran ``pip install``. Running ``which python`` (macOS/Linux) or ``where python`` (Windows) should point to your environment's interpreter.
 
-   pip install --upgrade openstef-models
+**Version conflicts**
+   If pip reports dependency conflicts, try installing inside a fresh virtual environment:
 
-.. warning::
-   OpenSTEF follows semantic versioning. Minor and patch releases are backwards-compatible, but major releases may introduce breaking changes. Review the changelog before upgrading across a major version boundary.
+   .. code-block:: bash
+
+      python -m venv .venv
+      source .venv/bin/activate   # Windows: .venv\Scripts\activate
+      pip install openstef
+
+**LightGBM or XGBoost not found at runtime**
+   These backends are optional. Install the appropriate extra as described in `Optional Dependencies`_ above.
+
+**MissingExtraError at runtime**
+   OpenSTEF will tell you exactly what to install. Follow the message — for example:
+
+   .. code-block:: bash
+
+      pip install "openstef-beam[all]"
 
 Next Steps
 ----------
 
-With OpenSTEF installed you are ready to run your first forecast. See :doc:`quickstart` for a minimal end-to-end example that trains a model and produces predictions in a few lines of code.
+With OpenSTEF installed, the :doc:`quickstart` page walks you through running your first forecast in a few lines of code.
