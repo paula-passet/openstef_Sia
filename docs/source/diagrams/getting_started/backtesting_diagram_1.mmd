@@ -1,0 +1,15 @@
+graph LR
+    A([start]) --> B[Train Window 1]
+    B --> P1(Predict 1)
+    P1 --> P2(Predict 2)
+    P2 --> C[Train Window 2]
+    C --> P3(Predict 3)
+    P3 --> P4(Predict 4)
+    P4 --> D([end])
+    B -->|grows forward| C
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C secondary
+    class P1,P2,P3,P4 primary
+    class A,D accent
