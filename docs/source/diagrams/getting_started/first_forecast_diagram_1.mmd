@@ -1,0 +1,17 @@
+graph LR
+    A([TimeSeriesDataset]) --> B[TransformPipeline\nPreprocessing]
+    B --> C[Holidays; Lags; Scaling]
+    C --> D[ForecastingModel]
+    D --> E[TransformPipeline\nPostprocessing]
+    E --> F[Quantile Sorting]
+    F --> G[CustomForecastingWorkflow\nfit; predict]
+    G --> H([ForecastDataset\nMetrics])
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,H accent
+    class B,E,G primary
+    class C,F secondary
+    class D primary
