@@ -1,0 +1,17 @@
+graph TD
+    A[Transforms] --> C[Forecasting Models]
+    B[ComponentSplitting] --> C
+    A --> B
+    C --> D[Presets and Workflows]
+    E[Energy Domain] --> A
+    F[General Transforms] --> A
+    G[MLflow Integration] --> D
+    H[ModelSerializer Mixin] --> D
+    I[PredictorCallback Mixin] --> D
+    D --> J[(External Persistence)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class D,C primary
+    class G,J secondary
+    class A,B,E,F,H,I accent
