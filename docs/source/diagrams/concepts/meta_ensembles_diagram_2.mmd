@@ -1,0 +1,18 @@
+graph TD
+    A[Base Forecaster Outputs] --> C[Classifier]
+    B[Additional Features] --> C
+    C --> D[Per-Model Probabilities]
+    D --> E{Selection Mode}
+    E -->|soft| F[Weighted Average]
+    E -->|hard| G[Argmax Selection]
+    F --> H[Final Forecast]
+    G --> H
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class C,D primary
+    class A,B secondary
+    class E accent
+    class F,G,H primary
