@@ -1,0 +1,20 @@
+graph TD
+    A[t = 0 hours] --> B[Uncertainty Grows Fast]
+    B --> C[t = tau hours]
+    C --> D[Growth Slows Down]
+    D --> E[t = far horizon]
+    E --> F[Asymptotic Level a plus b]
+
+    T1([tau = far_horizon divided by 4])
+    T2([sigma = a times 1 minus e to neg t over tau plus b])
+
+    C --- T1
+    F --- T2
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,D primary
+    class C,E secondary
+    class T1,T2,F accent
