@@ -1,0 +1,16 @@
+graph LR
+    A([Forecast Start]) --> B[Median P50]
+    B --> C[Narrow Band\nP30 to P70]
+    B --> D[Wide Band\nP10 to P90]
+    C --> E([Near Horizon])
+    D --> F([Far Horizon])
+    E --> G[60 pct Interval]
+    F --> H[80 pct Interval]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B primary
+    class C,D secondary
+    class E,F,G,H accent
