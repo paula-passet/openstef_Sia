@@ -1,0 +1,15 @@
+graph TD
+    A[(Train Dataset)] --> B[train method]
+    V[(Validation Dataset)] --> B
+    B --> C[ForecastingModel fit]
+    C --> D[(Model Storage write)]
+    E[(Forecast Dataset)] --> F[predict method]
+    D -->|read model| F
+    F --> G[ForecastingModel predict]
+    G --> H([Forecast Output])
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,F primary
+    class C,G secondary
+    class A,V,E,D,H accent
