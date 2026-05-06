@@ -1,0 +1,19 @@
+graph TD
+    A[WorkflowConfig] --> B[EnsembleForecastingModel]
+    C[openstef_models] -->|base forecasters| D[Forecaster 1]
+    C -->|base forecasters| E[Forecaster N]
+    F[openstef_core] -->|base forecasters| D
+    F -->|base forecasters| E
+    D --> G[ForecastCombiner]
+    E --> G
+    G --> H[Ensemble Output]
+    B --> G
+    I[openstef_beam] -->|distributed exec| B
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,G,H primary
+    class B,D,E secondary
+    class C,F,I accent
