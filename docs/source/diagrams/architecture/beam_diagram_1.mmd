@@ -1,0 +1,20 @@
+graph TD
+    A[BenchmarkPipeline] --> B[TargetProvider]
+    A --> C[ForecasterFactory]
+    B -->|targets| D[BacktestPipeline]
+    C -->|models| D
+    D -->|forecast series| E[EvaluationPipeline]
+    E -->|EvaluationReport| F[(BenchmarkStorage)]
+    F -->|all reports| G[AnalysisPipeline]
+    G --> H[Final Summary]
+    F -.->|stored reports| I[BenchmarkComparisonPipeline]
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A primary
+    class D,E,G,I primary
+    class F secondary
+    class B,C accent
+    class H accent
