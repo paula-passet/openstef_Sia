@@ -1,0 +1,17 @@
+graph LR
+    A([Data Arrives]) --> B[Validation Checks]
+    B -->|pass| C[Primary Model]
+    B -->|fail| F[Fallback Model]
+    C --> D{Staleness Gate}
+    D -->|pass| E([Output])
+    D -->|fail| F[Fallback Model]
+    F --> E
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B primary
+    class C,D secondary
+    class F accent
+    class E primary
