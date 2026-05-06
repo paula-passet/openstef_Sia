@@ -1,18 +1,16 @@
 Quickstart
 ==========
 
-This page walks you through producing your first energy forecast with OpenSTEF in under a minute of reading. You will generate synthetic load data, configure a preset forecasting workflow, train a model, and retrieve predictions — all in a single self-contained script.
+This page walks you through producing your first energy forecast with OpenSTEF in under five minutes. You will generate synthetic load data, configure a preset forecasting workflow, train a model, and retrieve probabilistic predictions — all in a single script.
 
-Before running the example, make sure OpenSTEF is installed. See the :doc:`installation` page if you have not done that yet.
+Before continuing, make sure OpenSTEF is installed. See the :doc:`installation` page if you have not done that yet.
 
 .. mermaid:: /diagrams/getting_started/quickstart_diagram_1.mmd
 
----
-
-Your First Forecast
+The Minimal Example
 -------------------
 
-The snippet below is copy-paste ready. It uses ``openstef_core.testing.create_synthetic_forecasting_dataset`` to avoid any dependency on real data files, so nothing needs to be downloaded or prepared in advance.
+The script below is complete and copy-paste ready. It uses only OpenSTEF built-ins: a synthetic dataset generator and the ``openstef_models`` preset workflow.
 
 .. code-block:: python
 
@@ -22,8 +20,8 @@ The snippet below is copy-paste ready. It uses ``openstef_core.testing.create_sy
 
     from openstef_core.testing import create_synthetic_forecasting_dataset
     from openstef_core.types import LeadTime, Q
-    from openstef_models.presets import ForecastingWorkflowConfig, create_forecasting_workflow
     from openstef_models.integrations.mlflow import MLFlowStorage
+    from openstef_models.presets import ForecastingWorkflowConfig, create_forecasting_workflow
 
     logging.basicConfig(level=logging.INFO, format="[%(asctime)s][%(levelname)s] %(message)s")
 
@@ -52,100 +50,90 @@ The snippet below is copy-paste ready. It uses ``openstef_core.testing.create_sy
     )
 
     # 3. Train
-    workflow.fit(dataset)
+    result = workflow.fit(dataset)
+    if result is not None:
+        print(result.metrics_full.to_dataframe())
 
     # 4. Predict
     forecast = workflow.predict(dataset)
-    print(forecast)
+    print(forecast.data.tail())
 
-Run this script from any directory. MLflow artefacts are written to ``mlflow_tracking/`` and ``mlflow_tracking_artifacts/`` relative to the working directory.
+Running this script trains a gradient-boosted linear model on the synthetic series and prints the last few rows of the forecast, including the 10th, 50th, and 90th percentile predictions.
 
-.. note:: [VISUALIZATION: Example console output showing a ForecastDataset with columns quantile_P10, quantile_P50, quantile_P90 and a DatetimeIndex covering the 36-hour horizon]
+.. note:: [VISUALIZATION: Example forecast output table showing timestamp index with columns for p10, p50, p90 quantile predictions]
 
----
+Step-by-Step Breakdown
+----------------------
 
-What Each Step Does
--------------------
+Generating data
+^^^^^^^^^^^^^^^
 
-**Synthetic data**
+``create_synthetic_forecasting_dataset`` produces a :class:`~openstef_core.datasets.timeseries_dataset.TimeSeriesDataset` with a ``load`` target column and weather-like feature columns (wind, temperature, radiation). The influence parameters control how strongly each feature drives the synthetic load signal. For real projects you would replace this call with your own ``TimeSeriesDataset``, but the synthetic generator is useful for experimenting without needing live data.
 
-``create_synthetic_forecasting_dataset`` returns a ``TimeSeriesDataset`` whose target column is a realistic-looking load signal composed of configurable physical influences (wind, temperature, solar radiation) plus a stochastic noise term. The default start date is ``2025-01-01T00:00:00+00:00`` and the default length is nine months; the example above shortens this to 90 days to keep training fast.
+Configuring the workflow
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Preset configuration**
+``ForecastingWorkflowConfig`` is a Pydantic model that bundles everything the preset needs:
 
-``ForecastingWorkflowConfig`` is a Pydantic model that bundles everything the workflow needs:
+- **model_id** — a unique string identifier stored alongside the trained artefacts in MLflow.
+- **model** — the underlying booster. Supported values include ``"xgboost"``, ``"gblinear"``, and ``"lgbm"``.
+- **horizons** — a list of :class:`~openstef_core.types.LeadTime` values expressed as ISO 8601 duration strings (e.g. ``"PT36H"`` for 36 hours ahead). The workflow trains one sub-model per horizon.
+- **quantiles** — probability levels for uncertainty estimation. ``Q(0.5)`` is the median; adding ``Q(0.1)`` and ``Q(0.9)`` gives you an 80 % prediction interval.
+- **mlflow_storage** — tells the workflow where to persist model artefacts and metrics. The paths above write to the current working directory.
 
-- ``model_id`` — a unique string identifier used to store and retrieve the trained model in MLflow.
-- ``model`` — the underlying booster type. ``"gblinear"`` is a good default; other options include ``"xgb"`` and ``"lgbm"``.
-- ``horizons`` — a list of :class:`LeadTime` values expressed as ISO 8601 durations (e.g. ``"PT36H"`` = 36 hours ahead). Currently one horizon per workflow is supported.
-- ``quantiles`` — probability levels for uncertainty estimation. ``Q(0.5)`` is the median; ``Q(0.1)`` and ``Q(0.9)`` form an 80 % prediction interval.
-- ``mlflow_storage`` — tells the workflow where to persist trained model artefacts.
+``create_forecasting_workflow`` returns a ``CustomForecastingWorkflow`` instance wired up with the feature engineering pipeline, the chosen model, and the MLflow backend.
 
-**Creating the workflow**
+Training
+^^^^^^^^
 
-``create_forecasting_workflow(config)`` returns a ``CustomForecastingWorkflow`` instance wired up with the feature engineering pipeline, the chosen model, and MLflow callbacks. You do not need to assemble these components manually for standard use cases.
-
-**Fit and predict**
-
-``workflow.fit(dataset)`` trains the model on the full dataset you pass in. ``workflow.predict(dataset)`` uses the same dataset as context and returns a ``ForecastDataset`` — a ``TimeSeriesDataset`` whose columns are named ``quantile_P10``, ``quantile_P50``, ``quantile_P90`` (matching the quantiles you configured).
-
----
-
-Adjusting the Synthetic Data
------------------------------
-
-``create_synthetic_forecasting_dataset`` accepts several keyword arguments that let you shape the signal without touching real data:
-
-.. code-block:: python
-
-    from openstef_core.testing import create_synthetic_forecasting_dataset
-    from datetime import datetime, timedelta, timezone
-
-    dataset = create_synthetic_forecasting_dataset(
-        start=datetime(2024, 1, 1, tzinfo=timezone.utc),
-        length=timedelta(days=180),
-        sample_interval=timedelta(minutes=15),   # 15-minute resolution
-        wind_influence=-15.0,
-        temp_influence=8.0,
-        radiation_influence=-10.0,
-        stochastic_influence=3.0,
-        include_atmosphere=True,   # adds pressure / humidity columns
-        include_price=True,        # adds an electricity price column
-        random_seed=0,
-    )
-
-Setting ``include_atmosphere=True`` or ``include_price=True`` adds extra feature columns that the model can exploit. The ``random_seed`` parameter makes runs reproducible.
-
----
-
-Changing the Forecast Horizon
-------------------------------
-
-Swap the ``horizons`` argument to target a different look-ahead window:
-
-.. code-block:: python
-
-    from openstef_core.types import LeadTime
-
-    # 24-hour horizon instead of 36
-    horizons=[LeadTime.from_string("PT24H")]
-
-    # 48-hour horizon
-    horizons=[LeadTime.from_string("PT48H")]
-
-Lead times are expressed as ISO 8601 duration strings. ``PT`` prefixes hours and minutes; ``P`` prefixes days (e.g. ``P2D`` = 48 hours).
-
----
-
-Next Steps
-----------
-
-Once the basic example works, explore the rest of the getting-started section:
-
-- **Installation** — system requirements, optional extras, and virtual-environment setup: :doc:`installation`.
-- **Concepts** — understand ``TimeSeriesDataset``, ``LeadTime``, quantiles, and the workflow abstraction before customising further.
-- **Tutorials** — step-by-step guides for real data ingestion, custom feature transforms, and ensemble workflows.
+``workflow.fit(dataset)`` runs the full training pipeline: feature engineering, train/validation splitting, model fitting, and evaluation. The returned ``result`` object exposes ``metrics_full`` and ``metrics_test`` DataFrames so you can inspect R² and other scores immediately after training.
 
 .. note::
 
-   The ``MLFlowStorage`` used above writes to the local filesystem. For team or production use you will want to point ``tracking_uri`` at a remote MLflow server. See the MLflow integration documentation for details.
+   ``fit`` returns ``None`` when the workflow determines there is insufficient data to evaluate. This is normal for very short datasets; the model is still trained.
+
+Predicting
+^^^^^^^^^^
+
+``workflow.predict(dataset)`` generates forecasts for all configured horizons and quantiles. The return value is a :class:`~openstef_core.datasets.ForecastDataset`. Its most useful attributes are:
+
+- ``forecast.data`` — the full DataFrame of quantile predictions indexed by timestamp.
+- ``forecast.median_series`` — a convenience accessor for the ``Q(0.5)`` column.
+- ``forecast.quantiles_data`` — a dict mapping each quantile to its prediction series.
+
+Visualising the Result
+----------------------
+
+OpenSTEF ships a Plotly-based plotter in ``openstef_beam`` for interactive HTML charts. Append the following lines to the script above:
+
+.. code-block:: python
+
+    from openstef_beam.analysis.plots import ForecastTimeSeriesPlotter
+
+    fig = (
+        ForecastTimeSeriesPlotter()
+        .add_measurements(measurements=dataset.select_version().data["load"])
+        .add_model(
+            model_name="gblinear",
+            forecast=forecast.median_series,
+            quantiles=forecast.quantiles_data,
+        )
+        .plot()
+    )
+    fig.write_html("forecast_plot.html")
+
+Open ``forecast_plot.html`` in any browser to see the observed load overlaid with the median forecast and the shaded uncertainty band.
+
+.. note:: [VISUALIZATION: Interactive Plotly chart showing observed load (grey line), median forecast (blue line), and shaded 10th–90th percentile band over a 36-hour horizon]
+
+What to Do Next
+---------------
+
+This example uses all default hyperparameters and a single horizon. Once you are comfortable with the basic loop, you can:
+
+- **Add more horizons** — pass multiple ``LeadTime`` values to ``horizons`` to train a multi-horizon model in one call.
+- **Tune hyperparameters** — ``ForecastingWorkflowConfig`` exposes ``xgboost_hyperparams``, ``gblinear_hyperparams``, and ``lgbm_hyperparams`` fields for fine-grained control.
+- **Use real data** — construct a ``TimeSeriesDataset`` from a pandas DataFrame with your own load and weather columns.
+- **Switch to an ensemble** — ``openstef_meta`` provides ``create_ensemble_forecasting_workflow`` and ``EnsembleForecastingWorkflowConfig`` for combining multiple base models.
+
+Refer to the other pages in this section for installation details and deeper configuration options.
