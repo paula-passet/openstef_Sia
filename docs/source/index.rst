@@ -1,171 +1,54 @@
-.. SPDX-FileCopyrightText: 2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
-..
-.. SPDX-License-Identifier: MPL-2.0
+OpenSTEF Documentation
+======================
 
-.. title:: OpenSTEF documentation
+**OpenSTEF** (Open Short-Term Energy Forecasting) is an open-source Python library for
+building and running short-term energy load forecasts — predicting grid load hours to
+days ahead. It provides end-to-end ML pipelines covering data preprocessing, feature
+engineering, model training, probabilistic forecasting, and evaluation, with built-in
+domain knowledge for energy systems such as PV generation estimates from solar radiation
+and temperature data.
 
-.. module:: openstef
+OpenSTEF is built for **data scientists and ML engineers** working at grid operators,
+energy companies, or research institutions who need reliable, production-ready forecasting
+infrastructure without building it from scratch.
+
+.. note:: [VISUALIZATION: OpenSTEF high-level pipeline — raw energy data in, probabilistic load forecast out]
+
+Getting Started
+---------------
+
+If you are new to OpenSTEF, the **Getting Started** section walks you through
+installation and your first forecast in minutes. From there, the **User Guide** covers
+the core concepts in depth: how pipelines are structured, how models are trained and
+stored, and how to configure forecasting for your own grid locations.
+
+For a complete reference of every class, function, and parameter, the **API Reference**
+is generated directly from the source code. If you want to extend OpenSTEF — adding a
+custom model, a new feature set, or an integration with an external system — the
+**Developer Guide** explains the architecture and contribution workflow.
+
+Community & Support
+-------------------
+
+OpenSTEF is a `LF Energy <https://www.lfenergy.org/projects/openstef/>`_ project
+developed openly on `GitHub <https://github.com/OpenSTEF/openstef>`_. The fastest way
+to get help or discuss ideas is the community **Slack workspace** at
+`slack.lfenergy.org <https://slack.lfenergy.org/>`_. You can also reach the team by
+email at `openstef@lfenergy.org <mailto:openstef@lfenergy.org>`_.
+
+The community holds open bi-weekly meetings — details and calendar invites are on the
+`community meeting page <https://lf-energy.atlassian.net/wiki/spaces/OS/pages/32278358/OpenSTEF+four-weekly+community+meeting>`_.
+Bug reports and feature requests go to
+`GitHub Issues <https://github.com/OpenSTEF/openstef/issues>`_.
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
-   :titlesonly:
+   :caption: Contents
+   :hidden:
 
-   User Guide <user_guide/index>
-   API <api/index>
-   Community <project/index>
-   Contributing <contribute/index>
+   getting_started/index
+   user_guide/index
+   concepts/index
+   architecture/index
+   faq
    changelog
-   examples
-
-##################################
-OpenSTEF 4.0.0 documentation
-##################################
-
-
-OpenSTEF is a library for creating short term forecasts for the energy sector. 
-It contains all components for the machine learning pipeline required to make a forecast.
-
-Install
-=======
-
-.. tab-set::
-    :class: sd-width-content-min
-
-    .. tab-item:: pip
-
-        .. code-block:: bash
-
-            pip install openstef
-
-    .. tab-item:: uv
-
-        .. code-block:: bash
-
-            uv add openstef
-
-    .. tab-item:: conda
-
-        .. code-block:: bash
-
-            conda install -c conda-forge openstef
-
-    .. tab-item:: pixi
-
-        .. code-block:: bash
-
-            pixi add openstef
-
-    .. tab-item:: other
-
-        .. rst-class:: section-toc
-
-        :doc:`user_guide/installation`
-
-
-For more detailed instructions, see the
-:doc:`installation guide <user_guide/installation>`.
-
-Learn
-=====
-
-.. grid:: 1 1 2 2
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **How to use OpenSTEF?**
-        ^^^
-
-        * :doc:`user_guide/installation`
-        * :doc:`user_guide/quick_start`
-        * :doc:`user_guide/tutorials`
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 6
-
-        **What can OpenSTEF do?**
-        ^^^
-
-        * :doc:`user_guide/intro/index`
-        * :doc:`examples`
-
-
-    .. grid-item-card::
-        :padding: 2
-        :columns: 12
-
-        **Reference**
-        ^^^
-
-        .. grid:: 1 1 2 2
-            :class-row: sd-align-minor-center
-
-            .. grid-item::
-
-                * :doc:`API reference <api/index>`
-
-            .. grid-item::
-
-                References for OpenSTEF's components:
-
-                - openstef-models: Core forecasting models and feature engineering
-                - openstef-beam: Backtesting, evaluation, analysis and metrics
-                - openstef-core: Core utilities, dataset types, shared types and base models
-
-
-What's new
-==========
-
-.. grid:: 1 1 2 2
-
-    .. grid-item::
-
-       Learn about new features and API changes.
-
-    .. grid-item::
-        
-        * :doc:`changelog`
-
-Contribute
-==========
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        OpenSTEF is an LF Energy community maintained for and by its users. See
-        :ref:`contributing` for the many ways you can help!
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * :ref:`submitting-a-bug-report`
-        * :ref:`contribute_guide`
-        * :ref:`development_workflow`
-        * :ref:`contribution_guideline`
-
-
-
-About OpenSTEF
-==============
-
-.. grid:: 1 1 2 2
-    :class-row: sd-align-minor-center
-
-    .. grid-item::
-
-        Here you can find all information about the OpenSTEF community.
-
-    .. grid-item::
-        .. rst-class:: section-toc
-
-        * `Linux Foundation project page <https://www.lfenergy.org/projects/openstef/>`_
-        * `Video About OpenSTEF <https://www.lfenergy.org/forecasting-to-create-a-more-resilient-optimized-grid/>`_
-        * :doc:`project/committee`
-        * :doc:`project/maintainers`
-        * :doc:`project/citing`
-        * :doc:`project/license`
