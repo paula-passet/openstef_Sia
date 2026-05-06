@@ -1,0 +1,14 @@
+graph LR
+    A[Upgrade Python 3.12] --> B[Upgrade Package]
+    B --> C[Replace PredictionJob]
+    C --> D[Replace Pipeline Calls]
+    D --> E[Update Import Paths]
+    E --> F[Remove MLflow Args]
+    F --> G[Migrate Evaluation]
+    G --> H[Run Test Suite]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C,D primary
+    class E,F secondary
+    class G,H accent
