@@ -1,0 +1,17 @@
+graph TD
+    A[TimeSeriesDataset Part 1] --> D[VersionedTimeSeriesDataset]
+    B[TimeSeriesDataset Part 2] --> D
+    C[TimeSeriesDataset Part N] --> D
+    D --> E[select_version called]
+    E --> F{Filter by available_at}
+    F -->|data available| G[Point-in-Time View]
+    F -->|not yet available| H[Excluded - future data]
+    G --> I[No Look-Ahead Bias]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C primary
+    class D,E secondary
+    class F accent
+    class G,I primary
+    class H secondary
