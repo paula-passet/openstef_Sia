@@ -1,0 +1,13 @@
+graph LR
+    A[(S3 / InfluxDB)] --> D[Load as DataFrame]
+    B[(PostgreSQL)] --> D
+    C[(Databricks)] --> D
+    D --> E[Validate Inputs]
+    E --> F[OpenSTEF Pipeline]
+    F --> G[Generate Forecasts]
+    G --> H[(Write to Storage)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class D,E,F,G primary
+    class A,B,C,H secondary
