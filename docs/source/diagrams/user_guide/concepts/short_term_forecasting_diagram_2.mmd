@@ -1,0 +1,16 @@
+graph LR
+    A[(Raw Measurements)] --> C[Preprocessing]
+    B[(Weather Data)] --> C
+    C --> D[Feature Engineering]
+    D --> E[Model Training]
+    D --> F[Prediction]
+    E --> F
+    F --> G[Probabilistic Forecast]
+    G --> H[Backtesting Evaluation]
+    H -->|feedback| E
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class C,D,E,F primary
+    class A,B secondary
+    class G,H accent

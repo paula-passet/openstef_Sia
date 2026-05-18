@@ -1,0 +1,18 @@
+graph LR
+    A[Very Short-Term] --> B[Intra-Day]
+    B --> C[Day-Ahead]
+    C --> D[Multi-Day]
+    A --- A1([15 min ahead])
+    B --- B1([1-6 hours ahead])
+    C --- C1([12-36 hours ahead])
+    D --- D1([2-7 days ahead])
+    A1 --- A2[Real-time balancing]
+    B1 --- B2[Congestion management]
+    C1 --- C2[Energy trading]
+    D1 --- D2[Maintenance planning]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C,D primary
+    class A1,B1,C1,D1 secondary
+    class A2,B2,C2,D2 accent

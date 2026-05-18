@@ -1,0 +1,17 @@
+graph TD
+    A[Update Import Paths] --> B{Uses Integer Quantiles?}
+    B -->|Yes| C[Convert to 0-1 Floats]
+    B -->|No| D[Remove Deprecated Fields]
+    C --> D
+    D --> E{Uses MLflow?}
+    E -->|Yes| F[Create MLFlowStorageCallback]
+    E -->|No| G[Remove mlflow params]
+    F --> H[Pass Callbacks to Pipelines]
+    G --> H
+    H --> I[Run and Verify Output]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,C,D,F,G,H primary
+    class I secondary
+    class B,E accent

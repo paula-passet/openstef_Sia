@@ -1,0 +1,14 @@
+graph LR
+    A[(Raw TimeSeriesDataset)] --> B[TransformPipeline]
+    B --> C[LagsAdder]
+    C --> D[WindPowerFeatureAdder]
+    D --> E[RollingAggregateAdder]
+    E --> F[(Enriched TimeSeriesDataset)]
+    F --> G[Model Training]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B primary
+    class C,D,E accent
+    class A,F secondary
+    class G primary

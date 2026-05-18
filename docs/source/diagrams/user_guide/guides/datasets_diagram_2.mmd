@@ -1,0 +1,17 @@
+graph LR
+    A[(Raw Data Source)] --> B[Load into Dataset]
+    B --> C[Filter by Time Range]
+    C --> D[Select Version Snapshot]
+    D --> E[Split Data]
+    E --> F[Train Set]
+    E --> G[Validation Set]
+    E --> H[Test Set]
+    F --> I[Training Pipeline]
+    G --> I
+    H --> I
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B,C,D,E primary
+    class A,I secondary
+    class F,G,H accent
