@@ -1,0 +1,16 @@
+graph LR
+    A[(Load Measurements)] --> D[Data Preprocessing]
+    B[(Weather Forecasts)] --> D
+    C[(Market and Calendar)] --> D
+    D --> E[OpenSTEF Model]
+    E --> F[Probabilistic Predictions]
+    F --> G{Operational Decisions}
+    G --> H[Congestion Management]
+    G --> I[Transport Forecasts]
+    G --> J[Grid Loss Optimization]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class D,E,F primary
+    class A,B,C secondary
+    class G,H,I,J accent

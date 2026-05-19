@@ -1,0 +1,16 @@
+graph TD
+    A{Non-linear relationship?}
+    A -->|Yes| B{Large dataset?}
+    A -->|No| C{Need extrapolation?}
+    B -->|Yes| D[LightGBM Trees]
+    B -->|No| E[XGBoost Trees]
+    C -->|Yes| F{Prefer LightGBM?}
+    C -->|No| G[Baseline Models]
+    F -->|Yes| H[LightGBM Linear]
+    F -->|No| I[GBLinear]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,C primary
+    class D,E,H,I secondary
+    class F,G accent
