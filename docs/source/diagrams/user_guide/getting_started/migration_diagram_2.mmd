@@ -1,0 +1,19 @@
+graph TD
+    subgraph V3["V3 Pipeline"]
+        A[Import Pipeline Function] --> B[Fetch Data Manually]
+        B --> C[Call train_model_pipeline]
+        C --> D[Write Results Manually]
+    end
+
+    subgraph V4["V4 Workflow"]
+        E[Define Config] --> F[Create Workflow via Preset]
+        F --> G[Workflow Handles All Steps]
+        G --> H[Results Stored Automatically]
+    end
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+
+    class A,B,C,D accent
+    class E,F,G,H primary

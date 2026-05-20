@@ -1,0 +1,14 @@
+graph LR
+    A[Raw DataFrame] -->|validate| B[ForecastInputDataset]
+    B -->|train| C[Fit Model]
+    B -->|inference| D[Predict]
+    C --> D
+    D -->|output| E[ForecastDataset]
+    E --> F[Point Forecasts]
+    E --> G[Quantile Bands]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B primary
+    class C,D secondary
+    class E,F,G accent

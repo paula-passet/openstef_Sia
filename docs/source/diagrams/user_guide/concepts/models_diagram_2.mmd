@@ -1,0 +1,16 @@
+graph LR
+    A[(Raw Data)] --> B[Completeness Check]
+    B --> C[Cyclic Features]
+    C --> D[Lags and Weather]
+    D --> E[Scaling and Cleaning]
+    E --> F[Forecaster]
+    F --> G[Postprocessing]
+    G --> H[(Final Forecast)]
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class B primary
+    class C,D,E primary
+    class F secondary
+    class G accent
+    class A,H secondary

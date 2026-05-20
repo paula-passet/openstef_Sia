@@ -1,0 +1,25 @@
+graph TD
+    T[Target: Monday 14:00]
+    V1[Sat 06:00 - predicts 18C]
+    V2[Sun 12:00 - predicts 20C]
+    V3[Mon 06:00 - predicts 19.5C]
+    P[Prediction Time: Sun 18:00]
+    S[Selected: Sun 12:00 version]
+    R[Later versions are leakage]
+
+    V1 --> T
+    V2 --> T
+    V3 --> T
+    P -->|latest available| S
+    S -->|uses| V2
+    V3 -.->|not yet issued| R
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    classDef danger fill:#ff6b6b,stroke:#1E3A5F,stroke-width:2px,color:#000
+
+    class T secondary
+    class V1,V2,V3 accent
+    class P,S primary
+    class R danger
