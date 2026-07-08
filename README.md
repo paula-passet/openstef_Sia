@@ -17,17 +17,17 @@ SPDX-License-Identifier: MPL-2.0
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5585/badge)](https://bestpractices.coreinfrastructure.org/projects/5585)
 [![License: MPL-2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](LICENSE.md)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
-[![Release](https://img.shields.io/badge/release-v4.0.0-blue.svg)](https://github.com/paula-passet/openstef_Sia/releases/tag/release/v4.0.0)
+[![Release](https://img.shields.io/badge/release-v4.0.1-blue.svg)](https://github.com/paula-passet/openstef_Sia/releases/tag/v4.0.1)
 
 ## What is OpenSTEF
 
-**OpenSTEF** (Open Short-Term Energy Forecasting) is an open-source, model-agnostic Python framework for creating short-term forecasts in the energy sector. It provides complete machine learning pipelines for data preprocessing, feature engineering, model training, probabilistic forecasting, and evaluation. Version 4.0.0 introduces a complete architectural refactor with enhanced modularity, full type safety, and modern Python development practices.
+**OpenSTEF** (Open Short-Term Energy Forecasting) is an open-source, model-agnostic Python framework for creating short-term forecasts in the energy sector. It provides complete machine learning pipelines for data preprocessing, feature engineering, model training, probabilistic forecasting, and evaluation. Version 4.0.1 continues the architectural refactor introduced in 4.0.0 with enhanced modularity, full type safety, and modern Python development practices.
 
 For more information, visit the [OpenSTEF project page at LF Energy](https://www.lfenergy.org/projects/openstef/).
 
 ## Monorepo Overview
 
-OpenSTEF 4.0.0 is organized as a monorepo with specialized packages under the `packages/` directory:
+OpenSTEF is organized as a monorepo with specialized packages under the `packages/` directory:
 
 | Package | Purpose |
 |---------|---------|
@@ -70,6 +70,7 @@ Tutorials and usage examples are available in the [`examples/`](examples/) folde
 
 - Forecasting quickstart
 - Feature engineering
+- Backtesting quickstart
 
 Additional tutorials are available in the [online documentation](https://openstef.github.io/openstef/user_guide/tutorials.html).
 
@@ -107,11 +108,10 @@ uv run poe all
 If you use OpenSTEF in your research or publications, please cite the project. Refer to the [CITATION.cff](CITATION.cff) file in this repository for the preferred citation format, or use:
 
 > Contributors to the OpenSTEF project. *OpenSTEF — Open Short-Term Energy Forecasting*. LF Energy, 2017–2025. Available at: https://github.com/OpenSTEF/openstef
-
 ## Contact
 
 - **Slack:** [LF Energy Slack](https://slack.lfenergy.org/)
 - **Email:** openstef@lfenergy.org
 - **Community meeting:** [OpenSTEF four-weekly community meeting](https://lf-energy.atlassian.net/wiki/spaces/OS/pages/32278358/OpenSTEF+four-weekly+community+meeting)
-- **Issues:** [GitHub Issue Tracker](https://github.com/OpenSTEF/openstef/issues)
+- **Issues:** [GitHub Issue Tracker](https://github.com/paula-passet/openstef_Sia/issues)
 - **Support Guide:** [How to get help](https://openstef.github.io/openstef/project/support.html)
