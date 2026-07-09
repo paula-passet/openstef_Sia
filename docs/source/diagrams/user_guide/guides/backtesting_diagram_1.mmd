@@ -1,0 +1,24 @@
+graph LR
+    A[Historical Data] --> B[Step 1: Train]
+    B --> C[Step 1: Predict]
+    C --> D[Step 2: Train]
+    D --> E[Step 2: Predict]
+    E --> F[Step N: Predict]
+    F --> G[Collect All Forecasts]
+    G --> H[Slice by Lead Time]
+    H --> I[Per-Horizon Metrics]
+
+    subgraph Constraint
+        J[Future Data Blocked]
+    end
+
+    C -.-> J
+    E -.-> J
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
+    class A,B,D primary
+    class C,E,F secondary
+    class G,H,I accent
+    class J secondary
