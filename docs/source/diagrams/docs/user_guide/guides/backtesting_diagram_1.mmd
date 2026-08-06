@@ -1,0 +1,23 @@
+graph LR
+    A[(Historical Data)] --> B[BacktestPipeline]
+    B --> C[Step t1: Train]
+    C --> D[Step t1: Predict]
+    D --> E[Step t2: Train]
+    E --> F[Step t2: Predict]
+    F --> G[Step tN: ...]
+    G --> H[EvaluationPipeline]
+    H --> I[Per-Horizon Metrics]
+
+    J([RestrictedHorizonVersionedTimeSeries]) -.->|blocks future| C
+    J -.->|blocks future| E
+
+    D -->|15min; 1h; 4h| H
+    F -->|15min; 1h; 4h| H
+
+    class B,C,D,E,F,G primary
+    class A,I secondary
+    class J,H accent
+
+    classDef primary fill:#00D9C5,stroke:#1E3A5F,stroke-width:2px,color:#000
+    classDef secondary fill:#1E3A5F,stroke:#00D9C5,stroke-width:2px,color:#fff
+    classDef accent fill:#e6f7f5,stroke:#00D9C5,stroke-width:2px,color:#000
