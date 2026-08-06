@@ -2,11 +2,11 @@
 # jupyter:
 #   jupytext:
 #     formats: ipynb,py:percent
+#     notebook_metadata_filter: -jupytext.text_representation.jupytext_version
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: .venv
 #     language: python
@@ -162,7 +162,7 @@ config = ForecastingWorkflowConfig(
     pressure_column="surface_pressure",
     xgboost_hyperparams=XGBoostHyperParams(
         # Tuned — custom bounds
-        learning_rate=FloatRange(0.01, 0.3, log=True, tune=True),  # pyright: ignore[reportCallIssue]
+        learning_rate=FloatRange(0.01, 0.3, log=True, tune=True),
         n_estimators=IntRange(50, 300, tune=True),
         # Tuned — inherits class-level bounds [1, 15]
         max_depth=IntRange(tune=True),
