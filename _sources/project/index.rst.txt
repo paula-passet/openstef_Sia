@@ -15,7 +15,9 @@ Community
 =========
 Here you can find all information about the OpenSTEF community.
 
-.. include:: governance.rst
+.. include:: committee.rst
+
+.. include:: maintainers.rst
 
 
 Roadmap
