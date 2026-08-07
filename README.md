@@ -1,3 +1,17 @@
+Now I have enough information to make the necessary updates. Based on the changes, I need to:
+
+1. The monorepo table needs to include `openstef-foundation-models` as a new package.
+2. The install section needs to already include `openstef-foundation-models` (it does).
+3. The examples section should mention the new deployment examples (Dagster, Airflow, Celery) and foundation model tutorial.
+4. The logo was updated (PR #951) - but the existing README already references the correct path.
+
+Let me check what specifically needs updating:
+
+- **Monorepo table**: Missing `openstef-foundation-models` package - needs to be added.
+- **Examples section**: Should mention deployment examples and foundation model forecasting tutorial since PR #943 and #967 added these.
+- Everything else looks accurate.
+
+```rst
 <!--
 SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
 
@@ -45,6 +59,7 @@ OpenSTEF 4.0.0 is organized as a monorepo with specialized packages under the `p
 | **openstef-models** | ML models, feature engineering, data processing |
 | **openstef-beam** | Backtesting, Evaluation, Analysis, and Metrics |
 | **openstef-meta** | Meta models for OpenSTEF |
+| **openstef-foundation-models** | Foundation-model forecasting (Chronos-2) with ONNX inference |
 
 ## How to Install
 
@@ -98,6 +113,8 @@ Tutorials and usage examples are available in the [`examples/`](examples/) folde
 
 - Forecasting quickstart
 - Feature engineering
+- Foundation-model forecasting (zero-shot with Chronos-2)
+- Deployment examples for Dagster, Airflow, and Celery orchestration
 
 Additional tutorials are available in the [online documentation](https://openstef.github.io/openstef/examples.html).
 
@@ -146,3 +163,4 @@ If you use OpenSTEF in your research or publications, please cite the project. R
 - **Community meeting:** [OpenSTEF four-weekly community meeting](https://lf-energy.atlassian.net/wiki/spaces/OS/pages/32278358/OpenSTEF+four-weekly+community+meeting)
 - **Issues:** [GitHub Issue Tracker](https://github.com/OpenSTEF/openstef/issues)
 - **Support Guide:** [How to get help](https://openstef.github.io/openstef/project/support.html)
+```

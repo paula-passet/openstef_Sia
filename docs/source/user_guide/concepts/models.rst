@@ -39,6 +39,11 @@ a Forecaster - it is solely responsible for the mathematical prediction step.
 All forecasters implement the :class:`~openstef_models.models.forecasting.forecaster.Forecaster` interface with ``fit()`` and ``predict()``
 methods.
 
+Foundation-model forecasters (such as :class:`~openstef_foundation_models.models.forecasting.chronos2_forecaster.Chronos2Forecaster`)
+also follow this interface. Because they are pretrained, their ``fit()`` is a no-op;
+prediction is zero-shot. They additionally expose a ``predict_batch()`` method for
+efficient multi-series inference in a single backend call.
+
 Transforms
 ^^^^^^^^^^
 
@@ -74,6 +79,11 @@ management: callbacks for MLflow storage, model reuse logic, model selection,
 performance monitoring, experiment tagging, and run naming. This is where operational
 concerns live - the Model stays focused on prediction.
 
+The workflow also supports batch inference via its ``predict_batch()`` method, which
+invokes ``on_predict_batch_start`` / ``on_predict_batch_end`` callbacks around the
+underlying model's batch prediction. This is particularly useful for foundation-model
+workflows where multiple series can share a single forward pass.
+
 Presets
 ^^^^^^^
 
@@ -81,6 +91,11 @@ For production use, :func:`~openstef_models.presets.create_forecasting_workflow`
 constructs a fully-wired :class:`~openstef_models.workflows.CustomForecastingWorkflow` from a
 :class:`~openstef_models.presets.ForecastingWorkflowConfig`. Presets cover the majority of production use cases with
 sensible defaults for preprocessing, feature engineering, and callbacks.
+
+The ``openstef-foundation-models`` package provides its own preset layer:
+:func:`~openstef_foundation_models.presets.forecasting_workflow.create_forecasting_workflow` builds a zero-shot
+workflow from a :class:`~openstef_foundation_models.presets.forecasting_workflow.ForecastingWorkflowConfig`,
+resolving a Chronos-2 checkpoint and wiring the ONNX inference backend automatically.
 
 .. warning::
 
@@ -130,6 +145,11 @@ Base Case forecasters, which produce only a single quantile.
      - Partial extrapolation
      - Multi
      - Partial
+   * - :class:`Chronos-2 <openstef_foundation_models.models.forecasting.chronos2_forecaster.Chronos2Forecaster>`
+     - Zero-shot; no training data needed; covariate-aware
+     - Cold-start; cross-domain transfer
+     - Multi
+     - Yes
    * - Ensemble (via openstef-meta)
      - Complementary model combination
      - Best accuracy
@@ -169,6 +189,12 @@ openstef-meta). Combining tree-based and linear forecasters exploits their
 complementary strengths - trees capture non-linear interactions while linear models
 provide extrapolation capability and stability.
 
+**Cold-start or cross-domain transfer**: Use the :class:`~openstef_foundation_models.models.forecasting.chronos2_forecaster.Chronos2Forecaster`
+(from the ``openstef-foundation-models`` package). It requires no historical training
+data for the target series, producing probabilistic forecasts zero-shot from a
+pretrained checkpoint. Known covariates (e.g., weather forecasts) are supported
+natively. Batch inference allows efficient multi-location forecasting.
+
 **Stable/predictable loads**: The Median forecaster provides a robust baseline with
 minimal complexity. Useful for loads with very low variance or as a sanity-check
 reference.
@@ -191,6 +217,9 @@ Choosing Your Abstraction Level
    * - Production deployment
      - Presets (:func:`~openstef_models.presets.create_forecasting_workflow`)
      - Sensible defaults, MLflow integration, model reuse
+   * - Foundation-model forecasting
+     - :func:`~openstef_foundation_models.presets.forecasting_workflow.create_forecasting_workflow`
+     - Zero-shot workflow from config; no training step
    * - Custom preprocessing research
      - :class:`~openstef_models.models.ForecastingModel`
      - Full control over transforms without lifecycle overhead
@@ -205,3 +234,4 @@ Most users start with Presets and only drop down to lower levels when they need
 custom behavior. The component boundaries are designed so you can replace one piece
 (e.g., swap a Forecaster or add a Transform) without rewriting the rest of the
 pipeline.
+```

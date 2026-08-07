@@ -76,10 +76,10 @@ For most users, start with the meta-package:
 
             pixi add openstef
 
-This installs the ``openstef`` meta-package, a minimal-but-runnable convenience layer:
-``openstef-core`` plus ``openstef-models`` with its CPU XGBoost runtime. To pick GPU
-runtimes, foundation models, or a leaner footprint, install the individual component
-packages with the extras you need (see below).
+This installs the ``openstef`` meta-package, which pulls in ``openstef-core``,
+``openstef-models``, ``openstef-beam``, and ``openstef-meta`` with CPU runtimes. To
+add foundation models, pick GPU runtimes, or keep a leaner footprint, install the
+individual component packages with the extras you need (see below).
 
 Installation Options
 ====================
@@ -196,6 +196,9 @@ Mix and match components using the meta-package:
    * - Model Evaluation
      - ``pip install "openstef[beam]"``
      - Models + evaluation tools
+   * - Foundation-Model Forecasting
+     - ``pip install "openstef[foundation-models]"``
+     - Zero-shot forecasting with Chronos-2
    * - Basic Development
      - ``pip install openstef``
      - Core functionality

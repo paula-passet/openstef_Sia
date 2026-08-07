@@ -43,6 +43,9 @@ In v3 these were all bundled in a single ``openstef`` package:
    * - (not available)
      - ``openstef-meta``
      - Ensemble forecasting, metalearning
+   * - (not available)
+     - ``openstef-foundation-models``
+     - Zero-shot foundation-model forecasting (Chronos-2)
    * - ``openstef-dbc``
      - *No equivalent*
      - See :ref:`migration_dbc` below
@@ -89,6 +92,14 @@ Key improvements:
 - Model types, quantiles, and durations use constrained types with IDE autocompletion.
 - Location, horizon, and hyperparameter settings are structured sub-objects with their
   own validation and defaults.
+
+.. note::
+
+   Foundation-model workflows use a separate config class in
+   ``openstef-foundation-models``:
+   :class:`~openstef_foundation_models.presets.forecasting_workflow.ForecastingWorkflowConfig`.
+   It shares the same preset pattern but configures checkpoint resolution and
+   inference-backend options instead of traditional ML hyperparameters.
 
 .. list-table:: Field Mapping
    :header-rows: 1
@@ -216,6 +227,8 @@ the full train/predict cycle without assuming any particular storage backend.
      - ``workflow.fit(dataset)``
    * - ``create_forecast(pj, data)``
      - ``workflow.predict(dataset)``
+   * - Batch prediction (not available)
+     - ``workflow.predict_batch(datasets, forecast_starts)``
    * - Task (fetch -> pipeline -> store)
      - User code + workflow (you own I/O)
 
@@ -244,8 +257,18 @@ A **Preset** is a factory that builds a fully configured workflow from a config 
 the forecaster, postprocessing, and callbacks into a
 :class:`~openstef_models.presets.forecasting_workflow.CustomForecastingWorkflow`.
 
+For batch inference (forecasting multiple locations or series in a single call),
+use :meth:`~openstef_models.presets.forecasting_workflow.CustomForecastingWorkflow.predict_batch`.
+Callbacks receive ``on_predict_batch_start`` and ``on_predict_batch_end`` events,
+enabling per-batch monitoring and storage.
+
 For ensemble approaches, ``openstef-meta`` provides
 :func:`~openstef_meta.presets.forecasting_workflow.create_ensemble_forecasting_workflow`.
+
+For zero-shot foundation-model forecasting, ``openstef-foundation-models`` provides
+:func:`~openstef_foundation_models.presets.forecasting_workflow.create_forecasting_workflow`
+which builds a workflow around a pre-trained Chronos-2 checkpoint with no training step
+required.
 
 See :doc:`/user_guide/guides/forecasting` for a complete walkthrough.
 
@@ -295,6 +318,9 @@ types; configure quantiles via the ``quantiles`` field instead.
    * - (new)
      - ``"lgbmlinear"``
      - LightGBM with linear learner
+   * - (new)
+     - ``"chronos2"``
+     - Zero-shot foundation model (via ``openstef-foundation-models``)
 
 .. _migration_dbc:
 
@@ -307,7 +333,8 @@ V4 focuses on the core ML libraries and leaves integration to the user.
 The `openstef-reference <https://github.com/OpenSTEF/openstef-reference>`_ repository
 demonstrates how a complete v3 system was deployed (scheduling, data
 integration, and storage). For v4 deployment patterns, see
-:doc:`/user_guide/guides/deployment` instead.
+:doc:`/user_guide/guides/deployment` instead. The repository also includes runnable
+deployment examples for Dagster, Airflow, and Celery orchestration frameworks.
 
 If your v3 code relied on ``openstef-dbc``:
 
@@ -318,3 +345,4 @@ If your v3 code relied on ``openstef-dbc``:
 3. **Configuration storage** -- serialize
    :class:`~openstef_models.presets.ForecastingWorkflowConfig` to/from your config
    store (JSON, YAML, database row).
+```
