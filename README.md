@@ -1,3 +1,16 @@
+Based on my research, I can see that:
+
+1. The CONTRIBUTING.md and CODE_OF_CONDUCT.md files were removed from the `.github` directory in this repo because they now live in the `OpenSTEF/.github` org-level repo and are pulled in via the docs build system.
+2. The README's Contributing section links to `https://openstef.github.io/openstef/contribute/` and the Code of Conduct link points to `https://openstef.github.io/openstef/contribute/code_of_conduct.html` — both of which are still valid since the docs site fetches these from the org `.github` repo.
+
+Looking at the changes:
+- The removal of CODE_OF_CONDUCT.md and CONTRIBUTING.md from `.github` is internal (moved to org-level repo, docs still pull them). The README links to the docs site, not to the repo files directly, so **no change needed** there.
+- SonarCloud badges are already present in the README. The "Added SonarCloud scan integration" is about the CI workflow, not about badges. **No change needed.**
+- All other changes are CI/internal workflow changes with no impact on the README content.
+
+The existing README is already accurate after these changes. No updates are required.
+
+```rst
 <!--
 SPDX-FileCopyrightText: 2017-2025 Contributors to the OpenSTEF project <openstef@lfenergy.org>
 
@@ -146,3 +159,4 @@ If you use OpenSTEF in your research or publications, please cite the project. R
 - **Community meeting:** [OpenSTEF four-weekly community meeting](https://lf-energy.atlassian.net/wiki/spaces/OS/pages/32278358/OpenSTEF+four-weekly+community+meeting)
 - **Issues:** [GitHub Issue Tracker](https://github.com/OpenSTEF/openstef/issues)
 - **Support Guide:** [How to get help](https://openstef.github.io/openstef/project/support.html)
+```
