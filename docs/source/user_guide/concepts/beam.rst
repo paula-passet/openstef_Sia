@@ -138,8 +138,12 @@ three dimensions. Each dimension answers a different operational question:
 
 **Configurable metrics.** Metrics are supplied as provider objects. BEAM includes
 providers such as ``RMAEProvider`` (Relative Mean Absolute Error) and ``RCRPSProvider``
-(Relative Continuous Ranked Probability Score) for probabilistic evaluation. You can
-implement custom providers to add domain-specific metrics.
+(Relative Continuous Ranked Probability Score) for probabilistic evaluation. The
+underlying CRPS computation supports configurable quantile weighting methods: ``"interval"``
+(default) weights each quantile by the probability interval it represents on [0, 1],
+giving more stability across quantile sets with different spacing, while ``"uniform"``
+weights every quantile equally. You can implement custom providers to add domain-specific
+metrics.
 
 .. code-block:: python
 
@@ -233,3 +237,4 @@ benchmarks (hundreds of targets, multiple models) remain tractable.
    - :ref:`concept_metalearning` for how BEAM results inform model selection decisions.
    - :doc:`/user_guide/guides/backtesting_tutorial` for a hands-on walkthrough of setting up and running a backtest.
    - :doc:`/api/beam` for the full openstef-beam API reference.
+```

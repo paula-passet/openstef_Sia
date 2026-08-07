@@ -102,8 +102,28 @@ For organizations managing thousands of forecast targets (e.g., one per grid con
 Key optimizations at this scale:
 
 - **Batch data loading**: fetch weather data once and distribute it to all workers that need the same region.
+- **Batch prediction**: use :meth:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow.predict_batch` to forecast multiple locations in a single call. This is especially effective with foundation models that support native batch inference on GPU.
 - **Model caching**: reuse loaded model artifacts across predictions for the same location within a worker.
 - **Graceful degradation**: if a single location fails, other locations continue unaffected. See :doc:`/user_guide/guides/reliability_fallback` for fallback strategies.
+
+Foundation Models and Zero-shot Forecasting
+-------------------------------------------
+
+The ``openstef-foundation-models`` package provides pre-trained foundation models
+(starting with Chronos-2) that require no training data for your specific location.
+This changes the deployment picture: the training task becomes optional (or reduces
+to fitting a lightweight feature selector), and prediction can start immediately.
+
+Use :func:`~openstef_foundation_models.presets.forecasting_workflow.create_forecasting_workflow`
+with a :class:`~openstef_foundation_models.presets.forecasting_workflow.ForecastingWorkflowConfig`
+to build a ready-to-use workflow from declarative configuration. The config selects a
+checkpoint, inference backend (ONNX with CUDA, TensorRT, or CoreML execution providers),
+quantiles, and horizons.
+
+Foundation models pair naturally with the *Queued execution* pattern: a single loaded
+model serves ``predict_batch`` calls across many locations without per-location training.
+For a worked example, see the foundation model forecasting tutorial in the examples
+directory.
 
 Data Integration
 ----------------
@@ -157,7 +177,7 @@ The callback system is pluggable. If MLflow does not fit your infrastructure, yo
            # Save model artifact to your backend
            ...
 
-Register your callback in the workflow's ``callbacks`` list. The workflow calls your hooks at each lifecycle stage (``on_fit_start``, ``on_fit_end``, ``on_predict_start``, ``on_predict_end``).
+Register your callback in the workflow's ``callbacks`` list. The workflow calls your hooks at each lifecycle stage (``on_fit_start``, ``on_fit_end``, ``on_predict_start``, ``on_predict_end``, ``on_predict_batch_start``, ``on_predict_batch_end``).
 
 Observability
 -------------
@@ -191,3 +211,4 @@ OpenSTEF is designed to be composed. If your deployment needs something the libr
 - Add custom preprocessing transforms to the model pipeline (see :doc:`/user_guide/concepts/models`).
 
 For how the forecasting workflow itself is structured (model creation, training, prediction), see :doc:`/user_guide/guides/forecasting`.
+```

@@ -61,16 +61,16 @@ OpenSTEF organizes forecasting logic in layers of increasing abstraction:
      - A single ML model (e.g., XGBoost, linear). Implements ``fit()`` and ``predict()``.
      - When building custom model types.
    * - **ForecastingModel**
-     - Wraps a Forecaster with preprocessing and postprocessing pipelines.
+     - Wraps a Forecaster with preprocessing and postprocessing pipelines. Supports batch prediction via ``predict_batch()``.
      - When you need full control over transforms.
    * - **CustomForecastingWorkflow**
-     - Adds lifecycle management, callbacks, and model persistence around a ForecastingModel.
+     - Adds lifecycle management, callbacks (including batch callbacks), and model persistence around a ForecastingModel.
      - Research, experimentation, custom integrations.
    * - **Preset** (``create_forecasting_workflow``)
-     - A factory that assembles a complete Workflow from a configuration object.
+     - A factory that assembles a complete Workflow from a configuration object. Supports both traditional and foundation-model (zero-shot) forecasters.
      - Production deployments.
 
-**Recommendation:** Start with Presets (via :func:`~openstef_models.presets.create_forecasting_workflow`) for production use. They encode best-practice defaults for preprocessing, postprocessing, callbacks, and model storage. Use :class:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow` directly when you need to experiment with non-standard pipelines or custom callback logic.
+**Recommendation:** Start with Presets (via :func:`~openstef_foundation_models.presets.forecasting_workflow.create_forecasting_workflow`) for production use. They encode best-practice defaults for preprocessing, postprocessing, callbacks, and model storage. Use :class:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow` directly when you need to experiment with non-standard pipelines or custom callback logic.
 
 Data Requirements
 -----------------
@@ -116,6 +116,10 @@ The ``fit()`` method returns a :class:`~openstef_models.models.forecasting_model
 3. **Postprocessing**: A separate :class:`~openstef_core.mixins.transform.TransformPipeline` applies quantile sorting (via :class:`~openstef_models.transforms.postprocessing.quantile_sorter.QuantileSorter`) and confidence interval construction (via :class:`~openstef_models.transforms.postprocessing.confidence_interval_applicator.ConfidenceIntervalApplicator`).
 4. **Callbacks**: The final :class:`~openstef_core.datasets.validated_datasets.ForecastDataset` is passed to callbacks for logging or downstream delivery.
 
+**Batch Predict**
+
+For scenarios requiring forecasts across multiple locations or series simultaneously, :class:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow` exposes a ``predict_batch()`` method. This accepts a list of :class:`~openstef_core.datasets.TimeSeriesDataset` inputs and a corresponding sequence of forecast start times, returning one :class:`~openstef_core.datasets.validated_datasets.ForecastDataset` per input. Batch-specific callbacks (``on_predict_batch_start`` and ``on_predict_batch_end``) fire around the entire batch operation.
+
 Model Reuse
 -----------
 
@@ -139,12 +143,14 @@ A minimal production setup using a Preset looks like this:
 
 .. code-block:: python
 
-   from openstef_models.presets import create_forecasting_workflow, ForecastingWorkflowConfig
+   from openstef_foundation_models.presets.forecasting_workflow import (
+       create_forecasting_workflow, ForecastingWorkflowConfig,
+   )
 
    config = ForecastingWorkflowConfig(model_id="my_substation_01", ...)
    workflow = create_forecasting_workflow(config=config)
 
-The workflow object exposes ``fit(data)`` and ``predict(data)`` at the top level. The Preset handles wiring up preprocessing, postprocessing, callbacks, and storage based on your configuration.
+The workflow object exposes ``fit(data)`` and ``predict(data)`` at the top level. For foundation-model presets (e.g., Chronos-2), the ``fit()`` call only fits the feature selector since the model itself is zero-shot. The Preset handles wiring up preprocessing, postprocessing, callbacks, and storage based on your configuration.
 
 For a complete walkthrough with real data, see :doc:`/tutorials/forecasting_quickstart`. For building custom pipelines with non-default transforms, see :doc:`/tutorials/custom_pipeline`.
 
@@ -154,3 +160,4 @@ For a complete walkthrough with real data, see :doc:`/tutorials/forecasting_quic
    - :doc:`/user_guide/guides/probabilistic_forecasting` for quantile forecasts and calibration.
    - :doc:`/user_guide/guides/deployment` for integrating forecasting into production systems.
    - :doc:`/user_guide/guides/backtesting_tutorial` for a hands-on backtest walkthrough; see also :ref:`concept_beam` for the broader framework.
+```
