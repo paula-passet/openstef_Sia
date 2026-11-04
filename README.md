@@ -45,6 +45,7 @@ OpenSTEF 4.0.0 is organized as a monorepo with specialized packages under the `p
 | **openstef-models** | ML models, feature engineering, data processing |
 | **openstef-beam** | Backtesting, Evaluation, Analysis, and Metrics |
 | **openstef-meta** | Meta models for OpenSTEF |
+| **openstef-foundation-models** | Foundation model forecasters (e.g. Chronos-2) with ONNX inference |
 
 ## How to Install
 
@@ -98,6 +99,8 @@ Tutorials and usage examples are available in the [`examples/`](examples/) folde
 
 - Forecasting quickstart
 - Feature engineering
+- Foundation model forecasting (Chronos-2)
+- Deployment pipelines (Dagster, Airflow, Celery)
 
 Additional tutorials are available in the [online documentation](https://openstef.github.io/openstef/examples.html).
 
