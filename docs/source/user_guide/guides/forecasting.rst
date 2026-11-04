@@ -61,10 +61,10 @@ OpenSTEF organizes forecasting logic in layers of increasing abstraction:
      - A single ML model (e.g., XGBoost, linear). Implements ``fit()`` and ``predict()``.
      - When building custom model types.
    * - **ForecastingModel**
-     - Wraps a Forecaster with preprocessing and postprocessing pipelines.
+     - Wraps a Forecaster with preprocessing and postprocessing pipelines. Supports both single and batch prediction via ``predict()`` and ``predict_batch()``.
      - When you need full control over transforms.
    * - **CustomForecastingWorkflow**
-     - Adds lifecycle management, callbacks, and model persistence around a ForecastingModel.
+     - Adds lifecycle management, callbacks, and model persistence around a ForecastingModel. Exposes ``predict_batch()`` for efficient multi-series inference with batch-level callbacks.
      - Research, experimentation, custom integrations.
    * - **Preset** (``create_forecasting_workflow``)
      - A factory that assembles a complete Workflow from a configuration object.
@@ -116,6 +116,10 @@ The ``fit()`` method returns a :class:`~openstef_models.models.forecasting_model
 3. **Postprocessing**: A separate :class:`~openstef_core.mixins.transform.TransformPipeline` applies quantile sorting (via :class:`~openstef_models.transforms.postprocessing.quantile_sorter.QuantileSorter`) and confidence interval construction (via :class:`~openstef_models.transforms.postprocessing.confidence_interval_applicator.ConfidenceIntervalApplicator`).
 4. **Callbacks**: The final :class:`~openstef_core.datasets.validated_datasets.ForecastDataset` is passed to callbacks for logging or downstream delivery.
 
+**Batch Predict**
+
+For scenarios where you need to forecast multiple series or locations in a single call, both :class:`~openstef_models.models.forecasting_model.ForecastingModel` and :class:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow` expose a ``predict_batch()`` method. It accepts a list of :class:`~openstef_core.datasets.TimeSeriesDataset` objects and a corresponding sequence of forecast start times, returning one :class:`~openstef_core.datasets.validated_datasets.ForecastDataset` per input. At the Workflow level, dedicated ``on_predict_batch_start`` and ``on_predict_batch_end`` callbacks fire around the batch. Forecasters that support native batching (such as foundation models) can override the internal ``_predict_batch`` method for improved throughput; the default implementation processes items sequentially.
+
 Model Reuse
 -----------
 
@@ -146,7 +150,7 @@ A minimal production setup using a Preset looks like this:
 
 The workflow object exposes ``fit(data)`` and ``predict(data)`` at the top level. The Preset handles wiring up preprocessing, postprocessing, callbacks, and storage based on your configuration.
 
-For a complete walkthrough with real data, see :doc:`/tutorials/forecasting_quickstart`. For building custom pipelines with non-default transforms, see :doc:`/tutorials/custom_pipeline`.
+For a complete walkthrough with real data, see :doc:`/tutorials/forecasting_quickstart`. For building custom pipelines with non-default transforms, see :doc:`/tutorials/custom_pipeline`. For using pre-trained foundation models (such as Chronos-2) instead of training from scratch, see :doc:`/tutorials/foundation_model_forecasting`.
 
 .. seealso::
 

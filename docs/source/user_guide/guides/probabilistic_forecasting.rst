@@ -217,13 +217,14 @@ Key metrics for probabilistic forecast quality include:
 
 - **Calibration error**: the difference between expected and observed coverage per quantile
 - **Sharpness**: the width of prediction intervals (narrower is better, given proper calibration)
-- **Pinball loss**: the proper scoring rule for quantile forecasts, penalizing both miscalibration and lack of sharpness
+- **Pinball loss**: the proper scoring rule for quantile forecasts, penalizing both miscalibration and lack of sharpness. OpenSTEF provides :func:`~openstef_beam.metrics.metrics_deterministic.pinball_loss` as a standalone metric for evaluating individual quantile levels.
+- **CRPS (Continuous Ranked Probability Score)**: a summary metric that integrates pinball loss across all quantile levels. OpenSTEF's CRPS implementation supports two weighting strategies: uniform weighting (the default) and ``"interval"`` weighting, which uses :func:`~openstef_beam.metrics.metrics_helpers.represented_interval_weights` to assign each quantile a weight proportional to the probability mass it represents on [0, 1]. The ``"interval"`` method produces a more accurate approximation when quantiles are unevenly spaced.
 
-See :doc:`/user_guide/guides/backtesting_tutorial` for how to evaluate forecast quality on historical data.
+See :doc:`/user_guide/guides/backtesting` for how to evaluate forecast quality on historical data.
 
 .. seealso::
 
    - :doc:`/user_guide/guides/forecasting` for the overall forecasting workflow (fitting, predicting, model selection).
    - :doc:`/user_guide/concepts/models` for understanding how different model types compare.
-   - :doc:`/user_guide/guides/backtesting_tutorial` for evaluating forecast performance systematically.
+   - :doc:`/user_guide/guides/backtesting` for evaluating forecast performance systematically.
    - :doc:`/user_guide/guides/reliability_fallback` for operational concerns like fallback behavior when data is missing.

@@ -37,7 +37,9 @@ return a :class:`~openstef_core.datasets.ForecastDataset`. No feature engineerin
 a Forecaster - it is solely responsible for the mathematical prediction step.
 
 All forecasters implement the :class:`~openstef_models.models.forecasting.forecaster.Forecaster` interface with ``fit()`` and ``predict()``
-methods.
+methods. Forecasters that support batch-native inference can override the internal
+``_predict_batch()`` method to process multiple inputs in a single call, which
+higher-level components use automatically.
 
 Transforms
 ^^^^^^^^^^
@@ -63,8 +65,10 @@ This is the core trainable object:
        target_column="load",
    )
 
-The model's ``fit()`` and ``predict()`` methods accept raw :class:`~openstef_core.datasets.TimeSeriesDataset`
-objects and handle the full pipeline internally.
+The model's ``fit()``, ``predict()``, and ``predict_batch()`` methods accept raw
+:class:`~openstef_core.datasets.TimeSeriesDataset` objects and handle the full pipeline internally.
+``predict_batch()`` processes multiple datasets in one call, delegating to the
+forecaster's batch path when available.
 
 Workflow
 ^^^^^^^^
@@ -73,6 +77,11 @@ The Workflow (:class:`~openstef_models.workflows.CustomForecastingWorkflow`) wra
 management: callbacks for MLflow storage, model reuse logic, model selection,
 performance monitoring, experiment tagging, and run naming. This is where operational
 concerns live - the Model stays focused on prediction.
+
+The Workflow exposes ``predict_batch()`` alongside ``predict()`` for multi-series
+inference. Corresponding ``on_predict_batch_start`` and ``on_predict_batch_end``
+callbacks fire around each batch call, giving monitoring and logging hooks the same
+visibility as single predictions.
 
 Presets
 ^^^^^^^
@@ -135,6 +144,11 @@ Base Case forecasters, which produce only a single quantile.
      - Best accuracy
      - Multi
      - Partial
+   * - Chronos-2 (via openstef-foundation-models)
+     - Pretrained foundation model; zero-shot capable
+     - Low-data regimes; rapid deployment
+     - Multi
+     - Yes
    * - :class:`Constant Quantile <openstef_models.models.forecasting.constant_quantile_forecaster.ConstantQuantileForecaster>`
      - No features needed at prediction
      - Fallback
@@ -168,6 +182,13 @@ extrapolation.
 openstef-meta). Combining tree-based and linear forecasters exploits their
 complementary strengths - trees capture non-linear interactions while linear models
 provide extrapolation capability and stability.
+
+**Foundation models**: The **Chronos-2** forecaster (available via the
+``openstef-foundation-models`` package) is a pretrained foundation model that can
+produce forecasts with little or no task-specific training data. It is well suited for
+low-data regimes, rapid prototyping, or as a strong baseline. Chronos-2 supports
+quantile output and can extrapolate beyond the training range. It integrates into the
+same Preset workflow as other forecasters.
 
 **Stable/predictable loads**: The Median forecaster provides a robust baseline with
 minimal complexity. Useful for loads with very low variance or as a sanity-check

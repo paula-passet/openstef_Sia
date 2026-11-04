@@ -11,8 +11,8 @@ OpenSTEF runs as a Python library call inside whatever execution environment
 your team uses: a single notebook, an orchestrated DAG, or a queue of workers.
 The core API is intentionally narrow: you wrap
 :class:`~openstef_models.workflows.custom_forecasting_workflow.CustomForecastingWorkflow`'s
-``fit()`` and ``predict()`` in the scheduler, data layer, and storage your
-stack already provides.
+``fit()``, ``predict()``, and ``predict_batch()`` in the scheduler, data layer,
+and storage your stack already provides.
 
 This page describes three deployment patterns that have worked in production,
 plus the integration points OpenSTEF exposes for data, model storage, and
@@ -101,6 +101,7 @@ For organizations managing thousands of forecast targets (e.g., one per grid con
 
 Key optimizations at this scale:
 
+- **Batch inference**: use ``workflow.predict_batch()`` to forecast multiple locations in a single call. The method preprocesses each input independently, delegates to the model's ``_predict_batch`` (which batch-native models can override for a single batched call), and postprocesses each result. Corresponding ``on_predict_batch_start`` / ``on_predict_batch_end`` callbacks fire around the entire batch.
 - **Batch data loading**: fetch weather data once and distribute it to all workers that need the same region.
 - **Model caching**: reuse loaded model artifacts across predictions for the same location within a worker.
 - **Graceful degradation**: if a single location fails, other locations continue unaffected. See :doc:`/user_guide/guides/reliability_fallback` for fallback strategies.
@@ -157,7 +158,7 @@ The callback system is pluggable. If MLflow does not fit your infrastructure, yo
            # Save model artifact to your backend
            ...
 
-Register your callback in the workflow's ``callbacks`` list. The workflow calls your hooks at each lifecycle stage (``on_fit_start``, ``on_fit_end``, ``on_predict_start``, ``on_predict_end``).
+Register your callback in the workflow's ``callbacks`` list. The workflow calls your hooks at each lifecycle stage (``on_fit_start``, ``on_fit_end``, ``on_predict_start``, ``on_predict_end``, ``on_predict_batch_start``, ``on_predict_batch_end``).
 
 Observability
 -------------
