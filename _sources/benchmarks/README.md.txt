@@ -23,7 +23,7 @@ BEAM replays historical data day by day, trains your model, makes forecasts, and
 
 ```bash
 # Install (requires uv: https://docs.astral.sh/uv/)
-uv sync
+uv sync --all-extras --all-groups --all-packages
 
 # Run the built-in Liander 2024 benchmark (XGBoost + GBLinear)
 uv run python -m examples.benchmarks.liander2024.run_xgboost_gblinear_benchmark
